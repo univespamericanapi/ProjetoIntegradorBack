@@ -27,4 +27,4 @@ Instale backend-nodejs com npm
 - [Yslander Martins de Souza](https://www.github.com/)
 ## Licença
 
-[![MIT License](https://img.shields.io/github/license/jhonatancassante/startse-desafio-01?style=plastic)](https://github.com/)
+[![MIT License](https://img.shields.io/github/license/univespamericanapi/ProjetoIntegradorBack?style=plastic)](https://github.com/univespamericanapi/ProjetoIntegradorBack/blob/main/LICENSE)
