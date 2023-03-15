@@ -1,0 +1,18 @@
+{
+  "name": "projetointegradorback",
+  "version": "1.0.0",
+  "description": "Projeto Integrador - Sistema de cadastramento de concursos cosplay em eventos.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pi",
+    "cosplay",
+    "concurso",
+    "node.js",
+    "mysql"
+  ],
+  "author": "Turma 001, Grupo 001, 2023, Campinas - UNIVESP",
+  "license": "MIT"
+}
