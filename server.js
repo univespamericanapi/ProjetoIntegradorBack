@@ -2,7 +2,7 @@ import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import db from './app/models/db.model.js';
 import { configAuth } from './app/config/auth.config.js';
-import { configDB } from './app/config/db.config.js';
+import { configRoles } from './app/config/role.config.js';
 import routesAuth from './app/routes/auth.route.js';
 import routesUser from './app/routes/user.route.js';
 
@@ -36,7 +36,7 @@ import bcrypt from 'bcryptjs';
 const Role = db.role;
 const User = db.user;
 const Op = db.Sequelize.Op;
-const rolesUser = ["staff", "admin"];
+const rolesUser = ["admin"];
 
 db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
@@ -44,7 +44,7 @@ db.sequelize.sync({ force: true }).then(() => {
 });
 
 function initial() {
-    configDB.roles.forEach(role => {
+    configRoles.forEach(role => {
         Role.create({
             name: role
         });

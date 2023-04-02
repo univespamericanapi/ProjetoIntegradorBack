@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
-import { configAuth } from '../config/auth.config.js';
 import db from '../models/db.model.js';
-import { configDB } from '../config/db.config.js';
+import { configRoles } from '../config/role.config.js';
+import { configSecret } from '../config/secret.config.js';
 
 const User = db.user;
 const { TokenExpiredError } = jwt;
 
-const adminRoleName = configDB.roles[1];
-const staffRoleName = configDB.roles[0];
+const adminRoleName = configRoles[1];
+const staffRoleName = configRoles[0];
 
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
@@ -23,16 +23,13 @@ const catchError = (err, res) => {
 const verifyToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
 
-    console.log(adminRoleName);
-    console.log(staffRoleName);
-
     if (!token) {
         return res.status(403).send({
             message: 'No token provided!'
         });
     }
 
-    jwt.verify(token, configAuth.secret, (err, decoded) => {
+    jwt.verify(token, configSecret, (err, decoded) => {
         if (err) {
             return catchError(err, res);
         }

@@ -1,5 +1,6 @@
 import db from '../models/db.model.js';
 import { configAuth } from '../config/auth.config.js';
+import { configSecret } from '../config/secret.config.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
@@ -59,7 +60,7 @@ const signin = (req, res) => {
             });
         }
 
-        const token = jwt.sign({ id: user.idUser }, configAuth.secret, {
+        const token = jwt.sign({ id: user.idUser }, configSecret, {
             expiresIn: configAuth.jwtExpiration
         });
 
@@ -113,7 +114,7 @@ const refreshToken = async (req, res) => {
         }
 
         const user = await refreshToken.getUser();
-        let newAccessToken = jwt.sign({ id: user.idUser }, configAuth.secret, {
+        let newAccessToken = jwt.sign({ id: user.idUser }, configSecret, {
             expiresIn: configAuth.jwtExpiration
         });
 

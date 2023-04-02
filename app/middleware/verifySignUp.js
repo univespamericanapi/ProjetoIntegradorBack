@@ -1,7 +1,7 @@
 import db from "../models/db.model.js";
-import { configDB } from "../config/db.config.js";
+import { configRoles } from "../config/role.config.js";
 
-const ROLES = configDB.roles;
+const ROLES = configRoles;
 const User = db.user;
 
 const checkDuplicateUsername = (req, res, next) => {
