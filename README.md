@@ -21,7 +21,7 @@ Instale backend-nodejs com npm
 - [Guilherme Cioldin Dainese](https://www.github.com/)
 - [Jhonatan Cassante de Brito](https://www.github.com/jhonatancassante)
 - [João Pedro de Oliveira Ferrera](https://www.github.com/)
-- [Larissa Chan Yuk Hei](https://www.github.com/)
+- [Larissa Chan Yuk Hei](https://www.github.com/LarissaChan)
 - [Natalia Santana Ventura](https://www.github.com/)
 - [Rodrigo Somaggio dos Santos](https://www.github.com/)
 - [Yslander Martins de Souza](https://www.github.com/)
