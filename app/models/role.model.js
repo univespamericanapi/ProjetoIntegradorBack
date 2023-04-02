@@ -1,6 +1,6 @@
 export const role = (sequelize, Sequelize) => {
     const Role = sequelize.define("roles", {
-        idRoles: {
+        idRole: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true

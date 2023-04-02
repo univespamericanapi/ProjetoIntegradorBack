@@ -14,20 +14,18 @@ const signup = (req, res) => {
         name: req.body.name,
         lastName: req.body.lastName
     }).then(user => {
-        if (req.body.roles) {
-            Role.findAll({
+        if (req.body.role) {
+            Role.findOne({
                 where: {
-                    name: {
-                        [Op.or]: req.body.roles
-                    }
+                    name: req.body.role
                 }
-            }).then(roles => {
-                user.setRoles(roles).then(() => {
+            }).then(role => {
+                user.setRole(role).then(() => {
                     res.send({ message: 'User was registered successfully!' });
                 });
             });
         } else {
-            user.setRoles([1]).then(() => {
+            user.setRole([1]).then(() => {
                 res.send({ message: 'User was registered successfully!' });
             });
         }
@@ -66,18 +64,16 @@ const signin = (req, res) => {
 
         let refreshToken = await RefreshToken.createToken(user);
 
-        let authorities = [];
-        user.getRoles().then(roles => {
-            roles.forEach(role => {
-                authorities.push('ROLE_' + role.name.toUpperCase());
-            });
+        let authority = "";
+        user.getRole().then(role => {
+            authority = 'ROLE_' + role.name.toUpperCase();
 
             res.status(200).send({
                 idUser: user.idUser,
                 username: user.username,
                 name: user.name,
                 lastName: user.lastName,
-                roles: authorities,
+                role: authority,
                 accessToken: token,
                 refreshToken: refreshToken
             });

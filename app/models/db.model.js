@@ -19,16 +19,12 @@ db.user = user(sequelize, Sequelize);
 db.role = role(sequelize, Sequelize);
 db.refreshToken = refreshToken(sequelize, Sequelize);
 
-db.role.belongsToMany(db.user, {
-    through: 'user_roles',
-    foreignKey: 'roleId',
-    otherKey: 'userId'
+db.role.hasMany(db.user, {
+    foreignKey: 'roleId'
 });
 
-db.user.belongsToMany(db.role, {
-    through: 'user_roles',
-    foreignKey: 'userId',
-    otherKey: 'roleId'
+db.user.belongsTo(db.role, {
+    foreignKey: 'roleId'
 });
 
 db.refreshToken.belongsTo(db.user, {

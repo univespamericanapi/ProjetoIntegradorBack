@@ -11,6 +11,7 @@ const routesUser = app => {
     });
 
     app.get('/api/all', controllerUser.allAccess);
+    app.get('/api/user', [authJwt.verifyToken], controllerUser.userBoard);
     app.get('/api/staff', [authJwt.verifyToken, authJwt.isStaff], controllerUser.staffBoard);
     app.get('/api/admin', [authJwt.verifyToken, authJwt.isAdmin], controllerUser.adminBoard);
 };

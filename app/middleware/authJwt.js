@@ -6,8 +6,8 @@ import { configSecret } from '../config/secret.config.js';
 const User = db.user;
 const { TokenExpiredError } = jwt;
 
-const adminRoleName = configRoles[1];
-const staffRoleName = configRoles[0];
+const adminRoleName = configRoles[2];
+const staffRoleName = configRoles[1];
 
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
@@ -41,12 +41,10 @@ const verifyToken = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === adminRoleName) {
-                    next();
-                    return;
-                }
+        user.getRole().then(role => {
+            if (role.name === adminRoleName) {
+                next();
+                return;
             }
 
             res.status(403).send({
@@ -59,13 +57,11 @@ const isAdmin = (req, res, next) => {
 
 const isStaff = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === adminRoleName ||
-                    roles[i].name === staffRoleName) {
-                    next();
-                    return;
-                }
+        user.getRole().then(role => {
+            if (role.name === adminRoleName ||
+                role.name === staffRoleName) {
+                next();
+                return;
             }
 
             res.status(403).send({

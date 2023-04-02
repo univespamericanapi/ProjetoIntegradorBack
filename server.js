@@ -36,7 +36,7 @@ import bcrypt from 'bcryptjs';
 const Role = db.role;
 const User = db.user;
 const Op = db.Sequelize.Op;
-const rolesUser = ["admin"];
+const rolesUser = "admin";
 
 db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
@@ -56,14 +56,12 @@ function initial() {
         name: 'Jhonatan',
         lastName: 'Cassante'
     }).then(user => {
-        Role.findAll({
+        Role.findOne({
             where: {
-                name: {
-                    [Op.or]: rolesUser
-                }
+                name: rolesUser
             }
-        }).then(roles => {
-            user.setRoles(roles);
+        }).then(role => {
+            user.setRole(role);
         });
     });
 }

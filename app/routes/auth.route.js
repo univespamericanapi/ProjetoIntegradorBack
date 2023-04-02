@@ -14,7 +14,7 @@ const routesAuth = app => {
         '/api/auth/signup',
         [
             verifySignUp.checkDuplicateUsername,
-            verifySignUp.checkRolesExisted
+            verifySignUp.checkRoleExisted
         ],
         controllerAuth.signup
     );

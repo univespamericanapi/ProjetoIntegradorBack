@@ -1,1 +1,1 @@
-export const configRoles = ['staff', 'admin'];
+export const configRoles = ['user', 'staff', 'admin'];
