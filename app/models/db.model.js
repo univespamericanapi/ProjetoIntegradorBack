@@ -41,6 +41,4 @@ db.user.hasOne(db.refreshToken, {
     targetKey: 'idUser'
 });
 
-db.ROLES = configDB.roles
-
 export default db;
