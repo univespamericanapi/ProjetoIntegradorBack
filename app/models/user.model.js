@@ -18,8 +18,7 @@ export const user = (sequelize, Sequelize) => {
             allowNull: false
         },
         lastName: {
-            type: Sequelize.STRING(255),
-            allowNull: false
+            type: Sequelize.STRING(255)
         }
     });
 

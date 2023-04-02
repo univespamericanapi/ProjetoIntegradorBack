@@ -28,29 +28,50 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
+connectToDatabase();
+
 // For production
-// db.sequelize.sync();
+// async function connectToDatabase() {
+//     try {
+//         await db.sequelize.authenticate();
+//         console.log("Connection has been established successfully.");
+
+//         await db.sequelize.sync();
+//         console.log("All models were synchronized successfully.");
+
+//     } catch (error) {
+//         console.error("Unable to connect to the database:", error);
+//     }
+// }
 
 // In development
 import bcrypt from 'bcryptjs';
-const Role = db.role;
-const User = db.user;
-const Op = db.Sequelize.Op;
-const rolesUser = "admin";
 
-db.sequelize.sync({ force: true }).then(() => {
-    console.log('Drop and Resync Db');
-    initial();
-});
+async function connectToDatabase() {
+    try {
+        await db.sequelize.authenticate();
+        console.log("Connection has been established successfully.");
 
-function initial() {
-    configRoles.forEach(role => {
-        Role.create({
+        await db.sequelize.sync({ force: false });
+        console.log("All models were synchronized successfully.");
+
+        const Role = db.role;
+        const User = db.user;
+
+        initial(Role, User);
+    } catch (error) {
+        console.error("Unable to connect to the database:", error);
+    }
+}
+
+async function initial(Role, User) {
+    configRoles.forEach(async role => {
+        await Role.create({
             name: role
         });
     });
 
-    User.create({
+    await User.create({
         username: 'jhonatanjb',
         password: bcrypt.hashSync('123', 8),
         name: 'Jhonatan',
@@ -58,7 +79,52 @@ function initial() {
     }).then(user => {
         Role.findOne({
             where: {
-                name: rolesUser
+                name: "admin"
+            }
+        }).then(role => {
+            user.setRole(role);
+        });
+    });
+
+    await User.create({
+        username: 'tester1',
+        password: bcrypt.hashSync('123', 8),
+        name: 'Tester',
+        lastName: 'Tester'
+    }).then(user => {
+        Role.findOne({
+            where: {
+                name: "staff"
+            }
+        }).then(role => {
+            user.setRole(role);
+        });
+    });
+
+    await User.create({
+        username: 'tester2',
+        password: bcrypt.hashSync('123', 8),
+        name: 'Tester',
+        lastName: 'Tester'
+    }).then(user => {
+        Role.findOne({
+            where: {
+                name: "staff"
+            }
+        }).then(role => {
+            user.setRole(role);
+        });
+    });
+
+    await User.create({
+        username: 'tester3',
+        password: bcrypt.hashSync('123', 8),
+        name: 'Tester',
+        lastName: 'Tester'
+    }).then(user => {
+        Role.findOne({
+            where: {
+                name: "user"
             }
         }).then(role => {
             user.setRole(role);
