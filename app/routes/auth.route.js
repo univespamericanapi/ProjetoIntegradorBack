@@ -1,7 +1,7 @@
 import verifySignUp from "../middleware/verifySignUp.js";
 import controllerAuth from "../controllers/auth.controller.js";
 
-const auth = app => {
+const routesAuth = app => {
     app.use((req,res, next) => {
         res.header(
             'Access-Control-Allow-Headers',

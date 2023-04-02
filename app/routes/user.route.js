@@ -1,7 +1,7 @@
 import authJwt from "../middleware/authJwt.js";
 import controllerUser from "../controllers/user.controller.js";
 
-const user = app => {
+const routesUser = app => {
     app.use((req, res, next) => {
         res.header(
             'Access-Control-Allow-Headers',
