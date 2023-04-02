@@ -1,13 +1,13 @@
 const allAccess = (req, res) => {
-    res.status(200).send('Public Content.')
+    res.status(200).send('Public Content.');
 };
 
 const staffBoard = (req, res) => {
-    res.status(200).send('User Content.')
+    res.status(200).send('Staff Content.');
 };
 
 const adminBoard = (req, res) => {
-    res.status(200).send('Admin Content.')
+    res.status(200).send('Admin Content.');
 };
 
 const controllerUser = {

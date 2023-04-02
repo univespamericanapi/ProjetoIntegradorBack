@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { configAuth } from '../config/auth.config.js';
 import db from '../models/db.model.js';
-import { configDB } from '../config/db.config,js';
+import { configDB } from '../config/db.config.js';
 
 const User = db.user;
 const { TokenExpiredError } = jwt;
 
 const adminRoleName = configDB.roles[1];
-const stafRoleName = configDB.roles[0];
+const staffRoleName = configDB.roles[0];
 
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
@@ -23,6 +23,9 @@ const catchError = (err, res) => {
 const verifyToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
 
+    console.log(adminRoleName);
+    console.log(staffRoleName);
+
     if (!token) {
         return res.status(403).send({
             message: 'No token provided!'
@@ -35,44 +38,46 @@ const verifyToken = (req, res, next) => {
         }
 
         req.userId = decoded.id;
-        next;
+        next();
     });
 };
 
 const isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
-            roles.forEach(role => {
-                if (role.name === adminRoleName) {
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i].name === adminRoleName) {
                     next();
                     return;
                 }
-            });
+            }
 
             res.status(403).send({
                 message: 'Require Admin Role!'
             });
+            return;
         });
     });
-};
+}
 
 const isStaff = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
-            roles.forEach(role => {
-                if (role.name === adminRoleName ||
-                        role.name === stafRoleName) {
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i].name === adminRoleName ||
+                    roles[i].name === staffRoleName) {
                     next();
                     return;
                 }
-            });
+            }
 
             res.status(403).send({
                 message: 'Require Staff or Admin Role!'
             });
+            return;
         });
     });
-};
+}
 
 const authJwt = {
     verifyToken: verifyToken,

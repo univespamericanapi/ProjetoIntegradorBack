@@ -26,6 +26,7 @@
   "homepage": "https://github.com/univespamericanapi/ProjetoIntegradorBack#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "cros": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

@@ -11,8 +11,8 @@ const routesUser = app => {
     });
 
     app.get('/api/all', controllerUser.allAccess);
-    app.get('/api/staff', controllerUser.staffBoard);
-    app.get('/api/admin', controllerUser.adminBoard);
+    app.get('/api/staff', [authJwt.verifyToken, authJwt.isStaff], controllerUser.staffBoard);
+    app.get('/api/admin', [authJwt.verifyToken, authJwt.isAdmin], controllerUser.adminBoard);
 };
 
-export default user;
+export default routesUser;

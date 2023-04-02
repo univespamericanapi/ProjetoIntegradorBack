@@ -11,7 +11,7 @@ export const refreshToken = (sequelize, Sequelize) => {
         }
     });
 
-    RefreshToken.createToken = async (user) => {
+    RefreshToken.createToken = async function (user) {
         let expiredAt = new Date();
 
         expiredAt.setSeconds(expiredAt.getSeconds() + configAuth.jwtRefreshExpiration);
@@ -24,7 +24,7 @@ export const refreshToken = (sequelize, Sequelize) => {
             expiryDate: expiredAt.getTime()
         });
 
-        return refreshToken.token
+        return refreshToken.token;
     };
 
     RefreshToken.verifyExpiration = token => {
