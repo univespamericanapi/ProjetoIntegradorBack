@@ -1,7 +1,5 @@
 import db from "../models/db.model.js";
-import { configRoles } from "../config/role.config.js";
 
-const ROLES = configRoles;
 const User = db.user;
 const Role = db.role;
 
@@ -35,19 +33,6 @@ const checkRoleExisted = async (req, res, next) => {
             return;
         }
     });
-
-    next();
-};
-
-const checkRolesExisted = (req, res, next) => {
-    if (req.body.role) {
-            if (!ROLES.includes(req.body.role)) {
-                res.status(400).send({
-                    message: 'Failed! Role does not exist = ' + req.body.role
-                });
-                return;
-            }
-    }
 
     next();
 };
