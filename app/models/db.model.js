@@ -6,6 +6,7 @@ import { refreshToken } from "./refreshToken.model.js";
 import { evento } from "./evento.model.js";
 import { participante } from "./participante.model.js";
 import { personagem } from "./personagem.model.js";
+import { cidades } from "./cidades.models.js";
 
 const sequelize = new Sequelize(configDB.dbname, configDB.user, configDB.password, {
     host: configDB.host,
@@ -24,6 +25,7 @@ db.refreshToken = refreshToken(sequelize, Sequelize);
 db.evento = evento(sequelize, Sequelize);
 db.participante = participante(sequelize, Sequelize);
 db.personagem = personagem(sequelize, Sequelize);
+db.cidades = cidades(sequelize, Sequelize);
 
 db.role.hasMany(db.user, {
     foreignKey: 'roleId'
