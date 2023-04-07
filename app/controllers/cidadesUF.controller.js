@@ -11,7 +11,7 @@ const cidades = async (req, res) => {
         let cidades = [];
 
         estado.forEach(cidade => {
-            cidades.push(cidade.cidade);
+            cidades.push({ id: cidade.idCidade, cidade: cidade.cidade });
         });
 
         if (cidades.length === 0) {
