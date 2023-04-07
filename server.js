@@ -33,7 +33,7 @@ app.listen(PORT, () => {
 // Conexão com o banco de dados
 connectToDatabase();
 
-// For production
+// In production, use this code
 // async function connectToDatabase() {
 //     try {
 //         await db.sequelize.authenticate();
@@ -47,7 +47,9 @@ connectToDatabase();
 //     }
 // }
 
-// In development
+// In development or in first time run, use this code
+// :::::::: Caution ::::::::
+// This code will drop all tables
 import addData from './app/data/add.data.js';
 
 async function connectToDatabase() {

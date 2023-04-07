@@ -1,3 +1,4 @@
+// To add base data when start for the first time
 import bcrypt from 'bcryptjs';
 import { configLists } from '../config/lists.config.js';
 
