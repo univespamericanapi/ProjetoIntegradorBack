@@ -67,6 +67,22 @@ db.personagem.belongsTo(db.participante, {
     foreignKey: 'pers_part'
 });
 
+// Evento - Estados
+db.estados.hasMany(db.evento, {
+    foreignKey: 'event_estado'
+});
+db.evento.belongsTo(db.estados, {
+    foreignKey: 'event_estado'
+});
+
+// Evento - Cidades
+db.cidades.hasMany(db.evento, {
+    foreignKey: 'event_cidade'
+});
+db.evento.belongsTo(db.cidades, {
+    foreignKey: 'event_cidade'
+});
+
 // Desfile - Evento
 db.evento.hasMany(db.desfile, {
     foreignKey: 'desf_event'
