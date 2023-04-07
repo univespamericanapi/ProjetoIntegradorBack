@@ -1,12 +1,3 @@
-// {
-//     nomeEvento,
-//     local,
-//     edicao,
-//     estado,
-//     cidade,
-//     data
-// }
-
 import db from "../models/db.model.js";
 
 const novoEvento = async (req, res) => {
