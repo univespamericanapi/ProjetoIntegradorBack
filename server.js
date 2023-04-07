@@ -82,8 +82,7 @@ async function initial(Role, User) {
     await User.create({
         username: 'admin',
         password: bcrypt.hashSync('admin', 8),
-        name: 'Admin',
-        lastName: 'User'
+        name: 'Admin'
     }).then(user => {
         Role.findOne({
             where: {
@@ -97,8 +96,7 @@ async function initial(Role, User) {
     await User.create({
         username: 'staff',
         password: bcrypt.hashSync('staff', 8),
-        name: 'Staff',
-        lastName: 'User'
+        name: 'Staff'
     }).then(user => {
         Role.findOne({
             where: {
@@ -112,8 +110,7 @@ async function initial(Role, User) {
     await User.create({
         username: 'user',
         password: bcrypt.hashSync('user', 8),
-        name: 'User',
-        lastName: 'User'
+        name: 'User'
     }).then(user => {
         Role.findOne({
             where: {

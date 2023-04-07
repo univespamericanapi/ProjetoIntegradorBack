@@ -17,8 +17,8 @@ export const user = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        lastName: {
-            type: Sequelize.STRING(255)
+        roleId: {
+            type: Sequelize.INTEGER
         }
     });
 

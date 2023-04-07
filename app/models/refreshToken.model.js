@@ -8,6 +8,9 @@ export const refreshToken = (sequelize, Sequelize) => {
         },
         expiryDate: {
             type: Sequelize.DATE
+        },
+        userId: {
+            type: Sequelize.INTEGER
         }
     });
 
