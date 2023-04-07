@@ -6,10 +6,12 @@ export const desfileCosplay = (sequelize, Sequelize) => {
             primaryKey: true
         },
         desf_event: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         desf_pers: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         desf_conf: {
             type: Sequelize.BOOLEAN
@@ -18,7 +20,8 @@ export const desfileCosplay = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         desf_categ: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         desf_extra: {
             type: Sequelize.STRING(250)

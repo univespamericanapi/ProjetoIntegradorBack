@@ -7,30 +7,20 @@ import bcrypt from 'bcryptjs';
 const { user: User, role: Role, refreshToken: RefreshToken } = db;
 const Op = db.Sequelize.Op;
 
-const signup = (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, 8),
-        name: req.body.name,
-        lastName: req.body.lastName
-    }).then(user => {
-        if (req.body.role) {
-            Role.findOne({
-                where: {
-                    name: req.body.role
-                }
-            }).then(role => {
-                user.setRole(role).then(() => {
-                    res.send({ message: 'User was registered successfully!' });
-                });
-            });
-        } else {
-            user.setRole([1]).then(() => {
-                res.send({ message: 'User was registered successfully!' });
-            });
+const signup = async (req, res) => {
+    await Role.findOne({
+        where: {
+            name: req.body.role
         }
-    }).catch(err => {
-        res.status(500).send({ message: err.message });
+    }).then(role => {
+        User.create({
+            username: req.body.username,
+            password: bcrypt.hashSync(req.body.password, 8),
+            name: req.body.name,
+            roleId: role.idRole
+        }).then(() => {
+            res.send({ message: 'User was registered successfully!' });
+        });
     });
 };
 

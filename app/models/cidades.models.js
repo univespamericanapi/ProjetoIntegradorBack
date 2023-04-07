@@ -10,7 +10,8 @@ export const cidades = (sequelize, Sequelize) => {
             allowNull: false
         },
         cid_estado: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     });
 

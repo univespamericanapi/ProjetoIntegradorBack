@@ -18,7 +18,8 @@ export const user = (sequelize, Sequelize) => {
             allowNull: false
         },
         roleId: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     });
 

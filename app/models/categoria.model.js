@@ -6,7 +6,8 @@ export const categoria = (sequelize, Sequelize) => {
             primaryKey: true
         },
         categ_nome: {
-            type: Sequelize.STRING(50)
+            type: Sequelize.STRING(50),
+            allowNull: false
         }
     });
 

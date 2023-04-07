@@ -58,7 +58,7 @@ async function connectToDatabase() {
         await db.sequelize.authenticate();
         console.log("Connection has been established successfully.");
 
-        await db.sequelize.sync({ force: true }).then(() => {
+        await db.sequelize.sync({ force: true }).then(async () => {
             console.log('Drop and Resync Db');
 
             const Role = db.role;
@@ -67,9 +67,10 @@ async function connectToDatabase() {
             const Estados = db.estados;
             const Categorias = db.categoria;
 
-            cidEstConfig(Estados, Cidades);
-            userRoles(Role, User);
-            categorias(Categorias);
+            await rolesAdd(Role)
+            await cidEstConfig(Estados, Cidades);
+            await categoriasAdd(Categorias);
+            await usersAdd(Role, User);
         });
         console.log("All models were synchronized successfully.");
     } catch (error) {
@@ -77,7 +78,7 @@ async function connectToDatabase() {
     }
 }
 
-async function categorias(Categorias) {
+async function categoriasAdd(Categorias) {
     configCategorias.forEach(async categoria => {
         await Categorias.create({
             categ_nome: categoria
@@ -85,52 +86,27 @@ async function categorias(Categorias) {
     });
 }
 
-async function userRoles(Role, User) {
+async function rolesAdd(Role) {
     configRoles.forEach(async role => {
         await Role.create({
             name: role
         });
     });
+}
 
-    await User.create({
-        username: 'admin',
-        password: bcrypt.hashSync('admin', 8),
-        name: 'Admin'
-    }).then(user => {
-        Role.findOne({
+function usersAdd(Role, User) {
+    configRoles.forEach(async roleInDb => {
+        await Role.findOne({
             where: {
-                name: "admin"
+                name: roleInDb
             }
         }).then(role => {
-            user.setRole(role);
-        });
-    });
-
-    await User.create({
-        username: 'staff',
-        password: bcrypt.hashSync('staff', 8),
-        name: 'Staff'
-    }).then(user => {
-        Role.findOne({
-            where: {
-                name: "staff"
-            }
-        }).then(role => {
-            user.setRole(role);
-        });
-    });
-
-    await User.create({
-        username: 'user',
-        password: bcrypt.hashSync('user', 8),
-        name: 'User'
-    }).then(user => {
-        Role.findOne({
-            where: {
-                name: "user"
-            }
-        }).then(role => {
-            user.setRole(role);
+            User.create({
+                username: roleInDb,
+                password: bcrypt.hashSync(roleInDb, 8),
+                name: roleInDb,
+                roleId: role.idRole
+            });
         });
     });
 }
