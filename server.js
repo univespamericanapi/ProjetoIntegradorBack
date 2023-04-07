@@ -19,10 +19,12 @@ app.get('/', (req, res) => {
 import routesAuth from './app/routes/auth.route.js';
 import routesUser from './app/routes/user.route.js';
 import routesCadastro from './app/routes/cadastro.routes.js';
+import routesEvento from './app/routes/evento.route.js';
 
 routesAuth(app);
 routesUser(app);
 routesCadastro(app);
+routesEvento(app);
 
 // Executando na porta
 const PORT = process.env.PORT || 8080;

@@ -28,8 +28,40 @@ export const evento = (sequelize, Sequelize) => {
         event_data: {
             type: Sequelize.DATE,
             allowNull: false
+        },
+        event_EdiNome: {
+            type: Sequelize.STRING(255),
+            allowNull: false
         }
     });
+
+    Evento.getIdByNome = async eventoNome => {
+        let id;
+        await Evento.findOne({
+            where: {
+                event_nome: eventoNome
+            }
+        }).then(evento => {
+            if (evento) {
+                id = evento.event_id;
+            }
+        });
+        return id;
+    };
+
+    Evento.getIdByEdiNome = async eventoEdiNome => {
+        let id;
+        await Evento.findOne({
+            where: {
+                event_EdiNome: eventoEdiNome
+            }
+        }).then(evento => {
+            if (evento) {
+                id = evento.event_id;
+            }
+        });
+        return id;
+    };
 
     return Evento;
 };

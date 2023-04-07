@@ -109,4 +109,10 @@ db.user.hasOne(db.refreshToken, {
     targetKey: 'idUser'
 });
 
+// Functions
+db.dataConverter = dataString => {
+    const dataArray = dataString.split("/");
+    return new Date(dataArray[2], dataArray[1] - 1, dataArray[0]);
+};
+
 export default db;

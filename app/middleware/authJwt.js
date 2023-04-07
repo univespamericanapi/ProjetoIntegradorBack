@@ -72,9 +72,9 @@ const isStaff = (req, res, next) => {
 }
 
 const authJwt = {
-    verifyToken: verifyToken,
-    isAdmin: isAdmin,
-    isStaff: isStaff
+    verifyToken,
+    isAdmin,
+    isStaff
 };
 
 export default authJwt;

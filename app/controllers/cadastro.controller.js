@@ -4,34 +4,30 @@ const cidades = async (req, res) => {
     const Cidades = db.cidades;
     const Estados = db.estados;
 
-    await Estados.findOne({
-        where: {
-            est_desc: req.body.estado
-        }
-    }).then(estado => {
-        if (!estado) {
-            return res.status(400).send({
-                message: 'No city was found!'
-            });
-        }
+    const estadoId = Estados.getIdByName(req.body.estado);
 
-        Cidades.findAll({
-            where: {
-                cid_estado: estado.est_id
-            }
-        }).then(cidades => {
-            let cidadeLista = [];
-
-            cidades.forEach(cidade => {
-                cidadeLista.push(cidade.cid_desc);
-            });
-
-            res.status(200).send({
-                cidadeLista
-            });
-        }).catch(err => {
-            res.status(500).send({ message: err.message });
+    if (!estadoId) {
+        return res.status(400).send({
+            message: 'Nenhum estado foi encontrado!'
         });
+    }
+
+    Cidades.findAll({
+        where: {
+            cid_estado: estadoId
+        }
+    }).then(cidades => {
+        let cidadeLista = [];
+
+        cidades.forEach(cidade => {
+            cidadeLista.push(cidade.cid_desc);
+        });
+
+        res.status(200).send({
+            cidadeLista
+        });
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
     });
 };
 

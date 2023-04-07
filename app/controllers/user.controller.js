@@ -15,10 +15,10 @@ const adminBoard = (req, res) => {
 };
 
 const controllerUser = {
-    allAccess: allAccess,
-    userBoard: userBoard,
-    staffBoard: staffBoard,
-    adminBoard: adminBoard
+    allAccess,
+    userBoard,
+    staffBoard,
+    adminBoard
 };
 
 export default controllerUser;

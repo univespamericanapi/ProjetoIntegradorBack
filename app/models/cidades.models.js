@@ -15,5 +15,20 @@ export const cidades = (sequelize, Sequelize) => {
         }
     });
 
+    Cidades.getIdByName = async (idEstado, cidadeNome) => {
+        let id;
+        await Cidades.findOne({
+            where: {
+                cid_desc: cidadeNome,
+                cid_estado: idEstado
+            }
+        }).then(cidade => {
+            if (cidade) {
+                id = cidade.cid_id;
+            }
+        });
+        return id;
+    };
+
     return Cidades;
 };

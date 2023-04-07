@@ -11,5 +11,17 @@ export const categoria = (sequelize, Sequelize) => {
         }
     });
 
+    Categoria.getIdByName = async categoriaNome => {
+        await Categoria.findOne({
+            where: {
+                categ_nome: categoriaNome
+            }
+        }).then(categoria => {
+            return categoria.categ_id;
+        }).catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+    };
+
     return Categoria;
 };

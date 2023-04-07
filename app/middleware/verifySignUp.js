@@ -1,9 +1,8 @@
 import db from "../models/db.model.js";
 
-const User = db.user;
-const Role = db.role;
-
 const checkDuplicateUsername = async (req, res, next) => {
+    const User = db.user;
+
     await User.findOne({
         where: {
             username: req.body.username
@@ -20,6 +19,8 @@ const checkDuplicateUsername = async (req, res, next) => {
 };
 
 const checkRoleExisted = async (req, res, next) => {
+    const Role = db.role;
+
     await Role.findOne({
         where: {
             name: req.body.role
@@ -36,8 +37,8 @@ const checkRoleExisted = async (req, res, next) => {
 };
 
 const verifySignUp = {
-    checkDuplicateUsername: checkDuplicateUsername,
-    checkRoleExisted: checkRoleExisted
+    checkDuplicateUsername,
+    checkRoleExisted
 };
 
 export default verifySignUp;

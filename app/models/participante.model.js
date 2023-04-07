@@ -29,7 +29,7 @@ export const participante = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             allowNull: false
         },
-        part_cel: {
+        part_whats: {
             type: Sequelize.STRING(11),
             allowNull: false
         },

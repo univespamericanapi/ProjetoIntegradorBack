@@ -1,5 +1,3 @@
-// import controllerCidEst from "../controllers/CidEst.controller.js";
-// import { controllerCategorias } from "../controllers/categoria.controller.js";
 import controllerCadastro from "../controllers/cadastro.controller.js";
 
 const routesCadastro = app => {

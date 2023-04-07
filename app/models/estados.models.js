@@ -15,5 +15,19 @@ export const estados = (sequelize, Sequelize) => {
         }
     });
 
+    Estados.getIdByName = async estadoNome => {
+        let id;
+        await Estados.findOne({
+            where: {
+                est_desc: estadoNome
+            }
+        }).then(estado => {
+            if (estado) {
+                id = estado.est_id;
+            }
+        });
+        return id;
+    };
+
     return Estados;
 };

@@ -114,9 +114,9 @@ const refreshToken = async (req, res) => {
 };
 
 const controllerAuth = {
-    signup: signup,
-    signin: signin,
-    refreshToken: refreshToken
+    signup,
+    signin,
+    refreshToken
 };
 
 export default controllerAuth;
