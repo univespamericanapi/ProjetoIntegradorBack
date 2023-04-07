@@ -1,5 +1,6 @@
 Aqui listarei as rotas da api com todos os campos necessários no body ou header para efetuar uma requisição.
 
+
 route: /api/auth/signup
 type: post
 body:
@@ -9,6 +10,11 @@ body:
   "name": "",
   "role": ""
 }
+return:
+{
+  "message": "User was registered successfully!"
+}
+
 
 route: /api/auth/signin
 type: post
@@ -17,6 +23,16 @@ body:
   "username": "",
   "password": ""
 }
+return:
+{
+  "idUser": ,
+  "username": "",
+  "name": "",
+  "role": "",
+  "accessToken": "",
+  "refreshToken": ""
+}
+
 
 route: /api/auth/refreshtoken
 type: post
@@ -24,6 +40,12 @@ body:
 {
   "refreshToken": ""
 }
+return:
+{
+  "accessToken": "",
+  "refreshToken": ""
+}
+
 
 route: /api/cadastro/cidades
 type: get
@@ -31,12 +53,27 @@ body:
 {
   "estado": ""
 }
+return:
+{
+  "cidadeLista": []
+}
+
 
 route: /api/cadastro/estados
 type: get
+return:
+{
+  "estadoLista": []
+}
+
 
 route: /api/cadastro/categorias
 type: get
+return:
+{
+  "categoriaLista": []
+}
+
 
 route: /api/admin/novoevento
 type: post
@@ -50,24 +87,46 @@ body:
   "cidade": "São Paulo",
   "data": "26/04/2023"
 }
+return:
+{
+  "message": "Novo evento criado com sucesso!"
+}
+
 
 route: /api/cadastro/eventos
 type: get
+return:
+{
+  "eventoLista": []
+}
+
 
 route: /api/all
 type: get
+return: Public Content.
+
 
 route: /api/user
 type: get
 header: x-access-token
+return: User Content.
+
 
 route: /api/staff
 type: get
 header: x-access-token
+return: Staff Content.
+
 
 route: /api/admin
 type: get
 header: x-access-token
+return: Admin Content.
+
 
 route: /
 type: get
+return:
+{
+  "message": "Welcome to Avalon back-end application."
+}
