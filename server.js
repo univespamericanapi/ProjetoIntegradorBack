@@ -5,6 +5,7 @@ import { configAuth } from './app/config/auth.config.js';
 import routesAuth from './app/routes/auth.route.js';
 import routesUser from './app/routes/user.route.js';
 import routesCidEst from './app/routes/cidEst.route.js';
+import routesCategoria from './app/routes/categoria.route.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 routesAuth(app);
 routesUser(app);
 routesCidEst(app);
+routesCategoria(app);
 
 // Escutando
 const PORT = process.env.PORT || 8080;
