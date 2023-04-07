@@ -15,9 +15,8 @@ const checkDuplicateUsername = async (req, res, next) => {
             });
             return;
         }
+        next();
     });
-
-    next();
 };
 
 const checkRoleExisted = async (req, res, next) => {
@@ -32,9 +31,8 @@ const checkRoleExisted = async (req, res, next) => {
             });
             return;
         }
+        next();
     });
-
-    next();
 };
 
 const verifySignUp = {

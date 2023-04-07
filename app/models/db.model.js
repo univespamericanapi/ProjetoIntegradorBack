@@ -19,12 +19,12 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.refreshToken = refreshToken(sequelize, Sequelize);
 db.user = user(sequelize, Sequelize);
 db.role = role(sequelize, Sequelize);
-db.refreshToken = refreshToken(sequelize, Sequelize);
 db.evento = evento(sequelize, Sequelize);
-db.participante = participante(sequelize, Sequelize);
 db.personagem = personagem(sequelize, Sequelize);
+db.participante = participante(sequelize, Sequelize);
 db.cidades = cidades(sequelize, Sequelize);
 
 db.role.hasMany(db.user, {
