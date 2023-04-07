@@ -49,6 +49,7 @@ connectToDatabase();
 import { cidEstConfig } from './app/config/cidEst.config.js';
 import bcrypt from 'bcryptjs';
 import { configRoles } from './app/config/role.config.js';
+import { configCategorias } from './app/config/categorias.config.js';
 
 async function connectToDatabase() {
     try {
@@ -62,9 +63,11 @@ async function connectToDatabase() {
             const User = db.user;
             const Cidades = db.cidades;
             const Estados = db.estados;
+            const Categorias = db.categoria;
 
             cidEstConfig(Estados, Cidades);
-            initial(Role, User);
+            userRoles(Role, User);
+            categorias(Categorias);
         });
         console.log("All models were synchronized successfully.");
     } catch (error) {
@@ -72,7 +75,15 @@ async function connectToDatabase() {
     }
 }
 
-async function initial(Role, User) {
+async function categorias(Categorias) {
+    configCategorias.forEach(async categoria => {
+        await Categorias.create({
+            categ_nome: categoria
+        });
+    });
+}
+
+async function userRoles(Role, User) {
     configRoles.forEach(async role => {
         await Role.create({
             name: role

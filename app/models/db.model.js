@@ -8,6 +8,8 @@ import { participante } from "./participante.model.js";
 import { personagem } from "./personagem.model.js";
 import { cidades } from "./cidades.models.js";
 import { estados } from "./estados.models.js";
+import { desfileCosplay } from "./desfile_cosplay.model.js";
+import { categoria } from "./categoria.model.js";
 
 // Instance of Sequelize
 const sequelize = new Sequelize(configDB.dbname, configDB.user, configDB.password, {
@@ -29,6 +31,8 @@ db.personagem = personagem(sequelize, Sequelize);
 db.participante = participante(sequelize, Sequelize);
 db.cidades = cidades(sequelize, Sequelize);
 db.estados = estados(sequelize, Sequelize);
+db.desfile = desfileCosplay(sequelize, Sequelize);
+db.categoria = categoria(sequelize, Sequelize);
 
 // Database Relationships
 // Cidades - Estados
@@ -61,6 +65,30 @@ db.participante.hasMany(db.personagem, {
 });
 db.personagem.belongsTo(db.participante, {
     foreignKey: 'pers_part'
+});
+
+// Desfile - Evento
+db.evento.hasMany(db.desfile, {
+    foreignKey: 'desf_event'
+});
+db.desfile.belongsTo(db.evento, {
+    foreignKey: 'desf_event'
+});
+
+// Desfile - Personagens
+db.personagem.hasMany(db.desfile, {
+    foreignKey: 'desf_pers'
+});
+db.desfile.belongsTo(db.personagem, {
+    foreignKey: 'desf_pers'
+});
+
+// Desfile - Categoria
+db.categoria.hasMany(db.desfile, {
+    foreignKey: 'desf_categ'
+});
+db.desfile.belongsTo(db.categoria, {
+    foreignKey: 'desf_categ'
 });
 
 // User - Role

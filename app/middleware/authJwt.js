@@ -6,8 +6,8 @@ import { configSecret } from '../config/secret.config.js';
 const User = db.user;
 const { TokenExpiredError } = jwt;
 
-const adminRoleName = configRoles[2];
-const staffRoleName = configRoles[1];
+const adminRoleName = "admin";
+const staffRoleName = "staff";
 
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
