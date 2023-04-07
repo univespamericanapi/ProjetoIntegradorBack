@@ -1,0 +1,73 @@
+Aqui listarei as rotas da api com todos os campos necessários no body ou header para efetuar uma requisição.
+
+route: /api/auth/signup
+type: post
+body:
+{
+  "username": "",
+  "password": "",
+  "name": "",
+  "role": ""
+}
+
+route: /api/auth/signin
+type: post
+body:
+{
+  "username": "",
+  "password": ""
+}
+
+route: /api/auth/refreshtoken
+type: post
+body:
+{
+  "refreshToken": ""
+}
+
+route: /api/cadastro/cidades
+type: get
+body:
+{
+  "estado": ""
+}
+
+route: /api/cadastro/estados
+type: get
+
+route: /api/cadastro/categorias
+type: get
+
+route: /api/admin/novoevento
+type: post
+header: x-access-token
+body:
+{
+  "nomeEvento": "São Paulo Anime Fest",
+  "local": "Liceu",
+  "edicao": "25",
+  "estado": "São Paulo",
+  "cidade": "São Paulo",
+  "data": "26/04/2023"
+}
+
+route: /api/cadastro/eventos
+type: get
+
+route: /api/all
+type: get
+
+route: /api/user
+type: get
+header: x-access-token
+
+route: /api/staff
+type: get
+header: x-access-token
+
+route: /api/admin
+type: get
+header: x-access-token
+
+route: /
+type: get

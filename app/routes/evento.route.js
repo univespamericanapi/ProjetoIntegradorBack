@@ -16,7 +16,7 @@ const routesEvento = app => {
         authJwt.isAdmin,
         verifyDuplicate.checkDuplicateEvento
     ], controllerEvento.novoEvento);
-    app.get('/api/user/eventos', controllerEvento.eventoList);
+    app.get('/api/cadastro/eventos', controllerEvento.eventoList);
 };
 
 export default routesEvento;
