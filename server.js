@@ -70,7 +70,7 @@ async function connectToDatabase() {
             await addData.estados(Estados);
             await addData.cidades(Estados, Cidades);
             await addData.categorias(Categorias);
-            await addData.users(Role, User);
+            await addData.users(Role, User); // Update this function when finish the development
         });
         console.log("All models were synchronized successfully.");
     } catch (error) {
