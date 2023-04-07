@@ -1,14 +1,20 @@
 import db from "../models/db.model.js";
 
-const Cidades = db.cidades;
-const Estados = db.estados;
-
 const cidades = async (req, res) => {
+    const Cidades = db.cidades;
+    const Estados = db.estados;
+
     await Estados.findOne({
         where: {
             est_desc: req.body.estado
         }
     }).then(estado => {
+        if (!estado) {
+            return res.status(400).send({
+                message: 'No city was found!'
+            });
+        }
+
         Cidades.findAll({
             where: {
                 cid_estado: estado.est_id
@@ -20,12 +26,6 @@ const cidades = async (req, res) => {
                 cidadeLista.push(cidade.cid_desc);
             });
 
-            if (cidadeLista.length === 0) {
-                return res.status(400).send({
-                    message: 'No city was found!'
-                });
-            }
-
             res.status(200).send({
                 cidadeLista
             });
@@ -36,7 +36,9 @@ const cidades = async (req, res) => {
 };
 
 const estados = async (req, res) => {
-    Estados.findAll().then(estados => {
+    const Estados = db.estados;
+
+    await Estados.findAll().then(estados => {
         let estadoLista = [];
 
         estados.forEach(estado => {
@@ -57,9 +59,34 @@ const estados = async (req, res) => {
     });
 };
 
-const controllerCidEst = {
-    cidades: cidades,
-    estados: estados
+const categorias = async (req, res) => {
+    const Categoria = db.categoria;
+
+    await Categoria.findAll().then(categorias => {
+        let categoriaLista = [];
+
+        categorias.forEach(categoria => {
+            categoriaLista.push(categoria.categ_nome);
+        });
+
+        if (categoriaLista.length === 0) {
+            return res.status(400).send({
+                message: 'No category was found!'
+            });
+        }
+
+        res.status(200).send({
+            categoriaLista
+        });
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
 };
 
-export default controllerCidEst;
+const controllerCadastro = {
+    cidades,
+    estados,
+    categorias
+};
+
+export default controllerCadastro;

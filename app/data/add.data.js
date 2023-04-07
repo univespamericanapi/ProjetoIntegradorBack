@@ -1,34 +1,15 @@
-// Add cidades and estados on db inicialization
-export const cidEstConfig = async (Estados, Cidades) => {
+import bcrypt from 'bcryptjs';
+import { configLists } from '../config/lists.config.js';
 
-    await Estados.create({ est_sigla: "AC", est_desc: "Acre" });
-    await Estados.create({ est_sigla: "AL", est_desc: "Alagoas" });
-    await Estados.create({ est_sigla: "AP", est_desc: "Amapá" });
-    await Estados.create({ est_sigla: "AM", est_desc: "Amazonas" });
-    await Estados.create({ est_sigla: "BA", est_desc: "Bahia" });
-    await Estados.create({ est_sigla: "CE", est_desc: "Ceará" });
-    await Estados.create({ est_sigla: "DF", est_desc: "Distrito Federal" });
-    await Estados.create({ est_sigla: "ES", est_desc: "Espírito Santo" });
-    await Estados.create({ est_sigla: "GO", est_desc: "Goiás" });
-    await Estados.create({ est_sigla: "MA", est_desc: "Maranhão" });
-    await Estados.create({ est_sigla: "MT", est_desc: "Mato Grosso" });
-    await Estados.create({ est_sigla: "MS", est_desc: "Mato Grosso do Sul" });
-    await Estados.create({ est_sigla: "MG", est_desc: "Minas Gerais" });
-    await Estados.create({ est_sigla: "PA", est_desc: "Pará" });
-    await Estados.create({ est_sigla: "PB", est_desc: "Paraíba" });
-    await Estados.create({ est_sigla: "PR", est_desc: "Paraná" });
-    await Estados.create({ est_sigla: "PE", est_desc: "Pernambuco" });
-    await Estados.create({ est_sigla: "PI", est_desc: "Piauí" });
-    await Estados.create({ est_sigla: "RJ", est_desc: "Rio de Janeiro" });
-    await Estados.create({ est_sigla: "RN", est_desc: "Rio Grande do Norte" });
-    await Estados.create({ est_sigla: "RS", est_desc: "Rio Grande do Sul" });
-    await Estados.create({ est_sigla: "RO", est_desc: "Rondônia" });
-    await Estados.create({ est_sigla: "RR", est_desc: "Roraima" });
-    await Estados.create({ est_sigla: "SC", est_desc: "Santa Catarina" });
-    await Estados.create({ est_sigla: "SP", est_desc: "São Paulo" });
-    await Estados.create({ est_sigla: "SE", est_desc: "Sergipe" });
-    await Estados.create({ est_sigla: "TO", est_desc: "Tocantins" });
+const categorias = async Categorias => {
+    configLists.categorias.forEach(async categoria => {
+        await Categorias.create({
+            categ_nome: categoria
+        });
+    });
+};
 
+const cidades = async (Estados, Cidades) => {
     await Estados.findOne({
         where: {
             est_desc: "Acre"
@@ -5788,3 +5769,68 @@ export const cidEstConfig = async (Estados, Cidades) => {
         await Cidades.create({ cid_desc: "Xambioá", cid_estado: estado.est_id });
     });
 };
+
+const estados = async Estados => {
+    await Estados.create({ est_sigla: "AC", est_desc: "Acre" });
+    await Estados.create({ est_sigla: "AL", est_desc: "Alagoas" });
+    await Estados.create({ est_sigla: "AP", est_desc: "Amapá" });
+    await Estados.create({ est_sigla: "AM", est_desc: "Amazonas" });
+    await Estados.create({ est_sigla: "BA", est_desc: "Bahia" });
+    await Estados.create({ est_sigla: "CE", est_desc: "Ceará" });
+    await Estados.create({ est_sigla: "DF", est_desc: "Distrito Federal" });
+    await Estados.create({ est_sigla: "ES", est_desc: "Espírito Santo" });
+    await Estados.create({ est_sigla: "GO", est_desc: "Goiás" });
+    await Estados.create({ est_sigla: "MA", est_desc: "Maranhão" });
+    await Estados.create({ est_sigla: "MT", est_desc: "Mato Grosso" });
+    await Estados.create({ est_sigla: "MS", est_desc: "Mato Grosso do Sul" });
+    await Estados.create({ est_sigla: "MG", est_desc: "Minas Gerais" });
+    await Estados.create({ est_sigla: "PA", est_desc: "Pará" });
+    await Estados.create({ est_sigla: "PB", est_desc: "Paraíba" });
+    await Estados.create({ est_sigla: "PR", est_desc: "Paraná" });
+    await Estados.create({ est_sigla: "PE", est_desc: "Pernambuco" });
+    await Estados.create({ est_sigla: "PI", est_desc: "Piauí" });
+    await Estados.create({ est_sigla: "RJ", est_desc: "Rio de Janeiro" });
+    await Estados.create({ est_sigla: "RN", est_desc: "Rio Grande do Norte" });
+    await Estados.create({ est_sigla: "RS", est_desc: "Rio Grande do Sul" });
+    await Estados.create({ est_sigla: "RO", est_desc: "Rondônia" });
+    await Estados.create({ est_sigla: "RR", est_desc: "Roraima" });
+    await Estados.create({ est_sigla: "SC", est_desc: "Santa Catarina" });
+    await Estados.create({ est_sigla: "SP", est_desc: "São Paulo" });
+    await Estados.create({ est_sigla: "SE", est_desc: "Sergipe" });
+    await Estados.create({ est_sigla: "TO", est_desc: "Tocantins" });
+};
+
+const roles = async Role => {
+    configLists.roles.forEach(async role => {
+        await Role.create({
+            name: role
+        });
+    });
+};
+
+const users = async (Role, User) => {
+    configLists.roles.forEach(async roleInDb => {
+        await Role.findOne({
+            where: {
+                name: roleInDb
+            }
+        }).then(role => {
+            User.create({
+                username: roleInDb,
+                password: bcrypt.hashSync(roleInDb, 8),
+                name: roleInDb,
+                roleId: role.idRole
+            });
+        });
+    });
+};
+
+const addData = {
+    categorias,
+    cidades,
+    estados,
+    roles,
+    users
+};
+
+export default addData;

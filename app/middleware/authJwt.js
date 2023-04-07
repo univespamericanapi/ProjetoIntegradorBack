@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import db from '../models/db.model.js';
-import { configRoles } from '../config/role.config.js';
 import { configSecret } from '../config/secret.config.js';
 
 const User = db.user;
