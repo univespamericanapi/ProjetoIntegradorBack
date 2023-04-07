@@ -1,5 +1,5 @@
-//Rename this file to db.config.js
-
+// Rename this file to db.config.js
+// Data Base configs
 export const configDB = {
     host: 'localhost',
     user: 'root',

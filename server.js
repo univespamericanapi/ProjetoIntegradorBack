@@ -8,14 +8,12 @@ import routesCidades from './app/routes/cidadesUF.route.js';
 
 const app = express();
 
-const corsOptions = {
-    origin: configAuth.corsOrigin
-};
-
-app.use(cors(corsOptions));
+// Configuração do aplicativo
+app.use(cors({ origin: configAuth.corsOrigin }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
+// Rotas
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to Avalon back-end application.' });
 });
@@ -24,11 +22,13 @@ routesAuth(app);
 routesUser(app);
 routesCidades(app);
 
+// Escutando
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
+// Conexão com o banco de dados
 connectToDatabase();
 
 // For production

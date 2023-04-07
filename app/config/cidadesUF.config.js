@@ -1,3 +1,4 @@
+// Add cidades on db inicialization
 export const cidadesUFConfig = async (Cidades) => {
     await Cidades.create({ estado: "Rondônia", cidade: "Alta Floresta D'oeste" });
     await Cidades.create({ estado: "Rondônia", cidade: "Ariquemes" });
