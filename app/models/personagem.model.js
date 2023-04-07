@@ -1,27 +1,27 @@
 export const personagem = (sequelize, Sequelize) => {
-    const Personagem = sequelize.define("personagems", {
-        idPersonagem: {
+    const Personagem = sequelize.define("personagens", {
+        pers_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        idParticipante: {
+        pers_part: {
             type: Sequelize.INTEGER,
-            primaryKey: true
-        },
-        nome: {
-            type: Sequelize.STRING(255),
             allowNull: false
         },
-        origem: {
-            type: Sequelize.STRING(255),
+        pers_nome: {
+            type: Sequelize.STRING(250),
             allowNull: false
         },
-        link_referencia: {
-            type: Sequelize.STRING(255),
+        pers_origem: {
+            type: Sequelize.STRING(250),
             allowNull: false
         },
-        aceite_regulamento: {
+        pers_link: {
+            type: Sequelize.STRING(250),
+            allowNull: false
+        },
+        pers_aceite: {
             type: Sequelize.BOOLEAN,
             allowNull: false
         }

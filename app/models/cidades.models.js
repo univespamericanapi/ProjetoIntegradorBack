@@ -1,16 +1,16 @@
 export const cidades = (sequelize, Sequelize) => {
     const Cidades = sequelize.define("cidades", {
-        idCidade: {
+        cid_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        cidade: {
-            type: Sequelize.STRING(255),
+        cid_desc: {
+            type: Sequelize.STRING(250),
             allowNull: false
         },
-        estado: {
-            type: Sequelize.STRING(255),
+        cid_estado: {
+            type: Sequelize.INTEGER,
             allowNull: false
         }
     });

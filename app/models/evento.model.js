@@ -1,24 +1,32 @@
 export const evento = (sequelize, Sequelize) => {
     const Evento = sequelize.define("eventos", {
-        idEvento: {
+        event_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        nome: {
-            type: Sequelize.STRING(255),
+        event_nome: {
+            type: Sequelize.STRING(250),
             allowNull: false
         },
-        cidade: {
-            type: Sequelize.STRING(255),
+        event_local: {
+            type: Sequelize.STRING(250),
             allowNull: false
         },
-        edicao: {
+        event_edicao: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        ano: {
+        event_estado: {
             type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        event_cidade: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        event_data: {
+            type: Sequelize.DATE,
             allowNull: false
         }
     });

@@ -4,7 +4,7 @@ import db from './app/models/db.model.js';
 import { configAuth } from './app/config/auth.config.js';
 import routesAuth from './app/routes/auth.route.js';
 import routesUser from './app/routes/user.route.js';
-import routesCidades from './app/routes/cidadesUF.route.js';
+import routesCidEst from './app/routes/cidEst.route.js';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 routesAuth(app);
 routesUser(app);
-routesCidades(app);
+routesCidEst(app);
 
 // Escutando
 const PORT = process.env.PORT || 8080;
@@ -46,7 +46,7 @@ connectToDatabase();
 // }
 
 // In development
-import { cidadesUFConfig } from './app/config/cidadesUF.config.js';
+import { cidEstConfig } from './app/config/cidEst.config.js';
 import bcrypt from 'bcryptjs';
 import { configRoles } from './app/config/role.config.js';
 
@@ -61,8 +61,10 @@ async function connectToDatabase() {
             const Role = db.role;
             const User = db.user;
             const Cidades = db.cidades;
+            const Estados = db.estados;
 
-            initial(Role, User, Cidades);
+            cidEstConfig(Estados, Cidades);
+            initial(Role, User);
         });
         console.log("All models were synchronized successfully.");
     } catch (error) {
@@ -70,14 +72,12 @@ async function connectToDatabase() {
     }
 }
 
-async function initial(Role, User, Cidades) {
+async function initial(Role, User) {
     configRoles.forEach(async role => {
         await Role.create({
             name: role
         });
     });
-
-    cidadesUFConfig(Cidades);
 
     await User.create({
         username: 'admin',

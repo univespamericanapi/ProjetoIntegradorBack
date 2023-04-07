@@ -1,46 +1,45 @@
 export const participante = (sequelize, Sequelize) => {
     const Participante = sequelize.define("participantes", {
-        idParticipante: {
+        part_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        usuario: {
+        part_user: {
             type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        part_senha: {
+            type: Sequelize.STRING(255),
+            allowNull: true
+        },
+        part_nome: {
+            type: Sequelize.STRING(500),
             allowNull: false
         },
-        senha: {
-            type: Sequelize.STRING(255),
+        part_nomeSocial: {
+            type: Sequelize.STRING(500),
             allowNull: false
         },
-        nome: {
-            type: Sequelize.STRING(255),
-            allowNull: false
-        },
-        sobrenome: {
-            type: Sequelize.STRING(255),
-            allowNull: false
-        },
-        nome_social: {
-            type: Sequelize.STRING(255)
-        },
-        cpf: {
+        part_cpf: {
             type: Sequelize.STRING(11),
             allowNull: false
         },
-        dt_nascimento: {
+        part_nasc: {
             type: Sequelize.DATE,
             allowNull: false
         },
-        celular: {
+        part_cel: {
             type: Sequelize.STRING(11),
             allowNull: false
         },
-        cidade: {
-            type: Sequelize.STRING(255)
+        part_est: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
-        estado: {
-            type: Sequelize.STRING(2)
+        part_cidade: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     });
 
