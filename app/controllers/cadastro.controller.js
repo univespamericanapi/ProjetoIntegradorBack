@@ -4,7 +4,7 @@ const cidades = async (req, res) => {
     const Cidades = db.cidades;
     const Estados = db.estados;
 
-    const estadoId = Estados.getIdByName(req.body.estado);
+    const estadoId = await Estados.getIdByName(req.body.estado);
 
     if (!estadoId) {
         return res.status(400).send({
@@ -12,7 +12,7 @@ const cidades = async (req, res) => {
         });
     }
 
-    Cidades.findAll({
+    await Cidades.findAll({
         where: {
             cid_estado: estadoId
         }
