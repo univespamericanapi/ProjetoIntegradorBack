@@ -2,15 +2,15 @@ import db from "../models/db.model.js";
 
 const novoEvento = async (req, res) => {
     const Evento = db.evento;
-    const Estados = db.estados;
-    const Cidades = db.cidades;
+    const Estado = db.estado;
+    const Cidade = db.cidade;
 
-    const idEstado = await Estados.getIdByName(req.body.estado);
+    const idEstado = await Estado.getIdByName(req.body.estado);
     if (!idEstado) {
         res.status(400).send({ message: 'Nenhum estado encontrado!' });
     }
 
-    const idCidade = await Cidades.getIdByName(idEstado, req.body.cidade);
+    const idCidade = await Cidade.getIdByName(idEstado, req.body.cidade);
     if (!idCidade) {
         res.status(400).send({ message: 'Nenhuma cidade encontrada!' });
     }
@@ -33,7 +33,7 @@ const novoEvento = async (req, res) => {
     });
 };
 
-const eventoList = async (req, res) => {
+const eventoLista = async (req, res) => {
     const Evento = db.evento;
 
     await Evento.findAll().then(eventos => {
@@ -57,9 +57,9 @@ const eventoList = async (req, res) => {
     });
 };
 
-const controllerEvento = {
+const eventoCtrl = {
     novoEvento,
-    eventoList
+    eventoLista
 };
 
-export default controllerEvento;
+export default eventoCtrl;

@@ -1,12 +1,12 @@
 import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import db from './app/models/db.model.js';
-import { configAuth } from './app/config/auth.config.js';
+import { authConfig } from './app/config/auth.config.js';
 
 const app = express();
 
 // Configuração do aplicativo
-app.use(cors({ origin: configAuth.corsOrigin }));
+app.use(cors({ origin: authConfig.corsOrigin }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
@@ -16,15 +16,15 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-import routesAuth from './app/routes/auth.route.js';
-import routesUser from './app/routes/user.route.js';
-import routesCadastro from './app/routes/cadastro.routes.js';
-import routesEvento from './app/routes/evento.route.js';
+import authRoutes from './app/routes/auth.route.js';
+import usuarioRoutes from './app/routes/usuario.route.js';
+import listaRoutes from './app/routes/lista.routes.js';
+import eventoRoutes from './app/routes/evento.route.js';
 
-routesAuth(app);
-routesUser(app);
-routesCadastro(app);
-routesEvento(app);
+authRoutes(app);
+usuarioRoutes(app);
+listaRoutes(app);
+eventoRoutes(app);
 
 // Executando na porta
 const PORT = process.env.PORT || 8080;
@@ -33,49 +33,49 @@ app.listen(PORT, () => {
 });
 
 // Conexão com o banco de dados
-connectToDatabase();
+conectarAoBanco();
 
 // In production, use this code
-// async function connectToDatabase() {
-//     try {
-//         await db.sequelize.authenticate();
-//         console.log("Connection has been established successfully.");
+async function conectarAoBanco() {
+    try {
+        await db.sequelize.authenticate();
+        console.log("Conexão estabelicida com sucesso.");
 
-//         await db.sequelize.sync();
-//         console.log("All models were synchronized successfully.");
+        await db.sequelize.sync();
+        console.log("Todos os modelos foram sincronizados com sucesso.");
 
-//     } catch (error) {
-//         console.error("Unable to connect to the database:", error);
-//     }
-// }
+    } catch (error) {
+        console.error("Não foi possível se conectar ao banco de dados:", error);
+    }
+}
 
 // In development or in first time run, use this code
 // :::::::: Caution ::::::::
 // This code will drop all tables
-import addData from './app/data/add.data.js';
+// import addData from './app/data/add.data.js';
 
-async function connectToDatabase() {
-    try {
-        await db.sequelize.authenticate();
-        console.log("Connection has been established successfully.");
+// async function conectarAoBanco() {
+//     try {
+//         await db.sequelize.authenticate();
+//         console.log("Conexão estabelicida com sucesso.");
 
-        await db.sequelize.sync({ force: true }).then(async () => {
-            console.log('Drop and Resync Db');
+//         await db.sequelize.sync({ force: true }).then(async () => {
+//             console.log('Removendo e Resincronizando o Banco de Dados');
 
-            const Role = db.role;
-            const User = db.user;
-            const Cidades = db.cidades;
-            const Estados = db.estados;
-            const Categorias = db.categoria;
+//             const Cargo = db.cargo;
+//             const Usuario = db.usuario;
+//             const Cidade = db.cidade;
+//             const Estado = db.estado;
+//             const Categoria = db.categoria;
 
-            await addData.roles(Role);
-            await addData.estados(Estados);
-            await addData.cidades(Estados, Cidades);
-            await addData.categorias(Categorias);
-            await addData.users(Role, User); // Update this function when finish the development
-        });
-        console.log("All models were synchronized successfully.");
-    } catch (error) {
-        console.error("Unable to connect to the database:", error);
-    }
-}
+//             await addData.cargo(Cargo);
+//             await addData.estado(Estado);
+//             await addData.cidade(Estado, Cidade);
+//             await addData.categoria(Categoria);
+//             await addData.usuario(Cargo, Usuario); // Update this function when finish the development
+//         });
+//         console.log("Todos os modelos foram sincronizados com sucesso.");
+//     } catch (error) {
+//         console.error("Não foi possível se conectar ao banco de dados:", error);
+//     }
+// }

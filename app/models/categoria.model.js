@@ -1,5 +1,5 @@
 export const categoria = (sequelize, Sequelize) => {
-    const Categoria = sequelize.define("categoria", {
+    const Categoria = sequelize.define("categorias", {
         categ_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,

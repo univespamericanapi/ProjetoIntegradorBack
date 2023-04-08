@@ -1,27 +1,27 @@
-export const user = (sequelize, Sequelize) => {
-    const User = sequelize.define("users", {
-        idUser: {
+export const usuario = (sequelize, Sequelize) => {
+    const Usuario = sequelize.define("usuarios", {
+        usuario_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        username: {
+        usuario_login: {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        password: {
+        usuario_senha: {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        name: {
+        usuario_nome: {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        roleId: {
+        usuario_cargo: {
             type: Sequelize.INTEGER,
             allowNull: false
         }
     });
 
-    return User;
+    return Usuario;
 };

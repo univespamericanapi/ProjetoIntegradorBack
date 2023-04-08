@@ -1,7 +1,7 @@
-import verifySignUp from "../middleware/verifySignUp.js";
-import controllerAuth from "../controllers/auth.controller.js";
+import verificaSignUp from "../middleware/verificaSignUp.js";
+import authCtrl from "../controllers/auth.ctrl.js";
 
-const routesAuth = app => {
+const authRoutes = app => {
     app.use((req, res, next) => {
         res.header(
             'Access-Control-Allow-Headers',
@@ -13,21 +13,21 @@ const routesAuth = app => {
     app.post(
         '/api/auth/signup',
         [
-            verifySignUp.checkDuplicateUsername,
-            verifySignUp.checkRoleExisted
+            verificaSignUp.checaDuplicadoLogin,
+            verificaSignUp.checaCargoExiste
         ],
-        controllerAuth.signup
+        authCtrl.signup
     );
 
     app.post(
         '/api/auth/signin',
-        controllerAuth.signin
+        authCtrl.signin
     );
 
     app.post(
         '/api/auth/refreshtoken',
-        controllerAuth.refreshToken
+        authCtrl.refreshToken
     );
 }
 
-export default routesAuth;
+export default authRoutes;

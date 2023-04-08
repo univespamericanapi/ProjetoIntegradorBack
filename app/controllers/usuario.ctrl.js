@@ -14,11 +14,11 @@ const adminBoard = (req, res) => {
     res.status(200).send('Admin Content.');
 };
 
-const controllerUser = {
+const usuarioCtrl = {
     allAccess,
     userBoard,
     staffBoard,
     adminBoard
 };
 
-export default controllerUser;
+export default usuarioCtrl;

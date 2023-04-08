@@ -1,8 +1,8 @@
-import { configAuth } from '../config/auth.config.js';
+import { authConfig } from '../config/auth.config.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export const refreshToken = (sequelize, Sequelize) => {
-    const RefreshToken = sequelize.define('refreshToken', {
+    const RefreshToken = sequelize.define('refreshTokens', {
         token: {
             type: Sequelize.STRING
         },
@@ -14,16 +14,16 @@ export const refreshToken = (sequelize, Sequelize) => {
         }
     });
 
-    RefreshToken.createToken = async function (user) {
+    RefreshToken.criarToken = async function (usuario) {
         let expiredAt = new Date();
 
-        expiredAt.setSeconds(expiredAt.getSeconds() + configAuth.jwtRefreshExpiration);
+        expiredAt.setSeconds(expiredAt.getSeconds() + authConfig.jwtExpira);
 
         let token = uuidv4();
 
         let refreshToken = await this.create({
             token: token,
-            userId: user.idUser,
+            refreshToken_usuario: usuario.usuario_id,
             expiryDate: expiredAt.getTime()
         });
 

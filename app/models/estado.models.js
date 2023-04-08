@@ -1,5 +1,5 @@
-export const estados = (sequelize, Sequelize) => {
-    const Estados = sequelize.define("estados", {
+export const estado = (sequelize, Sequelize) => {
+    const Estado = sequelize.define("estados", {
         est_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -15,9 +15,9 @@ export const estados = (sequelize, Sequelize) => {
         }
     });
 
-    Estados.getIdByName = async estadoNome => {
+    Estado.getIdByName = async estadoNome => {
         let id;
-        await Estados.findOne({
+        await Estado.findOne({
             where: {
                 est_desc: estadoNome
             }
@@ -29,5 +29,5 @@ export const estados = (sequelize, Sequelize) => {
         return id;
     };
 
-    return Estados;
+    return Estado;
 };

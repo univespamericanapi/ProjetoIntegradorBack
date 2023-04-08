@@ -28,6 +28,6 @@ const getEventoId = (eventoNome) => {
     Evento
 };
 
-const controllerDesfile = {};
+const desfileCtrl = {};
 
-export default controllerDesfile;
+export default desfileCtrl;

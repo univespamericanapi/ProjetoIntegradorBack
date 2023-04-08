@@ -1,70 +1,70 @@
 import jwt from 'jsonwebtoken';
 import db from '../models/db.model.js';
-import { configSecret } from '../config/secret.config.js';
+import { segredoConfig } from '../config/segredo.config.js';
 
-const User = db.user;
+const Usuario = db.usuario;
 const { TokenExpiredError } = jwt;
 
-const adminRoleName = "admin";
-const staffRoleName = "staff";
+const adminNomeCargo = "admin";
+const staffNomeCargo = "staff";
 
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) {
         return res.status(401).send({
-            message: 'Unauthorized! Access Token was expired!'
+            message: 'Não autorizado! Access Token expirou!'
         });
     }
     return res.status(401).send({
-        message: 'Unauthorized!'
+        message: 'Não autorizado!'
     });
 };
 
-const verifyToken = (req, res, next) => {
+const verificaToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
 
     if (!token) {
         return res.status(403).send({
-            message: 'No token provided!'
+            message: 'Nenhum token foi fornecido!'
         });
     }
 
-    jwt.verify(token, configSecret, (err, decoded) => {
+    jwt.verify(token, segredoConfig, (err, decoded) => {
         if (err) {
             return catchError(err, res);
         }
 
-        req.userId = decoded.id;
+        req.usuario_id = decoded.id;
         next();
     });
 };
 
-const isAdmin = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
-        user.getRole().then(role => {
-            if (role.name === adminRoleName) {
+const eAdmin = (req, res, next) => {
+    Usuario.findByPk(req.usuario_id).then(usuario => {
+        usuario.getCargo().then(cargo => {
+            if (cargo.cargo_nome === adminNomeCargo) {
                 next();
                 return;
             }
 
             res.status(403).send({
-                message: 'Require Admin Role!'
+                message: 'Requerido cargo de Administrador!'
             });
             return;
         });
     });
 }
 
-const isStaff = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
-        user.getRole().then(role => {
-            if (role.name === adminRoleName ||
-                role.name === staffRoleName) {
+const eStaff = (req, res, next) => {
+    Usuario.findByPk(req.usuario_id).then(usuario => {
+        usuario.getCargo().then(cargo => {
+            if (cargo.cargo_nome === adminNomeCargo ||
+                cargo.cargo_nome === staffNomeCargo) {
                 next();
                 return;
             }
 
             res.status(403).send({
-                message: 'Require Staff or Admin Role!'
+                message: 'Requerido cargo de Staff ou de Administrador!'
             });
             return;
         });
@@ -72,9 +72,9 @@ const isStaff = (req, res, next) => {
 }
 
 const authJwt = {
-    verifyToken,
-    isAdmin,
-    isStaff
+    verificaToken,
+    eAdmin,
+    eStaff
 };
 
 export default authJwt;

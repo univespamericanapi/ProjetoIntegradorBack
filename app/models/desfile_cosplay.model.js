@@ -1,5 +1,5 @@
 export const desfileCosplay = (sequelize, Sequelize) => {
-    const DesfileCosplay = sequelize.define("desfile_cosplay", {
+    const DesfileCosplay = sequelize.define("desfile_cosplays", {
         desf_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,

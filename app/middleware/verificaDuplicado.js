@@ -1,6 +1,6 @@
 import db from "../models/db.model.js";
 
-const checkDuplicateEvento = async (req, res, next) => {
+const checaDuplicadoEvento = async (req, res, next) => {
     const Evento = db.evento;
     const eventEdiNome = `${req.body.edicao}º ${req.body.nomeEvento}`;
 
@@ -8,8 +8,8 @@ const checkDuplicateEvento = async (req, res, next) => {
         where: {
             event_EdiNome: eventEdiNome
         }
-    }).then(user => {
-        if (user) {
+    }).then(evento => {
+        if (evento) {
             res.status(400).send({
                 message: 'Evento já cadastrado!'
             });
@@ -19,8 +19,8 @@ const checkDuplicateEvento = async (req, res, next) => {
     });
 };
 
-const verifyDuplicate = {
-    checkDuplicateEvento
+const verificaDuplicado = {
+    checaDuplicadoEvento
 };
 
-export default verifyDuplicate;
+export default verificaDuplicado;

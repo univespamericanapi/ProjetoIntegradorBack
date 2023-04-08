@@ -1,22 +1,22 @@
 import Sequelize from "sequelize";
-import { configDB } from "../config/db.config.js";
-import { user } from './user.model.js';
-import { role } from './role.model.js';
+import { dbConfig } from "../config/db.config.js";
+import { usuario } from './usuario.model.js';
+import { cargo } from './cargo.model.js';
 import { refreshToken } from "./refreshToken.model.js";
 import { evento } from "./evento.model.js";
 import { participante } from "./participante.model.js";
 import { personagem } from "./personagem.model.js";
-import { cidades } from "./cidades.models.js";
-import { estados } from "./estados.models.js";
+import { cidade } from "./cidade.models.js";
+import { estado } from "./estado.models.js";
 import { desfileCosplay } from "./desfile_cosplay.model.js";
 import { categoria } from "./categoria.model.js";
 
 // Instance of Sequelize
-const sequelize = new Sequelize(configDB.dbname, configDB.user, configDB.password, {
-    host: configDB.host,
-    dialect: configDB.dialect,
+const sequelize = new Sequelize(dbConfig.dbname, dbConfig.user, dbConfig.password, {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
     operatorsAliases: false,
-    pool: configDB.pool
+    pool: dbConfig.pool
 });
 
 // Instance of tables
@@ -24,38 +24,38 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.refreshToken = refreshToken(sequelize, Sequelize);
-db.user = user(sequelize, Sequelize);
-db.role = role(sequelize, Sequelize);
+db.usuario = usuario(sequelize, Sequelize);
+db.cargo = cargo(sequelize, Sequelize);
 db.evento = evento(sequelize, Sequelize);
 db.personagem = personagem(sequelize, Sequelize);
 db.participante = participante(sequelize, Sequelize);
-db.cidades = cidades(sequelize, Sequelize);
-db.estados = estados(sequelize, Sequelize);
+db.cidade = cidade(sequelize, Sequelize);
+db.estado = estado(sequelize, Sequelize);
 db.desfile = desfileCosplay(sequelize, Sequelize);
 db.categoria = categoria(sequelize, Sequelize);
 
 // Database Relationships
 // Cidades - Estados
-db.estados.hasMany(db.cidades, {
+db.estado.hasMany(db.cidade, {
     foreignKey: 'cid_estado'
 });
-db.cidades.belongsTo(db.estados, {
+db.cidade.belongsTo(db.estado, {
     foreignKey: 'cid_estado'
 });
 
 // Participantes - Estados
-db.estados.hasMany(db.participante, {
+db.estado.hasMany(db.participante, {
     foreignKey: 'part_est'
 });
-db.participante.belongsTo(db.estados, {
+db.participante.belongsTo(db.estado, {
     foreignKey: 'part_est'
 });
 
 // Participantes - Cidades
-db.cidades.hasMany(db.participante, {
+db.cidade.hasMany(db.participante, {
     foreignKey: 'part_cidade'
 });
-db.participante.belongsTo(db.cidades, {
+db.participante.belongsTo(db.cidade, {
     foreignKey: 'part_cidade'
 });
 
@@ -68,18 +68,18 @@ db.personagem.belongsTo(db.participante, {
 });
 
 // Evento - Estados
-db.estados.hasMany(db.evento, {
+db.estado.hasMany(db.evento, {
     foreignKey: 'event_estado'
 });
-db.evento.belongsTo(db.estados, {
+db.evento.belongsTo(db.estado, {
     foreignKey: 'event_estado'
 });
 
 // Evento - Cidades
-db.cidades.hasMany(db.evento, {
+db.cidade.hasMany(db.evento, {
     foreignKey: 'event_cidade'
 });
-db.evento.belongsTo(db.cidades, {
+db.evento.belongsTo(db.cidade, {
     foreignKey: 'event_cidade'
 });
 
@@ -108,21 +108,21 @@ db.desfile.belongsTo(db.categoria, {
 });
 
 // User - Role
-db.role.hasMany(db.user, {
-    foreignKey: 'roleId'
+db.cargo.hasMany(db.usuario, {
+    foreignKey: 'usuario_cargo'
 });
-db.user.belongsTo(db.role, {
-    foreignKey: 'roleId'
+db.usuario.belongsTo(db.cargo, {
+    foreignKey: 'usuario_cargo'
 });
 
 // refreshToken - user
-db.refreshToken.belongsTo(db.user, {
-    foreignKey: 'userId',
-    targetKey: 'idUser'
+db.refreshToken.belongsTo(db.usuario, {
+    foreignKey: 'refreshToken_usuario',
+    targetKey: 'usuario_id'
 });
-db.user.hasOne(db.refreshToken, {
-    foreignKey: 'userId',
-    targetKey: 'idUser'
+db.usuario.hasOne(db.refreshToken, {
+    foreignKey: 'refreshToken_usuario',
+    targetKey: 'usuario_id'
 });
 
 // Functions

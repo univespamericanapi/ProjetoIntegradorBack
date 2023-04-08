@@ -1,6 +1,6 @@
 // Rename this file to db.config.js
 // Data Base configs
-export const configDB = {
+export const dbConfig = {
     host: 'localhost',
     user: 'root',
     password: '123456',

@@ -1,8 +1,8 @@
 import authJwt from "../middleware/authJwt.js";
-import controllerEvento from "../controllers/evento.controller.js";
-import verifyDuplicate from "../middleware/verifyDuplicate.js";
+import eventoCtrl from "../controllers/evento.ctrl.js";
+import verificaDuplicado from "../middleware/verificaDuplicado.js";
 
-const routesEvento = app => {
+const eventoRoutes = app => {
     app.use((req, res, next) => {
         res.header(
             'Access-Control-Allow-Headers',
@@ -11,12 +11,12 @@ const routesEvento = app => {
         next();
     });
 
-    app.post('/api/admin/novoevento', [
-        authJwt.verifyToken,
-        authJwt.isAdmin,
-        verifyDuplicate.checkDuplicateEvento
-    ], controllerEvento.novoEvento);
-    app.get('/api/cadastro/eventos', controllerEvento.eventoList);
+    app.post('/api/admin/evento/create', [
+        authJwt.verificaToken,
+        authJwt.eAdmin,
+        verificaDuplicado.checaDuplicadoEvento
+    ], eventoCtrl.novoEvento);
+    app.get('/api/lista/evento/readlist', eventoCtrl.eventoLista);
 };
 
-export default routesEvento;
+export default eventoRoutes;

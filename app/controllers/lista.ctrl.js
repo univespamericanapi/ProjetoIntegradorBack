@@ -1,10 +1,10 @@
 import db from "../models/db.model.js";
 
-const cidades = async (req, res) => {
-    const Cidades = db.cidades;
-    const Estados = db.estados;
+const cidade = async (req, res) => {
+    const Cidade = db.cidade;
+    const Estado = db.estado;
 
-    const estadoId = await Estados.getIdByName(req.body.estado);
+    const estadoId = await Estado.getIdByName(req.body.estado);
 
     if (!estadoId) {
         return res.status(400).send({
@@ -12,7 +12,7 @@ const cidades = async (req, res) => {
         });
     }
 
-    await Cidades.findAll({
+    await Cidade.findAll({
         where: {
             cid_estado: estadoId
         }
@@ -31,10 +31,10 @@ const cidades = async (req, res) => {
     });
 };
 
-const estados = async (req, res) => {
-    const Estados = db.estados;
+const estado = async (req, res) => {
+    const Estado = db.estado;
 
-    await Estados.findAll().then(estados => {
+    await Estado.findAll().then(estados => {
         let estadoLista = [];
 
         estados.forEach(estado => {
@@ -43,7 +43,7 @@ const estados = async (req, res) => {
 
         if (estadoLista.length === 0) {
             return res.status(400).send({
-                message: 'No city was found!'
+                message: 'Nenhuma cidade foi encontrada!'
             });
         }
 
@@ -55,7 +55,7 @@ const estados = async (req, res) => {
     });
 };
 
-const categorias = async (req, res) => {
+const categoria = async (req, res) => {
     const Categoria = db.categoria;
 
     await Categoria.findAll().then(categorias => {
@@ -67,7 +67,7 @@ const categorias = async (req, res) => {
 
         if (categoriaLista.length === 0) {
             return res.status(400).send({
-                message: 'No category was found!'
+                message: 'Nenhuma categoria foi encontrada!'
             });
         }
 
@@ -79,10 +79,10 @@ const categorias = async (req, res) => {
     });
 };
 
-const controllerCadastro = {
-    cidades,
-    estados,
-    categorias
+const listaCtrl = {
+    cidade,
+    estado,
+    categoria
 };
 
-export default controllerCadastro;
+export default listaCtrl;

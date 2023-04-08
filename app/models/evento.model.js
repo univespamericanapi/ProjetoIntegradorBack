@@ -35,20 +35,6 @@ export const evento = (sequelize, Sequelize) => {
         }
     });
 
-    Evento.getIdByNome = async eventoNome => {
-        let id;
-        await Evento.findOne({
-            where: {
-                event_nome: eventoNome
-            }
-        }).then(evento => {
-            if (evento) {
-                id = evento.event_id;
-            }
-        });
-        return id;
-    };
-
     Evento.getIdByEdiNome = async eventoEdiNome => {
         let id;
         await Evento.findOne({

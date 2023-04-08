@@ -1,5 +1,5 @@
-export const cidades = (sequelize, Sequelize) => {
-    const Cidades = sequelize.define("cidades", {
+export const cidade = (sequelize, Sequelize) => {
+    const Cidade = sequelize.define("cidades", {
         cid_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -15,9 +15,9 @@ export const cidades = (sequelize, Sequelize) => {
         }
     });
 
-    Cidades.getIdByName = async (idEstado, cidadeNome) => {
+    Cidade.getIdByName = async (idEstado, cidadeNome) => {
         let id;
-        await Cidades.findOne({
+        await Cidade.findOne({
             where: {
                 cid_desc: cidadeNome,
                 cid_estado: idEstado
@@ -30,5 +30,5 @@ export const cidades = (sequelize, Sequelize) => {
         return id;
     };
 
-    return Cidades;
+    return Cidade;
 };
