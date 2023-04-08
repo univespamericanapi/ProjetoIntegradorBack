@@ -5,7 +5,7 @@ const checaDuplicadoLogin = async (req, res, next) => {
 
     await Usuario.findOne({
         where: {
-            usuario_login: req.body.login
+            usuario_login: req.body.usuario_login
         }
     }).then(usuario => {
         if (usuario) {
@@ -23,12 +23,12 @@ const checaCargoExiste = async (req, res, next) => {
 
     await Cargo.findOne({
         where: {
-            cargo_nome: req.body.cargo
+            cargo_nome: req.body.usuario_cargo
         }
     }).then(cargo => {
         if (!cargo) {
             res.status(400).send({
-                message: 'Falha! Cargo não existe = ' + req.body.cargo
+                message: 'Falha! Cargo não existe = ' + req.body.usuario_cargo
             });
             return;
         }

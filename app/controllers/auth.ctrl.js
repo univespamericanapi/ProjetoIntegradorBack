@@ -10,13 +10,13 @@ const Op = db.Sequelize.Op;
 const signup = async (req, res) => {
     await Cargo.findOne({
         where: {
-            cargo_nome: req.body.cargo
+            cargo_nome: req.body.usuario_cargo
         }
-    }).then(cargo => {
-        Usuario.create({
-            usuario_login: req.body.login,
-            usuario_senha: bcrypt.hashSync(req.body.senha, 8),
-            usuario_nome: req.body.nome,
+    }).then(async cargo => {
+        await Usuario.create({
+            usuario_login: req.body.usuario_login,
+            usuario_senha: bcrypt.hashSync(req.body.usuario_senha, 8),
+            usuario_nome: req.body.usuario_nome,
             usuario_cargo: cargo.cargo_id
         }).then(() => {
             res.send({ message: 'Usuário foi registrado com sucesso!' });
@@ -27,7 +27,7 @@ const signup = async (req, res) => {
 const signin = (req, res) => {
     Usuario.findOne({
         where: {
-            usuario_login: req.body.login
+            usuario_login: req.body.usuario_login
         }
     }).then(async usuario => {
         if (!usuario) {
@@ -37,7 +37,7 @@ const signin = (req, res) => {
         }
 
         const senhaEValida = bcrypt.compareSync(
-            req.body.senha,
+            req.body.usuario_senha,
             usuario.usuario_senha
         );
 
@@ -60,9 +60,9 @@ const signin = (req, res) => {
 
             res.status(200).send({
                 usuario_id: usuario.usuario_id,
-                login: usuario.usuario_login,
-                nome: usuario.usuario_nome,
-                cargo: autoridade,
+                usuario_login: usuario.usuario_login,
+                usuario_nome: usuario.usuario_nome,
+                usuario_cargo: autoridade,
                 accessToken: token,
                 refreshToken: refreshToken
             });

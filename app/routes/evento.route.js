@@ -24,7 +24,8 @@ const eventoRoutes = app => {
         authJwt.verificaToken,
         authJwt.eAdmin
     ], eventoCtrl.deletaEvento);
-    app.get('/api/lista/evento/readlist', eventoCtrl.eventoLista);
+    app.get('/api/lista/evento/read', eventoCtrl.eventoLista);
+    app.get('/api/lista/evento/read/:id', eventoCtrl.eventoPorId);
 };
 
 export default eventoRoutes;

@@ -5,14 +5,14 @@ route: /api/auth/signup
 type: post
 body:
 {
-  "username": "",
-  "password": "",
-  "name": "",
-  "role": ""
+  "usuario_login": "",
+  "usuario_senha": "",
+  "usuario_nome": "",
+  "usuario_cargo": ""
 }
 return:
 {
-  "message": "User was registered successfully!"
+  "message": "Usuário foi registrado com sucesso!"
 }
 
 
@@ -20,15 +20,15 @@ route: /api/auth/signin
 type: post
 body:
 {
-  "username": "",
-  "password": ""
+  "usuario_login": "",
+  "usuario_senha": ""
 }
 return:
 {
-  "idUser": ,
-  "username": "",
-  "name": "",
-  "role": "",
+  "usuario_id": ,
+  "usuario_login": "",
+  "usuario_nome": "",
+  "usuario_cargo": "",
   "accessToken": "",
   "refreshToken": ""
 }
@@ -47,45 +47,62 @@ return:
 }
 
 
-route: /api/cadastro/cidades
+route: /api/lista/cidade
 type: get
 body:
 {
-  "estado": ""
+  "cid_estado": id
 }
 return:
 {
-  "cidadeLista": []
+  "cidadeLista": [
+    {
+      "cid_id": ,
+      "cid_desc": "",
+      "estado": {
+        "est_sigla": "",
+        "est_desc": ""
+      }
+    },
 }
 
 
-route: /api/cadastro/estados
+route: /api/lista/estado
 type: get
 return:
 {
-  "estadoLista": []
+  "estadoLista": [
+    {
+      "est_id": ,
+      "est_sigla": "",
+      "est_desc": ""
+    },
 }
 
 
-route: /api/cadastro/categorias
+route: /api/lista/categoria
 type: get
 return:
 {
-  "categoriaLista": []
+  "categoriaLista": [
+    {
+      "categ_id": ,
+      "categ_nome": ""
+    },
 }
 
 
-route: /api/admin/novoevento
+route: /api/admin/evento/create
 type: post
 header: x-access-token
 body:
 {
-  "nomeEvento": "São Paulo Anime Fest",
-  "local": "Liceu",
-  "edicao": "25",
-  "estado": "São Paulo",
-  "cidade": "São Paulo",
-  "data": "26/04/2023"
+  "event_nome": "",
+  "event_local": "",
+  "event_edicao": ,
+  "event_estado": id,
+  "event_cidade": id,
+  "event_data": "dd/mm/aaaa"
 }
 return:
 {
@@ -93,15 +110,84 @@ return:
 }
 
 
-route: /api/cadastro/eventos
-type: get
+route: /api/admin/evento/update/:id
+type: post
+header: x-access-token
+params: id
+body:
+{
+  "event_nome": "",
+  "event_local": "",
+  "event_edicao": ,
+  "event_estado": id,
+  "event_cidade": id,
+  "event_data": "dd/mm/aaaa"
+}
+body = pode faltar qualquer parâmetro.
 return:
 {
-  "eventoLista": []
+  "message": "Evento atualizado com sucesso!"
 }
 
 
-route: /api/all
+route: /api/admin/evento/delete/:id
+type: post
+header: x-access-token
+params: id
+return:
+{
+  "message": "Evento deletado com sucesso!"
+}
+
+
+route: /api/lista/evento/read
+type: get
+return:
+{
+  "eventoLista": [
+    {
+      "event_id": ,
+      "event_nome": "",
+      "event_local": "",
+      "event_edicao": ,
+      "event_data": "",
+      "event_EdiNome": "",
+      "cidade": {
+        "cid_desc": "",
+        "estado": {
+          "est_sigla": "",
+          "est_desc": ""
+        }
+      }
+    },
+}
+
+
+route: /api/lista/evento/read/:id
+type: get
+params: id
+return:
+{
+  "eventoLista": [
+    {
+      "event_id": ,
+      "event_nome": "",
+      "event_local": "",
+      "event_edicao": ,
+      "event_data": "",
+      "event_EdiNome": "",
+      "cidade": {
+        "cid_desc": "",
+        "estado": {
+          "est_sigla": "",
+          "est_desc": ""
+        }
+      }
+    },
+}
+
+
+route: /api/tudo
 type: get
 return: Public Content.
 

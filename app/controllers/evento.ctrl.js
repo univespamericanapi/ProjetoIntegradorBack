@@ -42,6 +42,12 @@ const atualizaEvento = async (req, res) => {
 
     const alterEvento = await Evento.findByPk(idEvento);
 
+    if (!alterEvento) {
+        return res.status(400).send({
+            message: 'Nenhum evento encontrado!'
+        });
+    }
+
     await alterEvento.update(req.body).then(atualizado => {
         res.status(202).send({ message: `Evento atualizado com sucesso!` });
     }).catch(err => {
@@ -63,6 +69,11 @@ const deletaEvento = async (req, res) => {
             event_id: idEvento
         }
     }).then(evento => {
+        if (!evento) {
+            return res.status(400).send({
+                message: 'Nenhum evento encontrado!'
+            });
+        }
         res.status(202).send({ message: `Evento deletado com sucesso!` });
     }).catch(err => {
         res.status(500).send({ message: err.message });
@@ -110,11 +121,48 @@ const eventoLista = async (req, res) => {
     });
 };
 
+const eventoPorId = async (req, res) => {
+    const Evento = db.evento;
+    const Estado = db.estado;
+    const Cidade = db.cidade;
+    const idEvento = req.params.id;
+
+    await Evento.findByPk(idEvento, {
+        attributes: {
+            exclude: ['event_estado', 'event_cidade']
+        },
+        include: {
+            model: Cidade,
+            attributes: ['cid_desc'],
+            include: {
+                model: Estado,
+                attributes: ['est_sigla', 'est_desc']
+            }
+        },
+        order: [
+            ['event_data', 'DESC']
+        ]
+    }).then(evento => {
+        if (!evento) {
+            return res.status(400).send({
+                message: 'Nenhum evento encontrado!'
+            });
+        }
+
+        res.status(200).send({
+            evento
+        });
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+};
+
 const eventoCtrl = {
     novoEvento,
     atualizaEvento,
     deletaEvento,
-    eventoLista
+    eventoLista,
+    eventoPorId
 };
 
 export default eventoCtrl;
