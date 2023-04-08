@@ -6,8 +6,8 @@ import { refreshToken } from "./refreshToken.model.js";
 import { evento } from "./evento.model.js";
 import { participante } from "./participante.model.js";
 import { personagem } from "./personagem.model.js";
-import { cidade } from "./cidade.models.js";
-import { estado } from "./estado.models.js";
+import { cidade } from "./cidade.model.js";
+import { estado } from "./estado.model.js";
 import { desfileCosplay } from "./desfile_cosplay.model.js";
 import { categoria } from "./categoria.model.js";
 

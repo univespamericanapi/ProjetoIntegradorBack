@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import db from '../models/db.model.js';
-import { segredoConfig } from '../config/segredo.config.js';
+import { segredoConfig } from '../config/segredos.config.js';
 
 const Usuario = db.usuario;
 const { TokenExpiredError } = jwt;

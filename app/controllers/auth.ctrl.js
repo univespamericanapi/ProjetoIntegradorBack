@@ -1,6 +1,6 @@
 import db from '../models/db.model.js';
 import { authConfig } from '../config/auth.config.js';
-import { segredoConfig } from '../config/segredo.config.js';
+import { segredoConfig } from '../config/segredos.config.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
