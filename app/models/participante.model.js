@@ -41,7 +41,7 @@ export const participante = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         }
-    });
+    }, { timestamps: false });
 
     return Participante;
 };

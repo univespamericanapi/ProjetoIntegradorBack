@@ -4,23 +4,28 @@ const cidade = async (req, res) => {
     const Cidade = db.cidade;
     const Estado = db.estado;
 
-    const estadoId = await Estado.getIdByName(req.body.estado);
-
-    if (!estadoId) {
-        return res.status(400).send({
-            message: 'Nenhum estado foi encontrado!'
-        });
+    if (!req.body.cid_estado) {
+        res.status(400).send({ message: 'Nenhum estado foi fornecido!' });
+        return;
     }
 
     await Cidade.findAll({
         where: {
-            cid_estado: estadoId
-        }
+            cid_estado: req.body.cid_estado
+        },
+        attributes: ['cid_id', 'cid_desc'],
+        include: {
+            model: Estado,
+            attributes: ['est_sigla', 'est_desc']
+        },
+        order: [
+            ['cid_desc', 'ASC']
+        ]
     }).then(cidades => {
         let cidadeLista = [];
 
         cidades.forEach(cidade => {
-            cidadeLista.push(cidade.cid_desc);
+            cidadeLista.push(cidade);
         });
 
         res.status(200).send({
@@ -38,7 +43,7 @@ const estado = async (req, res) => {
         let estadoLista = [];
 
         estados.forEach(estado => {
-            estadoLista.push(estado.est_desc);
+            estadoLista.push(estado);
         });
 
         if (estadoLista.length === 0) {
@@ -62,7 +67,7 @@ const categoria = async (req, res) => {
         let categoriaLista = [];
 
         categorias.forEach(categoria => {
-            categoriaLista.push(categoria.categ_nome);
+            categoriaLista.push(categoria);
         });
 
         if (categoriaLista.length === 0) {

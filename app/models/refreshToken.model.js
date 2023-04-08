@@ -12,7 +12,7 @@ export const refreshToken = (sequelize, Sequelize) => {
         userId: {
             type: Sequelize.INTEGER
         }
-    });
+    }, { timestamps: false });
 
     RefreshToken.criarToken = async function (usuario) {
         let expiredAt = new Date();

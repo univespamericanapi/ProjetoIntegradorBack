@@ -21,7 +21,7 @@ export const usuario = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         }
-    });
+    }, { timestamps: false });
 
     return Usuario;
 };

@@ -33,21 +33,7 @@ export const evento = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: false
         }
-    });
-
-    Evento.getIdByEdiNome = async eventoEdiNome => {
-        let id;
-        await Evento.findOne({
-            where: {
-                event_EdiNome: eventoEdiNome
-            }
-        }).then(evento => {
-            if (evento) {
-                id = evento.event_id;
-            }
-        });
-        return id;
-    };
+    }, { timestamps: false });
 
     return Evento;
 };

@@ -2,7 +2,7 @@ import db from "../models/db.model.js";
 
 const checaDuplicadoEvento = async (req, res, next) => {
     const Evento = db.evento;
-    const eventEdiNome = `${req.body.edicao}º ${req.body.nomeEvento}`;
+    const eventEdiNome = `${req.body.event_edicao}º ${req.body.event_nome}`;
 
     await Evento.findOne({
         where: {

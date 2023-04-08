@@ -9,19 +9,7 @@ export const categoria = (sequelize, Sequelize) => {
             type: Sequelize.STRING(50),
             allowNull: false
         }
-    });
-
-    Categoria.getIdByName = async categoriaNome => {
-        await Categoria.findOne({
-            where: {
-                categ_nome: categoriaNome
-            }
-        }).then(categoria => {
-            return categoria.categ_id;
-        }).catch(err => {
-            res.status(500).send({ message: err.message });
-        });
-    };
+    }, { timestamps: false });
 
     return Categoria;
 };

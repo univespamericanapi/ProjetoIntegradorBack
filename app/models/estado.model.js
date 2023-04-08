@@ -13,21 +13,7 @@ export const estado = (sequelize, Sequelize) => {
             type: Sequelize.STRING(50),
             allowNull: false
         }
-    });
-
-    Estado.getIdByName = async estadoNome => {
-        let id;
-        await Estado.findOne({
-            where: {
-                est_desc: estadoNome
-            }
-        }).then(estado => {
-            if (estado) {
-                id = estado.est_id;
-            }
-        });
-        return id;
-    };
+    }, { timestamps: false });
 
     return Estado;
 };

@@ -9,7 +9,7 @@ export const cargo = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: false
         }
-    });
+    }, { timestamps: false });
 
     return Cargo;
 };

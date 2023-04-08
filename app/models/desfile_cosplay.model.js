@@ -26,7 +26,7 @@ export const desfileCosplay = (sequelize, Sequelize) => {
         desf_extra: {
             type: Sequelize.STRING(250)
         }
-    });
+    }, { timestamps: false });
 
     return DesfileCosplay;
 };

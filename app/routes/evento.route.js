@@ -16,6 +16,14 @@ const eventoRoutes = app => {
         authJwt.eAdmin,
         verificaDuplicado.checaDuplicadoEvento
     ], eventoCtrl.novoEvento);
+    app.put('/api/admin/evento/update/:id', [
+        authJwt.verificaToken,
+        authJwt.eAdmin
+    ], eventoCtrl.atualizaEvento);
+    app.delete('/api/admin/evento/delete/:id', [
+        authJwt.verificaToken,
+        authJwt.eAdmin
+    ], eventoCtrl.deletaEvento);
     app.get('/api/lista/evento/readlist', eventoCtrl.eventoLista);
 };
 
