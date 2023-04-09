@@ -10,6 +10,7 @@ import { cidade } from "./cidade.model.js";
 import { estado } from "./estado.model.js";
 import { desfileCosplay } from "./desfile_cosplay.model.js";
 import { categoria } from "./categoria.model.js";
+import { nota } from "./nota.model.js";
 
 // Instance of Sequelize
 const sequelize = new Sequelize(dbConfig.dbname, dbConfig.user, dbConfig.password, {
@@ -33,6 +34,7 @@ db.cidade = cidade(sequelize, Sequelize);
 db.estado = estado(sequelize, Sequelize);
 db.desfile = desfileCosplay(sequelize, Sequelize);
 db.categoria = categoria(sequelize, Sequelize);
+db.nota = nota(sequelize, Sequelize);
 
 // Database Relationships
 // Cidades - Estados
@@ -123,6 +125,22 @@ db.refreshToken.belongsTo(db.usuario, {
 db.usuario.hasOne(db.refreshToken, {
     foreignKey: 'refreshToken_usuario',
     targetKey: 'usuario_id'
+});
+
+// Nota - Usuario
+db.usuario.hasMany(db.nota, {
+    foreignKey: 'nota_usuario'
+});
+db.nota.belongsTo(db.usuario, {
+    foreignKey: 'nota_usuario'
+});
+
+// Nota - Desfile
+db.desfile.hasMany(db.nota, {
+    foreignKey: 'nota_desfile'
+});
+db.nota.belongsTo(db.desfile, {
+    foreignKey: 'nota_desfile'
 });
 
 // Functions
