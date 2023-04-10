@@ -33,7 +33,24 @@ export const evento = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: false
         }
-    }, { timestamps: false });
+    }, {
+        timestamps: false,
+        hooks: {
+            afterCreate: (eventos) => {
+                sequelize.models.concursos.findAll().then(concursoLista => {
+                    concursoLista.forEach(concurso => {
+                        sequelize.models.configs_concursos.create({
+                            config_event: eventos.event_id,
+                            config_concurso: concurso.concur_id,
+                            config_limit_inscr: 0,
+                            config_limit_espera: 0,
+                            config_ativo: false
+                        });
+                    });
+                });
+            }
+        }
+    });
 
     return Evento;
 };
