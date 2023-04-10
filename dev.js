@@ -5,7 +5,7 @@ import { authConfig } from './app/config/auth.config.js';
 
 const app = express();
 
-const fast = false;
+const fast = true;
 
 // Configuração do aplicativo
 app.use(cors({ origin: authConfig.corsOrigin }));

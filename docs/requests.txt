@@ -140,7 +140,7 @@ return:
 }
 
 
-route: /api/lista/evento/read
+route: /api/lista/evento
 type: get
 return:
 {
@@ -163,7 +163,7 @@ return:
 }
 
 
-route: /api/lista/evento/read/:id
+route: /api/lista/evento/:id
 type: get
 params: id
 return:
