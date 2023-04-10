@@ -54,7 +54,7 @@ Use o comando para executar o servidor:
   npm run dev
 ```
 
-Essa opção sempre fará um drop em todas as tabelas e recriará o banco.
+Essa opção executará o arquivo dev.js, que pode ser configurado para execução rápida, onde não fará o drop table de todo banco, e a opção que fará o drop table. Para configurar basta verificar a constante `fast` no arquivo.
     
 ## Autores
 
