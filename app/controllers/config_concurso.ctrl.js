@@ -33,6 +33,9 @@ const configLista = async (req, res) => {
         where: {
             config_event: idEvento
         },
+        attributes: {
+            exclude: ['config_event', 'config_concurso']
+        },
         include: {
             model: Concurso,
             attributes: ['concur_nome'],

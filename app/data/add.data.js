@@ -33,7 +33,7 @@ const concurso = async () => {
 
     const quantidade = await Concurso.count();
 
-    if (quantidade < 6) {
+    if (quantidade < 2) {
         listasConfig.concurso.forEach(async concurso => {
             await Concurso.create({
                 concur_nome: concurso
