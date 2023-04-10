@@ -1,32 +1,23 @@
 import db from "../models/db.model.js";
 
 const atualizaConfig = async (req, res) => {
-    const Evento = db.evento;
-    const idEvento = req.params.id;
-    const alteracoes = req.body;
+    const Config = db.config;
+    const idConfig = req.params.id;
 
-    if (!idEvento) {
+    if (!idConfig) {
         res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
         return;
     }
 
-    if (alteracoes.event_data) {
-        alteracoes.event_data = db.dataConverter(alteracoes.event_data);
-    }
+    const alterConfig = await Config.findByPk(idConfig);
 
-    if (alteracoes.event_nome || alteracoes.event_edicao) {
-        alteracoes.event_EdiNome = `${alteracoes.event_edicao}º ${alteracoes.event_nome}`;
-    }
-
-    const alterEvento = await Evento.findByPk(idEvento);
-
-    if (!alterEvento) {
+    if (!alterConfig) {
         return res.status(400).send({
-            message: 'Nenhum evento encontrado!'
+            message: 'Nenhuma configuração foi encontrada!'
         });
     }
 
-    await alterEvento.update(req.body).then(atualizado => {
+    await alterConfig.update(req.body).then(atualizado => {
         res.status(202).send({ message: `Evento atualizado com sucesso!` });
     }).catch(err => {
         res.status(500).send({ message: err.message });
@@ -35,8 +26,6 @@ const atualizaConfig = async (req, res) => {
 
 const configLista = async (req, res) => {
     const Config = db.config;
-    const Evento = db.evento;
-    const Concurso = db.concurso;
     const idEvento = req.params.id;
 
     await Config.findAll({
@@ -62,42 +51,6 @@ const configLista = async (req, res) => {
 
         res.status(200).send({
             configLista
-        });
-    }).catch(err => {
-        res.status(500).send({ message: err.message });
-    });
-};
-
-const eventoPorId = async (req, res) => {
-    const Evento = db.evento;
-    const Estado = db.estado;
-    const Cidade = db.cidade;
-    const idEvento = req.params.id;
-
-    await Evento.findByPk(idEvento, {
-        attributes: {
-            exclude: ['event_estado', 'event_cidade']
-        },
-        include: {
-            model: Cidade,
-            attributes: ['cid_desc'],
-            include: {
-                model: Estado,
-                attributes: ['est_sigla', 'est_desc']
-            }
-        },
-        order: [
-            ['event_data', 'DESC']
-        ]
-    }).then(evento => {
-        if (!evento) {
-            return res.status(400).send({
-                message: 'Nenhum evento encontrado!'
-            });
-        }
-
-        res.status(200).send({
-            evento
         });
     }).catch(err => {
         res.status(500).send({ message: err.message });
