@@ -37,7 +37,7 @@ db.estado = estado(sequelize, Sequelize);
 db.desfile = desfileCosplay(sequelize, Sequelize);
 db.categoria = categoria(sequelize, Sequelize);
 db.concurso = concurso(sequelize, Sequelize);
-db.configConcurso = configConcurso(sequelize, Sequelize);
+db.config = configConcurso(sequelize, Sequelize);
 db.nota = nota(sequelize, Sequelize);
 
 // Database Relationships
@@ -145,6 +145,22 @@ db.desfile.hasMany(db.nota, {
 });
 db.nota.belongsTo(db.desfile, {
     foreignKey: 'nota_desfile'
+});
+
+// Config - Concurso
+db.concurso.hasMany(db.config, {
+    foreignKey: 'config_concurso'
+});
+db.config.belongsTo(db.concurso, {
+    foreignKey: 'config_concurso'
+});
+
+// Config - Evento
+db.evento.hasMany(db.config, {
+    foreignKey: 'config_event'
+});
+db.config.belongsTo(db.evento, {
+    foreignKey: 'config_event'
 });
 
 // Functions
