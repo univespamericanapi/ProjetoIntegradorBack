@@ -37,21 +37,24 @@ import addData from './app/data/add.data.js';
 // Conexão com o banco de dados
 conectarAoBanco();
 
-// In production, use this code
+// In development or in first time run, use this code
+// :::::::: Caution ::::::::
+// This code will drop all tables everytime
 async function conectarAoBanco() {
     try {
         await db.sequelize.authenticate();
         console.log("Conexão estabelicida com sucesso.");
 
-        await db.sequelize.sync();
+        await db.sequelize.sync({ force: true }).then(async () => {
+            console.log('Removendo e Resincronizando o Banco de Dados');
+
+            await addData.cargo();
+            await addData.estado();
+            await addData.cidade();
+            await addData.categoria();
+            await addData.usuario();
+        });
         console.log("Todos os modelos foram sincronizados com sucesso.");
-
-        await addData.cargo();
-        await addData.estado();
-        await addData.cidade();
-        await addData.categoria();
-        await addData.usuario();
-
     } catch (error) {
         console.error("Não foi possível se conectar ao banco de dados:", error);
     }
