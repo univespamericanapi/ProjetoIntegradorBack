@@ -41,10 +41,20 @@ Só é necessário criar o banco de dados, as tabelas e relacionamentos serão c
 Use o comando para executar o servidor:
 
 ```bash
-  node server.js
+  npm start
 ```
 
 Na primeira execução, o código irá criar todas as tabelas, relacionamentos e os dados das tabelas categoria, cidade, estado, cargo e usuario.
+
+## Execução de desenvolvedor
+
+Use o comando para executar o servidor:
+
+```bash
+  npm run dev
+```
+
+Essa opção sempre fará um drop em todas as tabelas e recriará o banco.
     
 ## Autores
 
