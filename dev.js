@@ -18,15 +18,9 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-import authRoutes from './app/routes/auth.route.js';
-import usuarioRoutes from './app/routes/usuario.route.js';
-import listaRoutes from './app/routes/lista.route.js';
-import eventoRoutes from './app/routes/evento.route.js';
+import indexRoutes from './app/routes/index.route.js';
 
-authRoutes(app);
-usuarioRoutes(app);
-listaRoutes(app);
-eventoRoutes(app);
+indexRoutes(app);
 
 // Executando na porta
 const PORT = process.env.PORT || 8080;
