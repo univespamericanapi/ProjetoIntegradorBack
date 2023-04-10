@@ -14,7 +14,7 @@ const configRoutes = app => {
         authJwt.verificaToken,
         authJwt.eAdmin
     ], configCtrl.atualizaConfig);
-    app.get('/api/lista/evento/:id', configCtrl.configLista);
+    app.get('/api/lista/config/:id', configCtrl.configLista);
 };
 
 export default configRoutes;

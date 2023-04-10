@@ -26,6 +26,7 @@ const atualizaConfig = async (req, res) => {
 
 const configLista = async (req, res) => {
     const Config = db.config;
+    const Concurso = db.concurso;
     const idEvento = req.params.id;
 
     await Config.findAll({
