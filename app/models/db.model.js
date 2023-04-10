@@ -10,6 +10,7 @@ import { cidade } from "./cidade.model.js";
 import { estado } from "./estado.model.js";
 import { desfileCosplay } from "./desfile_cosplay.model.js";
 import { categoria } from "./categoria.model.js";
+import { concurso } from "./concurso.model.js";
 import { nota } from "./nota.model.js";
 
 // Instance of Sequelize
@@ -34,6 +35,7 @@ db.cidade = cidade(sequelize, Sequelize);
 db.estado = estado(sequelize, Sequelize);
 db.desfile = desfileCosplay(sequelize, Sequelize);
 db.categoria = categoria(sequelize, Sequelize);
+db.concurso = concurso(sequelize, Sequelize);
 db.nota = nota(sequelize, Sequelize);
 
 // Database Relationships

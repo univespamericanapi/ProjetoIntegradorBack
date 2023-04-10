@@ -46,11 +46,7 @@ async function conectarAoBanco() {
         await db.sequelize.sync();
         console.log("Todos os modelos foram sincronizados com sucesso.");
 
-        await addData.cargo();
-        await addData.estado();
-        await addData.cidade();
-        await addData.categoria();
-        await addData.usuario();
+        await addData.create();
 
     } catch (error) {
         console.error("Não foi possível se conectar ao banco de dados:", error);

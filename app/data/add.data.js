@@ -4,6 +4,15 @@ import { listasConfig } from '../config/listas.config.js';
 import { contaAdminConfig } from '../config/segredos.config.js';
 import db from '../models/db.model.js';
 
+const create = async () => {
+    await cargo();
+    await estado();
+    await cidade();
+    await categoria();
+    await concurso();
+    await usuario();
+};
+
 const categoria = async () => {
     const Categoria = db.categoria;
 
@@ -16,6 +25,21 @@ const categoria = async () => {
             });
         });
         console.log("Criando categorias...");
+    }
+};
+
+const concurso = async () => {
+    const Concurso = db.concurso;
+
+    const quantidade = await Concurso.count();
+
+    if (quantidade < 6) {
+        listasConfig.concurso.forEach(async concurso => {
+            await Concurso.create({
+                concur_nome: concurso
+            });
+        });
+        console.log("Criando concursos...");
     }
 };
 
@@ -5864,7 +5888,9 @@ const usuario = async () => {
 };
 
 const addData = {
+    create,
     categoria,
+    concurso,
     cidade,
     estado,
     cargo,

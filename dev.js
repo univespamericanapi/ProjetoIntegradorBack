@@ -54,11 +54,7 @@ async function conectarAoBanco() {
             await db.sequelize.sync({ force: true }).then(async () => {
                 console.log('Removendo e Resincronizando o Banco de Dados');
 
-                await addData.cargo();
-                await addData.estado();
-                await addData.cidade();
-                await addData.categoria();
-                await addData.usuario();
+                await addData.create();
             });
         }
 
