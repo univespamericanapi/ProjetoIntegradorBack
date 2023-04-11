@@ -2,7 +2,7 @@ import db from "../models/db.model.js";
 
 const atualizaConfig = async (req, res) => {
     const Config = db.config;
-    const idConfig = req.params.id;
+    const idConfig = req.params.idEvento;
 
     if (!idConfig) {
         res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
@@ -27,7 +27,7 @@ const atualizaConfig = async (req, res) => {
 const configLista = async (req, res) => {
     const Config = db.config;
     const Concurso = db.concurso;
-    const idEvento = req.params.id;
+    const idEvento = req.params.idEvento;
 
     await Config.findAll({
         where: {

@@ -2,9 +2,6 @@ import db from "../models/db.model.js";
 import utils from "../middleware/utils.js";
 
 const novoDesfile = async (req, res) => {
-    const Desfile = db.desfile;
-    const Participante = db.participante;
-    const Personagem = db.personagem;
     const Evento = db.evento;
 
     const desfDados = {};
@@ -37,10 +34,10 @@ const novoDesfile = async (req, res) => {
         partDados.part_nomeSocial = partDados.part_nome;
     }
 
-    if (!utils.validaCpf(partDados.part_cpf)) {
-        res.status(400).send({ message: 'CPF inválido!' });
-        return;
-    }
+    // if (!utils.validaCpf(partDados.part_cpf)) {
+    //     res.status(400).send({ message: 'CPF inválido!' });
+    //     return;
+    // }
 
     persDados.pers_aceite = req.body.pers_aceite;
     persDados.pers_nome = req.body.pers_nome;
@@ -51,19 +48,181 @@ const novoDesfile = async (req, res) => {
     desfDados.desf_extra = req.body.desf_extra;
     desfDados.desf_conf = false;
 
-    const configs = await verificaLimite(Desfile, desfDados.desf_event);
+    const configsVerifica = await verificaConfigs(desfDados.desf_event);
 
-    if (configs.fim) {
-        res.status(400).send({ message: configs.mensagem });
+    if (configsVerifica.status === 400) {
+        res.status(configsVerifica.status).send({
+            message: configsVerifica.message
+        });
         return;
     }
 
-    if (!configs.ativo) {
-        res.status(400).send({ message: configs.mensagem });
+    desfDados.desf_ordem = configsVerifica.total + 1;
+
+    let gravado = await criarDados(partDados, persDados, desfDados);
+
+    if (configsVerifica.status === 201) {
+        gravado.status = configsVerifica.status;
+        gravado.message = configsVerifica.message;
+    }
+
+    res.status(gravado.status).send({ message: gravado.message });
+};
+
+const desfileLista = async (req, res) => {
+    const idEvento = req.params.idEvento;
+
+    if (!idEvento) {
+        res.status(400).send({ message: 'Não foram enviadas todas as informações!' });
         return;
     }
 
-    desfDados.desf_ordem = configs.total + 1;
+    const configs = await getConfigs(idEvento);
+
+    if (!configs) {
+        res.status(400).send({ message: 'Evento não encontrado!' });
+        return;
+    }
+
+    let pula = 0;
+    let quant = configs.config_limit_inscr;
+
+    const listaInscri = await criarLista(idEvento, pula, quant);
+
+    if (listaInscri.status === 400) {
+        res.status(listaInscri.status).send({ message: listaInscri.message });
+        return;
+    }
+
+    pula = configs.config_limit_inscr;
+    quant = configs.config_limit_espera;
+
+    const listaEspera = await criarLista(idEvento, pula, quant);
+
+    res.status(200).send({
+        listaInscri: listaInscri.lista,
+        listaEspera: listaEspera.lista,
+    });
+};
+
+const desfileCheckin = async (req, res) => {
+    const idDesfile = req.params.id;
+
+    if (!idDesfile) {
+        res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
+        return;
+    }
+
+    const Desfile = db.desfile;
+
+    const alterDesfile = await Desfile.findByPk(idDesfile);
+
+    const contagem = await Desfile.count({
+        where: {
+            desf_event: idDesfile,
+            desf_conf: true
+        }
+    });
+
+    const configs = await getConfigs(alterDesfile.desf_event);
+
+    if (contagem >= configs.config_limit_checkin) {
+        return res.status(400).send({
+            message: 'Limite de participantes no concurso alcançado!'
+        });
+    }
+
+    if (!alterDesfile) {
+        return res.status(400).send({
+            message: 'Nenhum concurso encontrado!'
+        });
+    }
+
+    await alterDesfile.update({
+        desf_conf: !alterDesfile.desf_conf
+    }).then(atualizado => {
+        if (atualizado.desf_conf) {
+            res.status(202).send({ message: `Checkin efetuado com sucesso!` });
+        } else {
+            res.status(202).send({ message: `Checkin desfeito com sucesso!` });
+        }
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+};
+
+const verificaConfigs = async idEvento => {
+    const Desfile = db.desfile;
+
+    const retorno = {
+        status: 200,
+        message: '',
+        total: 0
+    };
+
+    const contagem = await Desfile.count({
+        where: {
+            desf_event: idEvento
+        }
+    });
+
+    retorno.total = contagem;
+
+    const configs = await getConfigs(idEvento);
+    const maximo = configs.config_limit_inscr + configs.config_limit_espera;
+
+    if (!configs.config_ativo) {
+        retorno.status = 400;
+        retorno.message = 'Evento inativo, aguarde até abrir as inscrições!';
+        return retorno;
+    }
+
+    if (contagem >= maximo) {
+        retorno.status = 400;
+        retorno.message = 'Não há mais vagas para inscrição!';
+        return retorno;
+    }
+
+    if (contagem >= configs.config_limit_inscr) {
+        retorno.status = 201;
+        retorno.message = 'As vagas para o concurso acabaram, sua inscrição foi registrada na fila de espera!';
+        return retorno;
+    }
+
+
+
+    return retorno;
+};
+
+const getConfigs = async idEvento => {
+    const Config = db.config;
+    const Concurso = db.concurso;
+
+    let retorno = {};
+
+    const concurso = await Concurso.findOne({
+        where: {
+            concur_nome: "Desfile Cosplay"
+        }
+    });
+
+    await Config.findOne({
+        where: {
+            config_event: idEvento,
+            config_concurso: concurso.concur_id
+        }
+    }).then(config => {
+        retorno = config;
+    });
+
+    return retorno;
+};
+
+const criarDados = async (partDados, persDados, desfDados) => {
+    const Desfile = db.desfile;
+    const Participante = db.participante;
+    const Personagem = db.personagem;
+    const retorno = {};
 
     try {
         await db.sequelize.transaction(async (transaction) => {
@@ -92,74 +251,97 @@ const novoDesfile = async (req, res) => {
                         defaults: desfDados,
                         transaction
                     }).then(async ([desfile, desfCriado]) => {
-                        if (configs.espera) {
-                            res.status(201).send({ message: configs.mensagem });
-                            return;
-                        }
-
-                        res.status(201).send({ message: 'Cadastro concluído com sucesso!' });
+                        retorno.status = 201;
+                        retorno.message = 'Cadastro concluído com sucesso!';
                     });
                 });
             });
         });
     } catch (error) {
-        res.status(500).send({ message: error.message });
+        retorno.status = 500;
+        retorno.message = error.message;
+        return retorno;
     };
-};
-
-const verificaLimite = async (Desfile, idEvento) => {
-    const Config = db.config;
-    const Concurso = db.concurso;
-    const retorno = {
-        ativo: true,
-        espera: false,
-        fim: false,
-        mensagem: "",
-        total: 0
-    };
-
-    const contagem = await Desfile.count({
-        where: {
-            desf_event: idEvento
-        }
-    });
-
-    retorno.total = contagem;
-
-    const concurso = await Concurso.findOne({
-        where: {
-            concur_nome: "Desfile Cosplay"
-        }
-    });
-
-    const configs = await Config.findOne({
-        where: {
-            config_event: idEvento,
-            config_concurso: concurso.concur_id
-        }
-    });
-
-    if (!configs.config_ativo) {
-        retorno.ativo = configs.config_ativo;
-        retorno.mensagem = "Evento inativo, aguarde até abrir as inscrições!";
-    }
-
-    if (contagem >= configs.config_limit_inscr) {
-        retorno.espera = true;
-        retorno.mensagem = "As vagas para o concurso acabaram, sua inscrição foi registrada na fila de espera!";
-    }
-
-    if (contagem >= (configs.config_limit_inscr +
-        configs.config_limit_espera)) {
-        retorno.fim = true;
-        retorno.mensagem = "Não há mais vagas para inscrição!";
-    }
 
     return retorno;
 };
 
+const criarLista = async (idEvento, pula, quant) => {
+    const Desfile = db.desfile;
+    const Evento = db.evento;
+    const Personagem = db.personagem;
+    const Participante = db.participante;
+    const Cidade = db.cidade;
+    const Estado = db.estado;
+    const Categoria = db.categoria;
+
+    const retorno = {
+        lista: [],
+        status: 200,
+        message: ''
+    }
+
+    await Desfile.findAll({
+        where: {
+            desf_event: idEvento
+        },
+        attributes: {
+            exclude: ['desf_event', 'desf_pers', 'desf_categ']
+        },
+        include: [{
+            model: Evento,
+            attributes: ['event_EdiNome']
+        }, {
+            model: Personagem,
+            attributes: {
+                exclude: ['pers_id', 'pers_part', 'pers_aceite']
+            },
+            include: {
+                model: Participante,
+                attributes: {
+                    exclude: ['part_id', 'part_user', 'part_senha', 'part_est', 'part_cidade']
+                },
+                include: {
+                    model: Cidade,
+                    attributes: ['cid_desc'],
+                    include: {
+                        model: Estado,
+                        attributes: ['est_desc']
+                    }
+                },
+            }
+        }, {
+            model: Categoria,
+            attributes: ['categ_nome']
+        }],
+        offset: pula,
+        limit: quant,
+        order: [
+            ['desf_ordem', 'ASC']
+        ]
+    }).then(desfiles => {
+        const desfileLista = [];
+
+        desfiles.forEach(desfile => {
+            desfileLista.push(desfile);
+        });
+
+        if (!retorno.lista.length === 0) {
+            console.log(retorno.lista);
+            retorno.status = 400;
+            retorno.message = 'Nenhum competidor foi encontrado!';
+            return retorno;
+        }
+
+        retorno.lista = desfileLista;
+    });
+    return retorno;
+};
+
 const desfileCtrl = {
-    novoDesfile
+    novoDesfile,
+    desfileLista,
+    desfileCheckin
 };
 
 export default desfileCtrl;

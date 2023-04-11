@@ -12,6 +12,8 @@ const desfileRoutes = app => {
     });
 
     app.post('/api/desfile/create', [verificaDuplicado.checaDuplicadoDesfile], desfileCtrl.novoDesfile);
+    app.get('/api/lista/desfile/:idEvento', desfileCtrl.desfileLista);
+    app.get('/api/staff/desfile/checkin/:id', [authJwt.verificaToken, authJwt.eStaff], desfileCtrl.desfileCheckin);
     // app.get('/api/user', [authJwt.verificaToken], demoCtrl.userBoard);
     // app.get('/api/staff', [authJwt.verificaToken, authJwt.eStaff], demoCtrl.staffBoard);
     // app.get('/api/admin', [authJwt.verificaToken, authJwt.eAdmin], demoCtrl.adminBoard);

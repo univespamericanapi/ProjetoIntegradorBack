@@ -10,11 +10,11 @@ const configRoutes = app => {
         next();
     });
 
-    app.put('/api/admin/config/update/:id', [
+    app.put('/api/admin/config/update/:idEvento', [
         authJwt.verificaToken,
         authJwt.eAdmin
     ], configCtrl.atualizaConfig);
-    app.get('/api/lista/config/:id', configCtrl.configLista);
+    app.get('/api/lista/config/:idEvento', configCtrl.configLista);
 };
 
 export default configRoutes;
