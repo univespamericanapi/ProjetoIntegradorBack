@@ -34,10 +34,10 @@ const novoDesfile = async (req, res) => {
         partDados.part_nomeSocial = partDados.part_nome;
     }
 
-    // if (!utils.validaCpf(partDados.part_cpf)) {
-    //     res.status(400).send({ message: 'CPF inválido!' });
-    //     return;
-    // }
+    if (!utils.validaCpf(partDados.part_cpf)) {
+        res.status(400).send({ message: 'CPF inválido!' });
+        return;
+    }
 
     persDados.pers_aceite = req.body.pers_aceite;
     persDados.pers_nome = req.body.pers_nome;
