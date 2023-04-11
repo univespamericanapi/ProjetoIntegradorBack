@@ -1,5 +1,69 @@
 Aqui listarei as rotas da api com todos os campos necessários no body ou header para efetuar uma requisição.
 
+route: /api/staff/desfile/resultado/:idEvent
+type: get
+header: x-access-token
+params: idEvent
+return:
+[
+  {
+    "desf_id": ,
+    "desf_conf": ,
+    "desf_media": "",
+    "personagen": {
+      "pers_nome": "",
+      "pers_origem": "",
+      "participante": {
+        "part_nome": "",
+        "part_nomeSocial": ""
+      }
+    }
+  },
+  {
+    "desf_id": ,
+    "desf_conf": ,
+    "desf_media": "",
+    "personagen": {
+      "pers_nome": "",
+      "pers_origem": "",
+      "participante": {
+        "part_nome": "",
+        "part_nomeSocial": ""
+      }
+    }
+  },
+  {
+    "desf_id": ,
+    "desf_conf": ,
+    "desf_media": ,
+    "personagen": {
+      "pers_nome": "",
+      "pers_origem": "",
+      "participante": {
+        "part_nome": "",
+        "part_nomeSocial": ""
+      }
+    }
+  }
+]
+
+
+route: /api/staff/desfile/nota/add
+type: post
+header: x-access-token
+body:
+{
+    "nota_usuario": 1,
+    "nota_desfile": 2,
+    "nota_jurado": 3,
+    "nota_confec": 8.5,
+    "nota_fidel": 7.5
+}
+return:
+{
+  "message": "Notas registradas com sucesso!"
+}
+
 
 route: /api/staff/desfile/checkin/:id
 type: put
