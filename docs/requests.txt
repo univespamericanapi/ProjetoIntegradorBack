@@ -1,6 +1,93 @@
 Aqui listarei as rotas da api com todos os campos necessários no body ou header para efetuar uma requisição.
 
 
+route: /api/staff/desfile/checkin/:id
+type: post
+header: x-access-token
+params: id
+return:
+{
+  "message": "Checkin efetuado com sucesso!"
+}
+ou:
+{
+  "message": "Checkin desfeito com sucesso!"
+}
+
+
+route: /api/lista/desfile/:idEvento
+type: post
+params: idEvento
+body:
+return:
+{
+  "listaInscri": [
+    {
+      "desf_id": ,
+      "desf_conf": ,
+      "desf_ordem": ,
+      "desf_extra": "",
+      "evento": {
+        "event_EdiNome": ""
+      },
+      "personagen": {
+        "pers_nome": "",
+        "pers_origem": "",
+        "pers_link": "",
+        "participante": {
+          "part_nome": "",
+          "part_nomeSocial": "",
+          "part_cpf": "",
+          "part_nasc": "",
+          "part_whats": "",
+          "cidade": {
+            "cid_desc": "",
+            "estado": {
+              "est_desc": ""
+            }
+          }
+        }
+      },
+      "categoria": {
+        "categ_nome": ""
+      }
+    }
+  ],
+  "listaEspera": [
+    {
+      "desf_id": ,
+      "desf_conf": ,
+      "desf_ordem": ,
+      "desf_extra": "",
+      "evento": {
+        "event_EdiNome": ""
+      },
+      "personagen": {
+        "pers_nome": "",
+        "pers_origem": "",
+        "pers_link": "",
+        "participante": {
+          "part_nome": "",
+          "part_nomeSocial": "",
+          "part_cpf": "",
+          "part_nasc": "",
+          "part_whats": "",
+          "cidade": {
+            "cid_desc": "",
+            "estado": {
+              "est_desc": ""
+            }
+          }
+        }
+      },
+      "categoria": {
+        "categ_nome": ""
+      }
+    }
+  ]
+}
+
+
 route: /api/desfile/create
 type: post
 body:
@@ -46,9 +133,9 @@ return:
 }
 
 
-route: /api/lista/config/:id
+route: /api/lista/config/:idEvento
 type: get
-params: id-evento
+params: idEvento
 return:
 {
   "configLista": [
