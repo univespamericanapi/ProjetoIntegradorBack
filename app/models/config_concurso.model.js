@@ -13,19 +13,11 @@ export const configConcurso = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        config_min_inscr: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
         config_limit_inscr: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
         config_limit_espera: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        config_min_checkin: {
             type: Sequelize.INTEGER,
             allowNull: false
         },

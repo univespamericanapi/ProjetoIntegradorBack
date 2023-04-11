@@ -12,7 +12,6 @@ app.use(cors({ origin: authConfig.corsOrigin }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to Avalon back-end application.' });
 });

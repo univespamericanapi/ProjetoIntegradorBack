@@ -1,4 +1,5 @@
 import db from "../models/db.model.js";
+import utils from "../middleware/utils.js";
 
 const novoEvento = async (req, res) => {
     const Evento = db.evento;
@@ -6,13 +7,15 @@ const novoEvento = async (req, res) => {
 
     if (!novo.event_estado) {
         res.status(400).send({ message: 'Nenhum estado fornecido!' });
+        return;
     }
 
     if (!novo.event_cidade) {
         res.status(400).send({ message: 'Nenhuma cidade fornecida!' });
+        return;
     }
 
-    novo.event_data = db.dataConverter(novo.event_data);
+    novo.event_data = utils.dataConverter(novo.event_data);
     novo.event_EdiNome = `${novo.event_edicao}º ${novo.event_nome}`;
 
     await Evento.create(novo).then(() => {
@@ -33,7 +36,7 @@ const atualizaEvento = async (req, res) => {
     }
 
     if (alteracoes.event_data) {
-        alteracoes.event_data = db.dataConverter(alteracoes.event_data);
+        alteracoes.event_data = utils.dataConverter(alteracoes.event_data);
     }
 
     if (alteracoes.event_nome || alteracoes.event_edicao) {

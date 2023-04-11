@@ -1,5 +1,5 @@
 import authJwt from "../middleware/authJwt.js";
-import usuarioCtrl from "../controllers/usuario.ctrl.js";
+import demoCtrl from "../controllers/demo.ctrl.js";
 
 const demoRoutes = app => {
     app.use((req, res, next) => {
@@ -10,10 +10,10 @@ const demoRoutes = app => {
         next();
     });
 
-    app.get('/api/all', usuarioCtrl.allAccess);
-    app.get('/api/user', [authJwt.verificaToken], usuarioCtrl.userBoard);
-    app.get('/api/staff', [authJwt.verificaToken, authJwt.eStaff], usuarioCtrl.staffBoard);
-    app.get('/api/admin', [authJwt.verificaToken, authJwt.eAdmin], usuarioCtrl.adminBoard);
+    app.get('/api/all', demoCtrl.allAccess);
+    app.get('/api/user', [authJwt.verificaToken], demoCtrl.userBoard);
+    app.get('/api/staff', [authJwt.verificaToken, authJwt.eStaff], demoCtrl.staffBoard);
+    app.get('/api/admin', [authJwt.verificaToken, authJwt.eAdmin], demoCtrl.adminBoard);
 };
 
 export default demoRoutes;

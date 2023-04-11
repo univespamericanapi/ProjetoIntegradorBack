@@ -49,11 +49,9 @@ export const evento = (sequelize, Sequelize) => {
                         sequelize.models.configs_concursos.create({
                             config_event: eventos.event_id,
                             config_concurso: concurso.concur_id,
-                            config_min_inscr: 3,
-                            config_limit_inscr: 0,
-                            config_limit_espera: 0,
-                            config_min_checkin: 3,
-                            config_limit_checkin: 0,
+                            config_limit_inscr: 1,
+                            config_limit_espera: 1,
+                            config_limit_checkin: 1,
                             config_ativo: false
                         });
                     });

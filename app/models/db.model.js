@@ -163,18 +163,4 @@ db.config.belongsTo(db.evento, {
     foreignKey: 'config_event'
 });
 
-// Functions
-db.dataConverter = dataString => {
-    const dataArray = dataString.split("/");
-    return new Date(dataArray[2], dataArray[1] - 1, dataArray[0])
-        .toLocaleDateString(
-            'en-CA',
-            {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            }
-        );
-};
-
 export default db;

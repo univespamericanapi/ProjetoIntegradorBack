@@ -1,4 +1,6 @@
-const allAccess = (req, res) => {
+// import db from "../models/db.model.js";
+
+const allAccess = async (req, res) => {
     res.status(200).send('Public Content.');
 };
 
@@ -14,11 +16,11 @@ const adminBoard = (req, res) => {
     res.status(200).send('Admin Content.');
 };
 
-const usuarioCtrl = {
+const demoCtrl = {
     allAccess,
     userBoard,
     staffBoard,
     adminBoard
 };
 
-export default usuarioCtrl;
+export default demoCtrl;
