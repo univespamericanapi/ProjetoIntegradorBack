@@ -1,108 +1,24 @@
 Aqui listarei as rotas da api com todos os campos necessários no body ou header para efetuar uma requisição.
 
 
-route: /api/auth/signup
+route: /api/desfile/create
 type: post
 body:
 {
-  "usuario_login": "",
-  "usuario_senha": "",
-  "usuario_nome": "",
-  "usuario_cargo": ""
-}
-return:
-{
-  "message": "Usuário foi registrado com sucesso!"
-}
-
-
-route: /api/auth/signin
-type: post
-body:
-{
-  "usuario_login": "",
-  "usuario_senha": ""
-}
-return:
-{
-  "usuario_id": ,
-  "usuario_login": "",
-  "usuario_nome": "",
-  "usuario_cargo": "",
-  "accessToken": "",
-  "refreshToken": ""
-}
-
-
-route: /api/auth/refreshtoken
-type: post
-body:
-{
-  "refreshToken": ""
-}
-return:
-{
-  "accessToken": "",
-  "refreshToken": ""
-}
-
-
-route: /api/lista/cidade
-type: get
-body:
-{
-  "cid_estado": id
-}
-return:
-{
-  "cidadeLista": [
-    {
-      "cid_id": ,
-      "cid_desc": "",
-      "estado": {
-        "est_sigla": "",
-        "est_desc": ""
-      }
-    },
-}
-
-
-route: /api/lista/estado
-type: get
-return:
-{
-  "estadoLista": [
-    {
-      "est_id": ,
-      "est_sigla": "",
-      "est_desc": ""
-    },
-}
-
-
-route: /api/lista/categoria
-type: get
-return:
-{
-  "categoriaLista": [
-    {
-      "categ_id": ,
-      "categ_nome": ""
-    },
-}
-
-
-route: /api/admin/evento/create
-type: post
-header: x-access-token
-body:
-{
-  "event_nome": "",
-  "event_local": "",
-  "event_edicao": ,
-  "event_estado": id,
-  "event_cidade": id,
-  "event_data": "dd/mm/aaaa"
+  "desf_event": id,
+  "part_nome": "",
+  "part_nomeSocial": "",
+  "part_cpf": "", somente dígitos
+  "part_nasc": "dd/mm/aaaa",
+  "part_whats": "", somente dígitos
+  "part_est": id,
+  "part_cidade": id,
+  "pers_aceite": true,
+  "pers_nome": "",
+  "pers_origem": "",
+  "pers_link": "",
+  "desf_categ": id,
+  "desf_extra": ""
 }
 return:
 {
@@ -110,18 +26,18 @@ return:
 }
 
 
-route: /api/admin/evento/update/:id
+route: /api/admin/config/update/:id
 type: post
 header: x-access-token
 params: id
 body:
 {
-  "event_nome": "",
-  "event_local": "",
-  "event_edicao": ,
-  "event_estado": id,
-  "event_cidade": id,
-  "event_data": "dd/mm/aaaa"
+  "config_min_inscr": ,
+  "config_limit_inscr": ,
+  "config_limit_espera": ,
+  "config_min_checkin": ,
+  "config_limit_checkin": ,
+  "config_ativo": 
 }
 body = pode faltar qualquer parâmetro.
 return:
@@ -130,34 +46,22 @@ return:
 }
 
 
-route: /api/admin/evento/delete/:id
-type: post
-header: x-access-token
-params: id
-return:
-{
-  "message": "Evento deletado com sucesso!"
-}
-
-
-route: /api/lista/evento
+route: /api/lista/config/:id
 type: get
+params: id-evento
 return:
 {
-  "eventoLista": [
+  "configLista": [
     {
-      "event_id": ,
-      "event_nome": "",
-      "event_local": "",
-      "event_edicao": ,
-      "event_data": "",
-      "event_EdiNome": "",
-      "cidade": {
-        "cid_desc": "",
-        "estado": {
-          "est_sigla": "",
-          "est_desc": ""
-        }
+      "config_id": ,
+      "config_min_inscr": ,
+      "config_limit_inscr": ,
+      "config_limit_espera": ,
+      "config_min_checkin": ,
+      "config_limit_checkin": ,
+      "config_ativo": ,
+      "concurso": {
+        "concur_nome": ""
       }
     },
 }
@@ -187,15 +91,80 @@ return:
 }
 
 
-route: /api/tudo
-type: get
-return: Public Content.
-
-
-route: /api/user
-type: get
+route: /api/admin/evento/delete/:id
+type: post
 header: x-access-token
-return: User Content.
+params: id
+return:
+{
+  "message": "Evento deletado com sucesso!"
+}
+
+
+route: /api/admin/evento/update/:id
+type: post
+header: x-access-token
+params: id
+body:
+{
+  "event_nome": "",
+  "event_local": "",
+  "event_edicao": ,
+  "event_estado": id,
+  "event_cidade": id,
+  "event_data": "dd/mm/aaaa"
+}
+body = pode faltar qualquer parâmetro.
+return:
+{
+  "message": "Evento atualizado com sucesso!"
+}
+
+
+route: /api/auth/refreshtoken
+type: post
+body:
+{
+  "refreshToken": ""
+}
+return:
+{
+  "accessToken": "",
+  "refreshToken": ""
+}
+
+
+route: /api/auth/signup
+type: post
+body:
+{
+  "usuario_login": "",
+  "usuario_senha": "",
+  "usuario_nome": "",
+  "usuario_cargo": ""
+}
+return:
+{
+  "message": "Usuário foi registrado com sucesso!"
+}
+
+
+route: /api/admin/evento/create
+type: post
+header: x-access-token
+body:
+{
+  "event_nome": "",
+  "event_local": "",
+  "event_edicao": ,
+  "event_estado": id,
+  "event_cidade": id,
+  "event_data": "dd/mm/aaaa"
+}
+return:
+{
+  "message": "Novo evento criado com sucesso!"
+}
 
 
 route: /api/staff
@@ -204,10 +173,107 @@ header: x-access-token
 return: Staff Content.
 
 
+route: /api/auth/signin
+type: post
+body:
+{
+  "usuario_login": "",
+  "usuario_senha": ""
+}
+return:
+{
+  "usuario_id": ,
+  "usuario_login": "",
+  "usuario_nome": "",
+  "usuario_cargo": "",
+  "accessToken": "",
+  "refreshToken": ""
+}
+
+
+route: /api/lista/evento
+type: get
+return:
+{
+  "eventoLista": [
+    {
+      "event_id": ,
+      "event_nome": "",
+      "event_local": "",
+      "event_edicao": ,
+      "event_data": "",
+      "event_EdiNome": "",
+      "cidade": {
+        "cid_desc": "",
+        "estado": {
+          "est_sigla": "",
+          "est_desc": ""
+        }
+      }
+    },
+}
+
+
+route: /api/lista/cidade
+type: get
+body:
+{
+  "cid_estado": id
+}
+return:
+{
+  "cidadeLista": [
+    {
+      "cid_id": ,
+      "cid_desc": "",
+      "estado": {
+        "est_sigla": "",
+        "est_desc": ""
+      }
+    },
+}
+
+
 route: /api/admin
 type: get
 header: x-access-token
 return: Admin Content.
+
+
+route: /api/user
+type: get
+header: x-access-token
+return: User Content.
+
+
+route: /api/lista/categoria
+type: get
+return:
+{
+  "categoriaLista": [
+    {
+      "categ_id": ,
+      "categ_nome": ""
+    },
+}
+
+
+route: /api/lista/estado
+type: get
+return:
+{
+  "estadoLista": [
+    {
+      "est_id": ,
+      "est_sigla": "",
+      "est_desc": ""
+    },
+}
+
+
+route: /api/all
+type: get
+return: Public Content.
 
 
 route: /
