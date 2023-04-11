@@ -119,14 +119,16 @@ const desfileCheckin = async (req, res) => {
 
     const contagem = await Desfile.count({
         where: {
-            desf_event: idDesfile,
             desf_conf: true
         }
     });
 
+    console.log(contagem);
+
     const configs = await getConfigs(alterDesfile.desf_event);
 
-    if (contagem >= configs.config_limit_checkin) {
+    if (contagem >= configs.config_limit_checkin &&
+        !alterDesfile.desf_conf) {
         return res.status(400).send({
             message: 'Limite de participantes no concurso alcançado!'
         });
@@ -148,6 +150,48 @@ const desfileCheckin = async (req, res) => {
         }
     }).catch(err => {
         res.status(500).send({ message: err.message });
+    });
+};
+
+const desfileResultado = async (req, res) => {
+    const Desfile = db.desfile;
+    const Personagem = db.personagem;
+    const Participante = db.participante;
+
+    const idEvento = req.params.idEvento;
+
+    if (!idEvento) {
+        res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
+        return;
+    }
+
+    await Desfile.findAll({
+        where: {
+            desf_event: idEvento,
+            desf_conf: true
+        },
+        attributes: ['desf_id', 'desf_conf', 'desf_media'],
+        include: [{
+            model: Personagem,
+            attributes: ['pers_nome', 'pers_origem'],
+            include: {
+                model: Participante,
+                attributes: ['part_nome', 'part_nomeSocial'],
+            }
+        }],
+        limit: 3,
+        order: [
+            ['desf_media', 'DESC']
+        ]
+    }).then(async desfiles => {
+        const listaResultado = [];
+
+        for (let desfile of desfiles) {
+            await calculaMedia(desfile);
+            listaResultado.push(desfile);
+        }
+
+        res.status(200).send(listaResultado);
     });
 };
 
@@ -286,7 +330,7 @@ const criarLista = async (idEvento, pula, quant) => {
             desf_event: idEvento
         },
         attributes: {
-            exclude: ['desf_event', 'desf_pers', 'desf_categ']
+            exclude: ['desf_event', 'desf_pers', 'desf_categ', 'desf_media']
         },
         include: [{
             model: Evento,
@@ -338,10 +382,35 @@ const criarLista = async (idEvento, pula, quant) => {
     return retorno;
 };
 
+const calculaMedia = async (desfile) => {
+    const Nota = db.nota;
+
+    await Nota.findAll({
+        where: {
+            nota_desfile: desfile.desf_id
+        }
+    }).then(notas => {
+        let somaConfec = 0;
+        let somaFidel = 0;
+
+        notas.forEach(nota => {
+            somaConfec += nota.nota_confec;
+            somaFidel += nota.nota_fidel
+        });
+
+        let media = (somaConfec + somaFidel) / 6;
+
+        desfile.update({
+            desf_media: media.toFixed(1)
+        });
+    });
+};
+
 const desfileCtrl = {
     novoDesfile,
     desfileLista,
-    desfileCheckin
+    desfileCheckin,
+    desfileResultado
 };
 
 export default desfileCtrl;

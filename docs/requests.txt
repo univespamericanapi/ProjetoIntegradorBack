@@ -2,7 +2,7 @@ Aqui listarei as rotas da api com todos os campos necessários no body ou header
 
 
 route: /api/staff/desfile/checkin/:id
-type: post
+type: put
 header: x-access-token
 params: id
 return:
@@ -16,7 +16,7 @@ ou:
 
 
 route: /api/lista/desfile/:idEvento
-type: post
+type: get
 params: idEvento
 body:
 return:

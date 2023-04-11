@@ -13,11 +13,15 @@ export const nota = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        nota_jurado: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         nota_confec: {
-            type: Sequelize.INTEGER
+            type: Sequelize.FLOAT
         },
         nota_fidel: {
-            type: Sequelize.INTEGER
+            type: Sequelize.FLOAT
         }
     }, { timestamps: false });
 

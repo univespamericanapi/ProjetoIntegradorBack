@@ -25,6 +25,10 @@ export const desfileCosplay = (sequelize, Sequelize) => {
         },
         desf_extra: {
             type: Sequelize.STRING(250)
+        },
+        desf_media: {
+            type: Sequelize.FLOAT,
+            defaultValue: 0.0
         }
     }, { timestamps: false });
 

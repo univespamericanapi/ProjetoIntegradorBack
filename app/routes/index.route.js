@@ -4,6 +4,7 @@ import listaRoutes from '../routes/lista.route.js';
 import eventoRoutes from '../routes/evento.route.js';
 import configRoutes from '../routes/config_concurso.route.js';
 import desfileRoutes from './desfile.route.js';
+import notaRoutes from './nota.route.js';
 
 const indexRoutes = app => {
     authRoutes(app);
@@ -12,6 +13,7 @@ const indexRoutes = app => {
     eventoRoutes(app);
     configRoutes(app);
     desfileRoutes(app);
+    notaRoutes(app);
 };
 
 export default indexRoutes;
