@@ -1,5 +1,5 @@
-import sequelize from "sequelize";
 import { mensagensConstant } from "../constants/mensagens.constant.js";
+import CustomError from "../helpers/customError.helper.js";
 
 export default class BaseRepository {
     constructor(m) {
@@ -37,22 +37,23 @@ export default class BaseRepository {
         }
     }
 
-    async deleteById(id) {
+    async deletarPorId(id) {
         try {
             const registro = await this.buscarPorId(id);
 
             if (!registro) {
-                throw new Error(mensagensConstant.registroNaoEncontrado);
+                // throw new Error(mensagensConstant.registroNaoEncontrado);
+                throw new CustomError(400, mensagensConstant.registroNaoEncontrado);
             }
 
-            await registro.destroy().then(() => {
+            return await registro.destroy().then(() => {
                 return {
                     status: 202,
                     message: mensagensConstant.registroDeletado
                 };
             }).catch(erro => {
                 throw erro;
-            });;
+            });
         } catch (erro) {
             throw erro;
         }
@@ -74,6 +75,14 @@ export default class BaseRepository {
             }).catch(erro => {
                 throw erro;
             });;
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
+    async contarTodos() {
+        try {
+            return await this.model.count();
         } catch (erro) {
             throw erro;
         }
