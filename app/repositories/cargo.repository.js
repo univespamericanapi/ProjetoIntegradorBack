@@ -1,5 +1,4 @@
 import BaseRepository from "./base.repository.js";
-import { mensagensConstant } from "../constants/mensagens.constant.js";
 import CustomError from "../helpers/customError.helper.js";
 
 export default class CargoRepository extends BaseRepository {
@@ -15,7 +14,10 @@ export default class CargoRepository extends BaseRepository {
 
             return cargo;
         } catch (erro) {
-            throw erro;
+            throw new CustomError(
+                500,
+                erro.message,
+            );
         }
     }
 }

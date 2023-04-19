@@ -1,9 +1,9 @@
 // import db from "../models/db.model.js";
 
-import criaUsuario from "./logon.controller.js";
+import criaUsuarioController from "./criaUsuario.controller.js";
 
 const allAccess = async (req, res) => {
-    criaUsuario(req, res);
+    criaUsuarioController(req, res);
     // res.status(200).send('Public Content.');
 };
 

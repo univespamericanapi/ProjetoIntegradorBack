@@ -30,7 +30,7 @@ export const mensagensConstant = {
     participacaoRegistrada: 'Cadastro concluído com sucesso!',
     eventoRegistrado: 'Novo evento criado com sucesso!',
     notaRegistrada: 'Notas registradas com sucesso!',
-    registroCriado: ' criado com sucesso!',
+    registroCriado: ' registrado com sucesso!',
 
     // successfully updated
     eventoAtualizado: 'Evento atualizado com sucesso!',
