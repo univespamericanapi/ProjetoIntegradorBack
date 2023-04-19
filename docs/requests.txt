@@ -285,21 +285,6 @@ return:
 }
 
 
-route: /api/auth/signup
-type: post
-body:
-{
-  "usuario_login": "",
-  "usuario_senha": "",
-  "usuario_nome": "",
-  "usuario_cargo": ""
-}
-return:
-{
-  "message": "Usuário foi registrado com sucesso!"
-}
-
-
 route: /api/admin/evento/create
 type: post
 header: x-access-token
@@ -322,24 +307,6 @@ route: /api/staff
 type: get
 header: x-access-token
 return: Staff Content.
-
-
-route: /api/auth/signin
-type: post
-body:
-{
-  "usuario_login": "",
-  "usuario_senha": ""
-}
-return:
-{
-  "usuario_id": ,
-  "usuario_login": "",
-  "usuario_nome": "",
-  "usuario_cargo": "",
-  "accessToken": "",
-  "refreshToken": ""
-}
 
 
 route: /api/lista/evento

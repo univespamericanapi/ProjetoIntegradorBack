@@ -2,6 +2,8 @@ import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import db from './app/models/db.model.js';
 import { authConfig } from './app/config/auth.config.js';
+import swaggerUI from 'swagger-ui-express'
+import swaggerDocs from './docs/swagger.json' assert {type: 'json'};
 
 const app = express();
 
@@ -9,6 +11,9 @@ const app = express();
 app.use(cors({ origin: authConfig.corsOrigin }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
+
+// Swagger
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 
 app.get('/', (req, res) => {

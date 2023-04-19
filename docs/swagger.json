@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Avalon Concursos",
+        "Description": "Essa API tem como objetivo o gerenciomento de concursos cosplay da Avalon Eventos.",
+        "termsOfService": "",
+        "contact": {
+            "email": "jhonatan.cassante@live.com"
+        },
+        "version": "1.0.0",
+        "license": {
+            "name": "MIT License",
+            "url": "https://github.com/univespamericanapi/ProjetoIntegradorBack/blob/main/LICENSE"
+        }
+    },
+    "host": "localhost",
+    "basePath": "/",
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "summary": "Login de usuário.",
+                "description": "Rota responsável pelo login dos usuários ao sistema.",
+                "tags": [
+                    "usuario"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "usuario_login": "joao",
+                                        "usuario_senha": "1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/login"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Senha inválida!"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado."
+                    }
+                }
+            }
+        },
+        "/api/admin/usuario/criar": {
+            "post": {
+                "summary": "Cadastro de usuário.",
+                "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
+                "tags": [
+                    "usuario"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "usuario_login": "joao",
+                                        "usuario_senha": "1234",
+                                        "usuario_nome": "João Silva",
+                                        "usuario_cargo": "staff"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado com sucesso!"
+                    },
+                    "400": {
+                        "description": "Usuário já está em uso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "login": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
+                        "type": "string"
+                    },
+                    "usuario_nome": {
+                        "type": "string"
+                    },
+                    "usuario_cargo": {
+                        "type": "string"
+                    },
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    }
+                }
+            },
+            "usuario": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
+                        "type": "string"
+                    },
+                    "usuario_senha": {
+                        "type": "string"
+                    },
+                    "usuario_nome": {
+                        "type": "string"
+                    },
+                    "usuario_cargo": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "JwtToken": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-access-token"
+            }
+        }
+    }
+}

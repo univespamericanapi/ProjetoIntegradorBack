@@ -1,0 +1,31 @@
+route: /api/admin/usuario/criar
+type: post
+header: x-access-token
+body:
+{
+  "usuario_login": "",
+  "usuario_senha": "",
+  "usuario_nome": "",
+  "usuario_cargo": ""
+}
+return:
+{
+  "Usuario registrado com sucesso!"
+}
+
+route: /api/auth/login
+type: post
+body:
+{
+  "usuario_login": "",
+  "usuario_senha": ""
+}
+return:
+{
+  "usuario_id": ,
+  "usuario_login": "",
+  "usuario_nome": "",
+  "usuario_cargo": "",
+  "accessToken": "",
+  "refreshToken": ""
+}
