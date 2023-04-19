@@ -1,7 +1,6 @@
 // import db from "../models/db.model.js";
 import CargoRepository from '../repositories/cargo.repository.js';
 import db from '../models/db.model.js';
-import { coresLog } from '../constants/coresLog.constant.js';
 
 const allAccess = async (req, res) => {
     const cargo = new CargoRepository(db.cargo);

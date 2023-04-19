@@ -4,6 +4,7 @@ import CustomError from "../helpers/customError.helper.js";
 export default class BaseRepository {
     constructor(m) {
         this.model = m;
+        this.nomeModel = this.pegarNomeModel();
     }
 
     async salvar(registro) {
@@ -11,9 +12,7 @@ export default class BaseRepository {
             await this.model.create(registro).then(() => {
                 return {
                     status: 201,
-                    message: mensagensConstant.registroNovo +
-                    this.model.getTableName() +
-                    "!"
+                    message: this.nomeModel + mensagensConstant.registroCriado,
                 };
             });
         } catch (erro) {
@@ -36,9 +35,7 @@ export default class BaseRepository {
             if (!registro) {
                 throw new CustomError(
                     400,
-                    mensagensConstant.registroNaoEncontrado +
-                    this.model.getTableName() +
-                    "!"
+                    this.nomeModel + mensagensConstant.registroNaoEncontrado,
                 );
             }
 
@@ -55,9 +52,7 @@ export default class BaseRepository {
             return await registro.destroy().then(() => {
                 return {
                     status: 202,
-                    message: mensagensConstant.registroDeletado +
-                    this.model.getTableName() +
-                    "!"
+                    message: this.nomeModel + mensagensConstant.registroDeletado,
                 };
             });
         } catch (erro) {
@@ -72,9 +67,7 @@ export default class BaseRepository {
             return await registro.update(alteracoes).then(() => {
                 return {
                     status: 202,
-                    message: mensagensConstant.registroAtualizado +
-                    this.model.getTableName() +
-                    "!"
+                    message: this.nomeModel + mensagensConstant.registroAtualizado,
                 };
             });
         } catch (erro) {
@@ -88,5 +81,10 @@ export default class BaseRepository {
         } catch (erro) {
             throw erro;
         }
+    }
+
+    pegarNomeModel() {
+        const nomeTabela = this.model.getTableName();
+        return nomeTabela.charAt(0).toUpperCase() + nomeTabela.slice(1, -1);
     }
 }
