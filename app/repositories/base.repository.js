@@ -9,7 +9,7 @@ export default class BaseRepository {
 
     async salvar(registro) {
         try {
-            await this.model.create(registro).then(() => {
+            return await this.model.create(registro).then(() => {
                 return {
                     status: 201,
                     message: this.nomeModel + mensagensConstant.registroCriado,
@@ -32,12 +32,7 @@ export default class BaseRepository {
         try {
             const registro = await this.model.findByPk(id);
 
-            if (!registro) {
-                throw new CustomError(
-                    400,
-                    this.nomeModel + mensagensConstant.registroNaoEncontrado,
-                );
-            }
+            verificaRegistro(registro);
 
             return registro;
         } catch (erro) {
@@ -86,5 +81,14 @@ export default class BaseRepository {
     pegarNomeModel() {
         const nomeTabela = this.model.getTableName();
         return nomeTabela.charAt(0).toUpperCase() + nomeTabela.slice(1, -1);
+    }
+
+    verificaRegistro(registro) {
+        if (!registro) {
+            throw new CustomError(
+                400,
+                this.nomeModel + mensagensConstant.registroNaoEncontrado,
+            );
+        }
     }
 }
