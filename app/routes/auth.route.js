@@ -1,4 +1,3 @@
-import verificaSignUp from "../middleware/verificaSignUp.js";
 import authCtrl from "../controllers/auth.ctrl.js";
 import authJwt from "../middleware/authJwt.js";
 import criaUsuarioController from "../controllers/criaUsuario.controller.js";

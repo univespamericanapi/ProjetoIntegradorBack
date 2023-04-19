@@ -7,23 +7,6 @@ import bcrypt from 'bcryptjs';
 const { usuario: Usuario, cargo: Cargo, refreshToken: RefreshToken } = db;
 const Op = db.Sequelize.Op;
 
-const signup = async (req, res) => {
-    await Cargo.findOne({
-        where: {
-            cargo_nome: req.body.usuario_cargo
-        }
-    }).then(async cargo => {
-        await Usuario.create({
-            usuario_login: req.body.usuario_login,
-            usuario_senha: bcrypt.hashSync(req.body.usuario_senha, 8),
-            usuario_nome: req.body.usuario_nome,
-            usuario_cargo: cargo.cargo_id
-        }).then(() => {
-            res.send({ message: 'Usuário foi registrado com sucesso!' });
-        });
-    });
-};
-
 const signin = (req, res) => {
     Usuario.findOne({
         where: {
@@ -113,7 +96,6 @@ const refreshToken = async (req, res) => {
 };
 
 const authCtrl = {
-    signup,
     signin,
     refreshToken
 };
