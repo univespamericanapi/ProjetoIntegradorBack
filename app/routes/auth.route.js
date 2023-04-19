@@ -1,5 +1,7 @@
 import verificaSignUp from "../middleware/verificaSignUp.js";
 import authCtrl from "../controllers/auth.ctrl.js";
+import authJwt from "../middleware/authJwt.js";
+import criaUsuarioController from "../controllers/criaUsuario.controller.js";
 
 const authRoutes = app => {
     app.use((req, res, next) => {
@@ -11,12 +13,12 @@ const authRoutes = app => {
     });
 
     app.post(
-        '/api/auth/signup',
+        '/api/auth/admin/criaUsuario',
         [
-            verificaSignUp.checaDuplicadoLogin,
-            verificaSignUp.checaCargoExiste
+            authJwt.verificaToken,
+            authJwt.eAdmin
         ],
-        authCtrl.signup
+        criaUsuarioController
     );
 
     app.post(

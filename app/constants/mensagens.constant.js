@@ -11,7 +11,7 @@ export const mensagensConstant = {
     // registered
     eventoJaCadastrado: 'Falha! Evento já cadastrado!',
     participanteJaCadastrado: 'Falha! Participante já foi cadastrado!',
-    usuarioJaCadastrado: 'Falha! Usuário já está em uso!',
+    usuarioJaCadastrado: 'Usuário já está em uso!',
 
     // not found
     cargoNaoEncontrado: 'Falha! Cargo não existe!',

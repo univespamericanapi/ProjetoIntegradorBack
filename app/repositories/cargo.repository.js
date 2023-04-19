@@ -14,10 +14,7 @@ export default class CargoRepository extends BaseRepository {
 
             return cargo;
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 }

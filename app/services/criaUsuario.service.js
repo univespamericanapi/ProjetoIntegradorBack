@@ -18,10 +18,7 @@ const criaUsuarioService = async (novo) => {
 
         return resposta;
     } catch (erro) {
-        throw new CustomError(
-            500,
-            erro.message,
-        );
+        throw erro;
     }
 };
 

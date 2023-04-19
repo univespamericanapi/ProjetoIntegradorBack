@@ -16,10 +16,7 @@ export default class BaseRepository {
                 };
             });
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
@@ -27,10 +24,7 @@ export default class BaseRepository {
         try {
             return await this.model.findAll();
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
@@ -42,10 +36,7 @@ export default class BaseRepository {
 
             return registro;
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
@@ -60,10 +51,7 @@ export default class BaseRepository {
                 };
             });
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
@@ -78,10 +66,7 @@ export default class BaseRepository {
                 };
             });
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
@@ -89,10 +74,7 @@ export default class BaseRepository {
         try {
             return await this.model.count();
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 

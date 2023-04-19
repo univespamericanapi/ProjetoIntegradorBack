@@ -1,7 +1,3 @@
-import bcrypt from 'bcryptjs';
-import db from '../models/db.model.js';
-import CargoRepository from '../repositories/cargo.repository.js';
-import UsuarioRepository from '../repositories/usuario.repository.js';
 import criaUsuarioService from '../services/criaUsuario.service.js';
 
 const criaUsuarioController = async (req, res) => {
@@ -10,7 +6,10 @@ const criaUsuarioController = async (req, res) => {
 
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
-        return res.status(erro.status).send(erro.message);
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
     }
 };
 
