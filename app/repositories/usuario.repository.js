@@ -13,6 +13,8 @@ export default class UsuarioRepository extends BaseRepository {
 
             this.verificaRegistro(usuario);
 
+            delete usuario.usuario_login;
+
             return usuario;
         } catch (erro) {
             throw new CustomError(

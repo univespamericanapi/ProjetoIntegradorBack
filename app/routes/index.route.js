@@ -5,6 +5,7 @@ import eventoRoutes from '../routes/evento.route.js';
 import configRoutes from '../routes/config_concurso.route.js';
 import desfileRoutes from './desfile.route.js';
 import notaRoutes from './nota.route.js';
+import usuarioRoutes from './usuario.route.js';
 
 const indexRoutes = app => {
     authRoutes(app);
@@ -14,6 +15,8 @@ const indexRoutes = app => {
     configRoutes(app);
     desfileRoutes(app);
     notaRoutes(app);
+
+    usuarioRoutes(app);
 };
 
 export default indexRoutes;

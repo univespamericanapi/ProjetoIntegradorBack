@@ -1,6 +1,4 @@
 import authCtrl from "../controllers/auth.ctrl.js";
-import authJwt from "../middleware/authJwt.js";
-import criaUsuarioController from "../controllers/criaUsuario.controller.js";
 
 const authRoutes = app => {
     app.use((req, res, next) => {
@@ -10,15 +8,6 @@ const authRoutes = app => {
         );
         next();
     });
-
-    app.post(
-        '/api/auth/admin/criaUsuario',
-        [
-            authJwt.verificaToken,
-            authJwt.eAdmin
-        ],
-        criaUsuarioController
-    );
 
     app.post(
         '/api/auth/signin',

@@ -2,9 +2,8 @@ import bcrypt from 'bcryptjs';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
-import CustomError from "../helpers/customError.helper.js";
 
-const criaUsuarioService = async (novo) => {
+const criar = async (novo) => {
     try {
         const Cargo = new CargoRepository(db.cargo);
         const Usuario = new UsuarioRepository(db.usuario);
@@ -16,10 +15,16 @@ const criaUsuarioService = async (novo) => {
 
         const resposta = await Usuario.salvar(novo);
 
+        delete novo.usuario_senha;
+
         return resposta;
     } catch (erro) {
         throw erro;
     }
 };
 
-export default criaUsuarioService;
+const usuarioService = {
+    criar,
+}
+
+export default usuarioService;

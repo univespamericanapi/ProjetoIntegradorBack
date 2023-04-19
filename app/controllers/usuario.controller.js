@@ -1,8 +1,10 @@
-import criaUsuarioService from '../services/criaUsuario.service.js';
+import criaUsuarioService from '../services/usuario.service.js';
 
-const criaUsuarioController = async (req, res) => {
+const criar = async (req, res) => {
     try {
         const resposta = await criaUsuarioService(req.body);
+
+        delete req.body.usuario_senha;
 
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
@@ -13,4 +15,8 @@ const criaUsuarioController = async (req, res) => {
     }
 };
 
-export default criaUsuarioController;
+const usuarioController = {
+    criar,
+}
+
+export default usuarioController;
