@@ -19,6 +19,7 @@ const allAccess = async (req, res) => {
         console.log(mensagem);
         res.status(mensagem.status).send(mensagem.message);
     } catch (erro) {
+        console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
         return res.status(erro.status).send(erro.message);
     }
 

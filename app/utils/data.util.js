@@ -4,7 +4,7 @@ const eData = (data) => (data === undefined && !moment(data, moment.ISO_8601, tr
 
 const dataParaString = (data) => (moment(data).format('DD/MM/YYYY'));
 
-const dataParaStringConsole = (data) => (moment(data).format('YYYY-MM-DD'));
+const dataParaStringConsole = (data) => (moment(data).format('YYYY-MM-DD HH:MM:SS'));
 
 const stringParaData = (data) => (moment(data, 'YYYY-MM-DD').toDate());
 
