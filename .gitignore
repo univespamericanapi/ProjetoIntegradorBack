@@ -1,3 +1,4 @@
+/.env
 /node_modules
 /app/config/segredos.config.js
 /app/config/db.config.js
