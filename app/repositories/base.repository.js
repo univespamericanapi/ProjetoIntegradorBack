@@ -1,14 +1,14 @@
 import sequelize from "sequelize";
 import { mensagensConstant } from "../constants/mensagens.constant.js";
 
-export default class Repository {
+export default class BaseRepository {
     constructor(m) {
         this.model = m;
     }
 
-    async salvar(objeto) {
+    async salvar(registro) {
         try {
-            await this.model.create(objeto).then(() => {
+            await this.model.create(registro).then(() => {
                 return {
                     status: 201,
                     message: mensagensConstant.registroNovo
