@@ -1,8 +1,8 @@
-import criaUsuarioService from '../services/usuario.service.js';
+import usuarioService from '../services/usuario.service.js';
 
 const criar = async (req, res) => {
     try {
-        const resposta = await criaUsuarioService(req.body);
+        const resposta = await usuarioService.criar(req.body);
 
         delete req.body.usuario_senha;
 

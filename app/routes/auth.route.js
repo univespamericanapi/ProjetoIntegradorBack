@@ -1,4 +1,4 @@
-import authCtrl from "../controllers/auth.ctrl.js";
+import authController from "../controllers/auth.controller.js";
 
 const authRoutes = app => {
     app.use((req, res, next) => {
@@ -10,13 +10,13 @@ const authRoutes = app => {
     });
 
     app.post(
-        '/api/auth/signin',
-        authCtrl.signin
+        '/api/auth/login',
+        authController.login
     );
 
     app.post(
         '/api/auth/refreshtoken',
-        authCtrl.refreshToken
+        authController.refreshToken
     );
 }
 

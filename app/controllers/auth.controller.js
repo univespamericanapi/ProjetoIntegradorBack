@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 const { usuario: Usuario, cargo: Cargo, refreshToken: RefreshToken } = db;
 const Op = db.Sequelize.Op;
 
-const signin = (req, res) => {
+const login = (req, res) => {
     Usuario.findOne({
         where: {
             usuario_login: req.body.usuario_login
@@ -95,9 +95,9 @@ const refreshToken = async (req, res) => {
     }
 };
 
-const authCtrl = {
-    signin,
+const authController = {
+    login,
     refreshToken
 };
 
-export default authCtrl;
+export default authController;

@@ -86,7 +86,7 @@ export default class BaseRepository {
     verificaRegistro(registro) {
         if (!registro) {
             throw new CustomError(
-                400,
+                404,
                 this.nomeModel + mensagensConstant.registroNaoEncontrado,
             );
         }
