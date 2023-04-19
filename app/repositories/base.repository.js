@@ -11,10 +11,10 @@ export default class BaseRepository {
             await this.model.create(registro).then(() => {
                 return {
                     status: 201,
-                    message: mensagensConstant.registroNovo
+                    message: mensagensConstant.registroNovo +
+                    this.model.getTableName() +
+                    "!"
                 };
-            }).catch(erro => {
-                throw erro;
             });
         } catch (erro) {
             throw erro;
@@ -31,7 +31,18 @@ export default class BaseRepository {
 
     async buscarPorId(id) {
         try {
-            return await this.model.findByPk(id);
+            const registro = await this.model.findByPk(id);
+
+            if (!registro) {
+                throw new CustomError(
+                    400,
+                    mensagensConstant.registroNaoEncontrado +
+                    this.model.getTableName() +
+                    "!"
+                );
+            }
+
+            return registro;
         } catch (erro) {
             throw erro;
         }
@@ -41,40 +52,31 @@ export default class BaseRepository {
         try {
             const registro = await this.buscarPorId(id);
 
-            if (!registro) {
-                // throw new Error(mensagensConstant.registroNaoEncontrado);
-                throw new CustomError(400, mensagensConstant.registroNaoEncontrado);
-            }
-
             return await registro.destroy().then(() => {
                 return {
                     status: 202,
-                    message: mensagensConstant.registroDeletado
+                    message: mensagensConstant.registroDeletado +
+                    this.model.getTableName() +
+                    "!"
                 };
-            }).catch(erro => {
-                throw erro;
             });
         } catch (erro) {
             throw erro;
         }
     }
 
-    async updateById(id, alteracoes) {
+    async atualizarPorId(id, alteracoes) {
         try {
             const registro = await this.buscarPorId(id);
 
-            if (!registro) {
-                throw new Error(mensagensConstant.registroNaoEncontrado);
-            }
-
-            await registro.update(alteracoes).then(() => {
+            return await registro.update(alteracoes).then(() => {
                 return {
                     status: 202,
-                    message: mensagensConstant.registroAtualizado
+                    message: mensagensConstant.registroAtualizado +
+                    this.model.getTableName() +
+                    "!"
                 };
-            }).catch(erro => {
-                throw erro;
-            });;
+            });
         } catch (erro) {
             throw erro;
         }

@@ -23,22 +23,22 @@ export const mensagensConstant = {
     participanteNaoEncontrado: 'Nenhum competidor foi encontrado!',
     cidadeNaoEncontrada: 'Nenhuma cidade foi encontrada!',
     categoriaNaoEncontrada: 'Nenhuma categoria foi encontrada!',
-    registroNaoEncontrado: 'Falha na operação! Registro não encontrado!',
+    registroNaoEncontrado: 'Falha na operação! Registro não encontrado em ',
 
     // successfully registered
     usuarioRegistrado: 'Usuário foi registrado com sucesso!',
     participacaoRegistrada: 'Cadastro concluído com sucesso!',
     eventoRegistrado: 'Novo evento criado com sucesso!',
     notaRegistrada: 'Notas registradas com sucesso!',
-    registroNovo: 'Novo registro criado com sucesso.',
+    registroNovo: 'Novo registro criado com sucesso em ',
 
     // successfully updated
     eventoAtualizado: 'Evento atualizado com sucesso!',
-    registroAtualizado: 'Registro atualizado com sucesso.',
+    registroAtualizado: 'Registro atualizado com sucesso em ',
 
     // successfully deleted
     eventoDeletado: 'Evento deletado com sucesso!',
-    registroDeletado: 'Registro deletado com sucesso.',
+    registroDeletado: 'Registro deletado com sucesso em ',
 
     // field not sent
     refreshTokenNaoEnviado: 'Refresh Token é requerido!',
