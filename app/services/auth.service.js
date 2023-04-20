@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
 import CustomError from '../helpers/customError.helper.js';
+import usuarioUtils from '../utils/usuario.util.js';
 
 const login = async (login) => {
     try {
@@ -32,23 +33,19 @@ const login = async (login) => {
 
         let refreshToken = await RefreshToken.criarToken(usuario);
 
-        let autoridade = "";
+        let autoridade = await usuarioUtils.cargoExibir(usuario);
 
-        return await usuario.getCargo().then(cargo => {
-            autoridade = 'ROLE_' + cargo.cargo_nome.toUpperCase();
-
-            return {
-                status: 200,
-                message: {
-                    usuario_id: usuario.usuario_id,
-                    usuario_login: usuario.usuario_login,
-                    usuario_nome: usuario.usuario_nome,
-                    usuario_cargo: autoridade,
-                    accessToken: token,
-                    refreshToken: refreshToken,
-                },
-            };
-        });
+        return {
+            status: 200,
+            message: {
+                usuario_id: usuario.usuario_id,
+                usuario_login: usuario.usuario_login,
+                usuario_nome: usuario.usuario_nome,
+                usuario_cargo: autoridade,
+                accessToken: token,
+                refreshToken: refreshToken,
+            },
+        };
     } catch (erro) {
         throw erro;
     }

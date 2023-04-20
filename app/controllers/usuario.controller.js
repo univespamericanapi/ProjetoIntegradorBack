@@ -41,10 +41,24 @@ const deletar = async (req, res) => {
     }
 };
 
-const alterar = async (req, res) => {
+const atualizarPorAdmin = async (req, res) => {
     try {
-        const resposta = "";
+        const resposta = await usuarioService.atualizarPorAdmin(req.params.idUsuario, req.body);;
 
+        return res.status(resposta.status).send(resposta.message);
+    } catch (erro) {
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
+    }
+};
+
+const atualizar = async (req, res) => {
+    try {
+        const resposta = await usuarioService.atualizar(req.params.idUsuario, req.body);;
+
+        return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
             return res.status(erro.status).send(erro.message);
@@ -55,8 +69,9 @@ const alterar = async (req, res) => {
 
 const buscarPorId = async (req, res) => {
     try {
-        const resposta = "";
+        const resposta = await usuarioService.buscarPorId(req.params.idUsuario);
 
+        return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
             return res.status(erro.status).send(erro.message);
@@ -67,8 +82,9 @@ const buscarPorId = async (req, res) => {
 
 const buscarPorLogin = async (req, res) => {
     try {
-        const resposta = "";
+        const resposta = await usuarioService.buscarPorLogin(req.query.login);
 
+        return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
             return res.status(erro.status).send(erro.message);
@@ -81,7 +97,8 @@ const usuarioController = {
     criar,
     listar,
     deletar,
-    alterar,
+    atualizarPorAdmin,
+    atualizar,
     buscarPorId,
     buscarPorLogin,
 }

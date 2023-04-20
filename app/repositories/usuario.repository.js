@@ -39,6 +39,21 @@ export default class UsuarioRepository extends BaseRepository {
         }
     }
 
+    async atualizarPorId(id, alteracoes) {
+        try {
+            const registro = await this.buscarPorId(id);
+
+            return await registro.update(alteracoes).then(() => {
+                return {
+                    status: 202,
+                    message: this.nomeModel + mensagensConstant.registroAtualizado,
+                };
+            });
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
     async checaUsuarioExiste(login) {
         try {
             const usuario = await this.model.findOne({

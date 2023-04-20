@@ -5,6 +5,8 @@ import UsuarioRepository from '../repositories/usuario.repository.js';
 import senhaValida from '../utils/senha.util.js';
 import CustomError from '../helpers/customError.helper.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
+import authJwt from '../middlewares/authJwt.js';
+import usuarioUtils from '../utils/usuario.util.js';
 
 const criar = async (novo) => {
     try {
@@ -42,9 +44,7 @@ const listar = async () => {
         const listaUsuarios = [];
 
         for (let usuario of usuarios) {
-            const autoridade = await usuario.getCargo().then(cargo => {
-                return 'ROLE_' + cargo.cargo_nome.toUpperCase();
-            });
+            const autoridade = await usuarioUtils.cargoExibir(usuario);
 
             const temp = {
                 usuario_id: usuario.usuario_id,
@@ -74,7 +74,7 @@ const listar = async () => {
 
 const deletar = async (idUsuario) => {
     try {
-        const Usuario = new UsuarioRepository(db.usuario);;
+        const Usuario = new UsuarioRepository(db.usuario);
 
         const resposta = await Usuario.deletarPorId(idUsuario);
 
@@ -84,10 +84,118 @@ const deletar = async (idUsuario) => {
     }
 };
 
+const atualizarPorAdmin = async (idUsuario, alteracao) => {
+    try {
+        const Usuario = new UsuarioRepository(db.usuario);
+
+        if (alteracao.usuario_login) {
+            await Usuario.checaUsuarioExiste(alteracao.usuario_login);
+        }
+
+        if (alteracao.usuario_cargo) {
+            const Cargo = new CargoRepository(db.cargo);
+
+            const cargo = await Cargo.buscarPorNome(alteracao.usuario_cargo);
+
+            console.log(cargo);
+
+            alteracao.usuario_cargo = cargo.cargo_id;
+        }
+
+        if (alteracao.usuario_senha) {
+            alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
+        }
+
+        const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
+
+        if (alteracao.usuario_senha) {
+            delete alteracao.usuario_senha;
+        }
+
+        return resposta;
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const atualizar = async (idUsuario, alteracao) => {
+    try {
+        const Usuario = new UsuarioRepository(db.usuario);
+
+        delete alteracao.usuario_cargo;
+
+        if (alteracao.usuario_login) {
+            await Usuario.checaUsuarioExiste(alteracao.usuario_login);
+        }
+
+        if (alteracao.usuario_senha) {
+            alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
+        }
+
+        const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
+
+        if (alteracao.usuario_senha) {
+            delete alteracao.usuario_senha;
+        }
+
+        return resposta;
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const buscarPorId = async (idUsuario) => {
+    try {
+        const Usuario = new UsuarioRepository(db.usuario);
+
+        const temp = await Usuario.buscarPorId(idUsuario);
+
+        const resposta = {
+            usuario_id: temp.usuario_id,
+            usuario_login: temp.usuario_login,
+            usuario_nome: temp.usuario_nome,
+            usuario_cargo: await usuarioUtils.cargoExibir(temp),
+        };
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const buscarPorLogin = async (loginUsuario) => {
+    try {
+        const Usuario = new UsuarioRepository(db.usuario);
+
+        const temp = await Usuario.buscarPorLogin(loginUsuario);
+
+        const resposta = {
+            usuario_id: temp.usuario_id,
+            usuario_login: temp.usuario_login,
+            usuario_nome: temp.usuario_nome,
+            usuario_cargo: await usuarioUtils.cargoExibir(temp),
+        };
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        throw erro;
+    }
+};
+
 const usuarioService = {
     criar,
     listar,
     deletar,
+    atualizarPorAdmin,
+    atualizar,
+    buscarPorId,
+    buscarPorLogin,
 }
 
 export default usuarioService;

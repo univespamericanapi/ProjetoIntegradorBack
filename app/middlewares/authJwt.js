@@ -72,7 +72,13 @@ const eStaff = async (req, res, next) => {
 
 const eOProprio = async (req, res, next) => {
     const Usuario = new UsuarioRepository(db.usuario);
-    const idUsuarioAltera = req.params.idUsuario;
+    let idUsuarioAltera = Number(req.params.idUsuario);
+
+    if (!idUsuarioAltera) {
+        const usuario = await Usuario.buscarPorLogin(req.query.login);
+
+        idUsuarioAltera = usuario.usuario_id;
+    }
 
     const usuario = await Usuario.buscarPorId(req.usuario_id);
 

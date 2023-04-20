@@ -27,7 +27,7 @@
                 "summary": "Login de usuário.",
                 "description": "Rota responsável pelo login dos usuários ao sistema.",
                 "tags": [
-                    "usuario"
+                    "Autenticação"
                 ],
                 "requestBody": {
                     "content": {
@@ -72,7 +72,7 @@
                 "summary": "Refresh JWT Token.",
                 "description": "Rota responsável pelo refresh do JWT Token.",
                 "tags": [
-                    "usuario"
+                    "Autenticação"
                 ],
                 "requestBody": {
                     "content": {
@@ -129,7 +129,7 @@
                 "summary": "Cadastro de usuário.",
                 "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
                 "tags": [
-                    "usuario"
+                    "Usuário"
                 ],
                 "security": [
                     {
@@ -182,7 +182,7 @@
                 "summary": "Listagem de todos os usuários.",
                 "description": "Rota responsável pela listagem de todos usuários cadastrados.",
                 "tags": [
-                    "usuario"
+                    "Usuário"
                 ],
                 "security": [
                     {
@@ -211,9 +211,6 @@
                     },
                     "404": {
                         "description": "Não encontrado!"
-                    },
-                    "406": {
-                        "description": "Senha inválida!"
                     }
                 }
             }
@@ -223,7 +220,7 @@
                 "summary": "Deletar um usuário pelo id",
                 "description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
                 "tags": [
-                    "usuario"
+                    "Usuário"
                 ],
                 "parameters": [
                     {
@@ -250,9 +247,203 @@
                     },
                     "404": {
                         "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/admin/usuario/atualizar/{idUsuario}": {
+            "put": {
+                "summary": "Atualizar um usuário pelo id, acesso de admin",
+                "description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo, com acesso de administrador.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "idUsuario",
+                        "in": "path",
+                        "description": "Id do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "usuario_login": "joao",
+                                        "usuario_senha": "1234ABcd",
+                                        "usuario_nome": "João Silva",
+                                        "usuario_cargo": "staff"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Usuario atualizado com sucesso!"
                     },
-                    "406": {
-                        "description": "Senha inválida!"
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/usuario/atualizar/{idUsuario}": {
+            "put": {
+                "summary": "Atualizar um usuário pelo id",
+                "description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "idUsuario",
+                        "in": "path",
+                        "description": "Id do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "usuario_login": "joao",
+                                        "usuario_senha": "1234ABcd",
+                                        "usuario_nome": "João Silva"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Usuario atualizado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/usuario/buscar/{idUsuario}": {
+            "get": {
+                "summary": "Buscar um usuário pelo id",
+                "description": "Rota responsável por buscar um usuário utilizando o id.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "idUsuario",
+                        "in": "path",
+                        "description": "Id do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/usuarioView"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/usuario/buscar": {
+            "get": {
+                "summary": "Buscar um usuário pelo id",
+                "description": "Rota responsável por buscar um usuário utilizando o id.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "Login do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/usuarioView"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
                     }
                 }
             }
