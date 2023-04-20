@@ -1,20 +1,20 @@
 export const mensagensConstant = {
     // unauthorized
-    naoAutorizado: 'Falha! Não autorizado!',
-    requeridoAdm: 'Falha! Requerido cargo de Administrador!',
-    requeridoStaff: 'Falha! Requerido cargo de Staff ou de Administrador!',
+    naoAutorizado: 'Não autorizado!',
+    requeridoAdm: 'Requerido cargo de Administrador!',
+    requeridoStaff: 'Requerido cargo de Staff ou de Administrador!',
 
     // expired
     tokenExpirou: 'Não autorizado! Access Token expirou!',
     refreshTokenExpirou: 'Refresh token expirou. Por favor, faça um novo login!',
 
     // registered
-    eventoJaCadastrado: 'Falha! Evento já cadastrado!',
-    participanteJaCadastrado: 'Falha! Participante já foi cadastrado!',
+    eventoJaCadastrado: 'Evento já cadastrado!',
+    participanteJaCadastrado: 'Participante já foi cadastrado!',
     usuarioJaCadastrado: 'Usuário já está em uso!',
 
     // not found
-    cargoNaoEncontrado: 'Falha! Cargo não existe!',
+    cargoNaoEncontrado: 'Cargo não existe!',
     usuarioNaoEncontrado: 'Usuário não encontrado.',
     refreshTokenNaoEncontrado: 'Refresh token não está no banco de dados!',
     configuracaoNaoEncontrada: 'Nenhuma configuração foi encontrada para esse evento!',

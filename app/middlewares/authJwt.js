@@ -70,10 +70,31 @@ const eStaff = async (req, res, next) => {
     });
 }
 
+const eOProprio = async (req, res, next) => {
+    const Usuario = new UsuarioRepository(db.usuario);
+    const idUsuarioAltera = req.params.idUsuario;
+
+    const usuario = await Usuario.buscarPorId(req.usuario_id);
+
+    await usuario.getCargo().then(cargo => {
+        if (cargo.cargo_nome === config.adminCargoNome ||
+            usuario.usuario_id === idUsuarioAltera) {
+            next();
+            return;
+        }
+
+        res.status(403).send({
+            message: mensagensConstant.naoAutorizado
+        });
+        return;
+    });
+}
+
 const authJwt = {
     verificaToken,
     eAdmin,
-    eStaff
+    eStaff,
+    eOProprio
 };
 
 export default authJwt;

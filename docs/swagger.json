@@ -67,59 +67,6 @@
                 }
             }
         },
-        "/api/admin/usuario/criar": {
-            "post": {
-                "summary": "Cadastro de usuário.",
-                "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
-                "tags": [
-                    "usuario"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/usuario"
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "usuario_login": "joao",
-                                        "usuario_senha": "1234ABcd",
-                                        "usuario_nome": "João Silva",
-                                        "usuario_cargo": "staff"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Usuario registrado com sucesso!"
-                    },
-                    "400": {
-                        "description": "Usuário já está em uso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    },
-                    "406": {
-                        "description": "Senha inválida!"
-                    }
-                }
-            }
-        },
         "/api/auth/refreshToken": {
             "post": {
                 "summary": "Refresh JWT Token.",
@@ -176,6 +123,103 @@
                     }
                 }
             }
+        },
+        "/api/admin/usuario/criar": {
+            "post": {
+                "summary": "Cadastro de usuário.",
+                "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
+                "tags": [
+                    "usuario"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "usuario_login": "joao",
+                                        "usuario_senha": "1234ABcd",
+                                        "usuario_nome": "João Silva",
+                                        "usuario_cargo": "staff"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado com sucesso!"
+                    },
+                    "400": {
+                        "description": "Usuário já está em uso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
+        },
+        "/api/admin/usuario/listar": {
+            "get": {
+                "summary": "Listagem de todos os usuários.",
+                "description": "Rota responsável pela listagem de todos usuários cadastrados.",
+                "tags": [
+                    "usuario"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/usuarioView"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário já está em uso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -213,6 +257,23 @@
                         "type": "string"
                     },
                     "usuario_senha": {
+                        "type": "string"
+                    },
+                    "usuario_nome": {
+                        "type": "string"
+                    },
+                    "usuario_cargo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "usuarioView": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
                         "type": "string"
                     },
                     "usuario_nome": {
