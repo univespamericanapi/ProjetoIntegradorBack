@@ -1,5 +1,4 @@
 import BaseRepository from "./base.repository.js";
-import CustomError from "../helpers/customError.helper.js";
 
 export default class CargoRepository extends BaseRepository {
     async buscarPorNome(nome) {

@@ -1,3 +1,4 @@
+import { Sequelize } from "sequelize";
 import { mensagensConstant } from "../constants/mensagens.constant.js";
 import CustomError from "../helpers/customError.helper.js";
 

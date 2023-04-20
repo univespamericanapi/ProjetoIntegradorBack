@@ -41,7 +41,7 @@ export const mensagensConstant = {
     registroDeletado: ' deletado com sucesso!',
 
     // field not sent
-    refreshTokenNaoEnviado: 'Refresh Token é requerido!',
+    refreshTokenNaoEnviado: 'RefreshToken é requerido!',
     participacaoNaoEnviada: 'Não foram enviadas todas as informações!',
     tokenNaoEnviado: 'Falha! Nenhum token foi fornecido!',
     eventoNaoEnviado: 'Não foram enviadas todas as informações!',
