@@ -30,8 +30,9 @@ const listar = async (req, res) => {
 
 const deletar = async (req, res) => {
     try {
-        const resposta = "";
+        const resposta = await usuarioService.deletar(req.params.idUsuario);
 
+        return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
             return res.status(erro.status).send(erro.message);

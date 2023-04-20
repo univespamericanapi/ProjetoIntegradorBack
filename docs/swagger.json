@@ -203,8 +203,44 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Usuário já está em uso!"
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
+        },
+        "/api/admin/usuario/deletar/{idUsuario}": {
+            "delete": {
+                "summary": "Deletar um usuário pelo id",
+                "description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
+                "tags": [
+                    "usuario"
+                ],
+                "parameters": [
+                    {
+                        "name": "idUsuario",
+                        "in": "path",
+                        "description": "Id do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Usuario deletado com sucesso!"
                     },
                     "401": {
                         "description": "Não autorizado!"

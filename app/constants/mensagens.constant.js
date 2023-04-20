@@ -48,6 +48,7 @@ export const mensagensConstant = {
     participacaoNaoEnviado: 'Nenhum parâmetro foi passado!',
     estadoNaoEnviado: 'Nenhum estado fornecido!',
     cidadeNaoEnviada: 'Nenhuma cidade fornecida!',
+    usuarioNaoEnviado: 'Nenhum usuario foi fornecido!',
 
     // invalid
     senhaInvalida: 'Senha inválida!',

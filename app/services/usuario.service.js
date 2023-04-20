@@ -72,9 +72,22 @@ const listar = async () => {
     }
 };
 
+const deletar = async (idUsuario) => {
+    try {
+        const Usuario = new UsuarioRepository(db.usuario);;
+
+        const resposta = await Usuario.deletarPorId(idUsuario);
+
+        return resposta;
+    } catch (erro) {
+        throw erro;
+    }
+};
+
 const usuarioService = {
     criar,
     listar,
+    deletar,
 }
 
 export default usuarioService;
