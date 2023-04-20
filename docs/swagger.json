@@ -89,7 +89,7 @@
                                 "usuario": {
                                     "value": {
                                         "usuario_login": "joao",
-                                        "usuario_senha": "1234",
+                                        "usuario_senha": "1234ABcd",
                                         "usuario_nome": "João Silva",
                                         "usuario_cargo": "staff"
                                     }
