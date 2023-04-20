@@ -33,7 +33,7 @@ export default class BaseRepository {
         try {
             const registro = await this.model.findByPk(id);
 
-            verificaRegistro(registro);
+            this.verificaRegistro(registro);
 
             return registro;
         } catch (erro) {

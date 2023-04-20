@@ -29,6 +29,8 @@ const config = {
         senha: process.env.ADM_PASSWORD,
         cargo: process.env.ADM_ROLE,
     },
+    adminCargoNome: process.env.ADMIN_CARGO_NOME,
+    staffNomeCargo: process.env.STAF_CARGO_NOME,
 }
 
 export default config;

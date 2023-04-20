@@ -1,4 +1,4 @@
-import authJwt from "../middleware/authJwt.js";
+import authJwt from "../middlewares/authJwt.js";
 import demoCtrl from "../controllers/demo.ctrl.js";
 
 const demoRoutes = app => {

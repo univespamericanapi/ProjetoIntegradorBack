@@ -1,4 +1,4 @@
-import authJwt from "../middleware/authJwt.js";
+import authJwt from "../middlewares/authJwt.js";
 import eventoCtrl from "../controllers/evento.ctrl.js";
 import verificaDuplicado from "../middleware/verificaDuplicado.js";
 

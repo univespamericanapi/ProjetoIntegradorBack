@@ -1,4 +1,4 @@
-import authJwt from "../middleware/authJwt.js";
+import authJwt from "../middlewares/authJwt.js";
 import usuarioController from "../controllers/usuario.controller.js";
 
 const usuarioRoutes = app => {

@@ -1,4 +1,4 @@
-import authJwt from "../middleware/authJwt.js";
+import authJwt from "../middlewares/authJwt.js";
 import notaCtrl from "../controllers/nota.ctrl.js";
 
 const notaRoutes = app => {

@@ -1,4 +1,4 @@
-import authJwt from "../middleware/authJwt.js";
+import authJwt from "../middlewares/authJwt.js";
 import configCtrl from "../controllers/config_concurso.ctrl.js";
 
 const configRoutes = app => {

@@ -5,7 +5,7 @@ export const mensagensConstant = {
     requeridoStaff: 'Falha! Requerido cargo de Staff ou de Administrador!',
 
     // expired
-    tokenExpirou: 'Falha! Não autorizado! Access Token expirou!',
+    tokenExpirou: 'Não autorizado! Access Token expirou!',
     refreshTokenExpirou: 'Refresh token expirou. Por favor, faça um novo login!',
 
     // registered
@@ -43,7 +43,7 @@ export const mensagensConstant = {
     // field not sent
     refreshTokenNaoEnviado: 'RefreshToken é requerido!',
     participacaoNaoEnviada: 'Não foram enviadas todas as informações!',
-    tokenNaoEnviado: 'Falha! Nenhum token foi fornecido!',
+    tokenNaoEnviado: 'Nenhum token foi fornecido!',
     eventoNaoEnviado: 'Não foram enviadas todas as informações!',
     participacaoNaoEnviado: 'Nenhum parâmetro foi passado!',
     estadoNaoEnviado: 'Nenhum estado fornecido!',
