@@ -1,5 +1,4 @@
 import Sequelize from "sequelize";
-import { dbConfig } from "../config/db.config.js";
 import { usuario } from './usuario.model.js';
 import { cargo } from './cargo.model.js';
 import { refreshToken } from "./refreshToken.model.js";
@@ -13,13 +12,14 @@ import { categoria } from "./categoria.model.js";
 import { concurso } from "./concurso.model.js";
 import { configConcurso } from "./config_concurso.model.js";
 import { nota } from "./nota.model.js";
+import config from "../config/config.js";
 
 // Instance of Sequelize
-const sequelize = new Sequelize(dbConfig.dbname, dbConfig.user, dbConfig.password, {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
+const sequelize = new Sequelize(config.bancoDeDados.dbname, config.bancoDeDados.user, config.bancoDeDados.password, {
+    host: config.bancoDeDados.host,
+    dialect: config.bancoDeDados.dialect,
     operatorsAliases: false,
-    pool: dbConfig.pool
+    pool: config.bancoDeDados.pool
 });
 
 // Instance of tables

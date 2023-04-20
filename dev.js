@@ -1,16 +1,17 @@
 import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import db from './app/models/db.model.js';
-import { authConfig } from './app/config/auth.config.js';
 import swaggerUI from 'swagger-ui-express'
 import swaggerDocs from './docs/swagger.json' assert {type: 'json'};
+import { createSeeder } from './app/database/seeders/index.seeder.js';
+import config from './app/config/config.js';
 
 const app = express();
 
 const fast = true;
 
 // Configuração do aplicativo
-app.use(cors({ origin: authConfig.corsOrigin }));
+app.use(cors({ origin: config.corsOrigin }));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
@@ -32,8 +33,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
-import addData from './app/data/add.data.js';
-
 // Conexão com o banco de dados
 conectarAoBanco();
 
@@ -52,7 +51,7 @@ async function conectarAoBanco() {
             await db.sequelize.sync({ force: true }).then(async () => {
                 console.log('Removendo e Resincronizando o Banco de Dados');
 
-                await addData.create();
+                await createSeeder();
             });
         }
 

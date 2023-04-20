@@ -38,13 +38,19 @@ Só é necessário criar o banco de dados, as tabelas e relacionamentos serão c
 
 ## Execução
 
-Use o comando para executar o servidor:
+Antes de executar pela primeira vez, execute o comando abaixo para popular as tabelas com informações básicas:
+
+```bash
+npm run seeder
+```
+
+Logo após...
+
+Use o comando abaixo para executar o servidor:
 
 ```bash
   npm start
 ```
-
-Na primeira execução, o código irá criar todas as tabelas, relacionamentos e os dados das tabelas categoria, cidade, estado, cargo e usuario.
 
 ## Execução de desenvolvedor
 
@@ -54,7 +60,7 @@ Use o comando para executar o servidor:
   npm run dev
 ```
 
-Essa opção executará o arquivo dev.js, que pode ser configurado para execução rápida, onde não fará o drop table de todo banco, e a opção que fará o drop table. Para configurar basta verificar a constante `fast` no arquivo.
+Essa opção executará o arquivo dev.js, que pode ser configurado para execução rápida, onde não fará o drop table de todo banco, e a opção que fará o drop table. Para configurar basta verificar a constante `fast` no arquivo, se estiver como `false`, irá executar o drop table.
     
 ## Autores
 
