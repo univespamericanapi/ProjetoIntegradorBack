@@ -631,6 +631,223 @@
                     }
                 }
             }
+        },
+        "/api/evento/listar": {
+            "get": {
+                "summary": "Listagem de todos os eventos.",
+                "description": "Rota responsável pela listagem de todos eventos cadastrados.",
+                "tags": [
+                    "Eventos"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/evento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/admin/evento/buscar/{idEvento}": {
+            "get": {
+                "summary": "Buscar um evento pelo id",
+                "description": "Rota responsável por buscar um evento utilizando o id.",
+                "tags": [
+                    "Eventos"
+                ],
+                "parameters": [
+                    {
+                        "name": "idEvento",
+                        "in": "path",
+                        "description": "Id do evento.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/evento"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/admin/evento/criar": {
+            "post": {
+                "summary": "Cadastrar de evento.",
+                "description": "Rota responsável pelo cadastro de novos eventos ao sistema.",
+                "tags": [
+                    "Eventos"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/evento"
+                            },
+                            "examples": {
+                                "evento": {
+                                    "value": {
+                                        "event_nome": "Mega Campinas Anime Fest",
+                                        "event_local": "Liceu Salesiano",
+                                        "event_edicao": 27,
+                                        "event_cidade": 4820,
+                                        "event_data": "20/08/2023"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Evento registrado com sucesso!"
+                    },
+                    "400": {
+                        "description": "Evento já cadastrado!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
+        },
+        "/api/admin/evento/atualizar/{idEvento}": {
+            "put": {
+                "summary": "Atualizar um evento pelo id.",
+                "description": "Rota responsável por atualizar um evento utilizando o id para encontrá-lo.",
+                "tags": [
+                    "Eventos"
+                ],
+                "parameters": [
+                    {
+                        "name": "idEvento",
+                        "in": "path",
+                        "description": "Id do evento.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/evento"
+                            },
+                            "examples": {
+                                "evento": {
+                                    "value": {
+                                        "event_nome": "Mega Campinas Anime Fest",
+                                        "event_local": "Liceu Salesiano",
+                                        "event_edicao": 27,
+                                        "event_cidade": 4820,
+                                        "event_data": "20/08/2023"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Evento atualizado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/admin/evento/deletar/{idEvento}": {
+            "delete": {
+                "summary": "Deletar um evento pelo id",
+                "description": "Rota responsável por deletar um evento utilizando o id para encontrá-lo.",
+                "tags": [
+                    "Eventos"
+                ],
+                "parameters": [
+                    {
+                        "name": "idEvento",
+                        "in": "path",
+                        "description": "Id do evento.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Evento deletado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -702,6 +919,33 @@
                         "type": "number"
                     },
                     "item_nome": {
+                        "type": "string"
+                    }
+                }
+            },
+            "evento": {
+                "type": "object",
+                "properties": {
+                    "event_id": {
+                        "type": "number"
+                    },
+                    "event_nome": {
+                        "type": "string"
+                    },
+                    "event_local": {
+                        "type": "string"
+                    },
+                    "event_edicao": {
+                        "type": "number"
+                    },
+                    "event_cidade": {
+                        "type": "number"
+                    },
+                    "event_data": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "event_ed_nome": {
                         "type": "string"
                     }
                 }

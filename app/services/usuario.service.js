@@ -156,10 +156,6 @@ const atualizar = async (idUsuario, alteracao) => {
 
         const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
 
-        if (alteracao.usuario_senha) {
-            delete alteracao.usuario_senha;
-        }
-
         return {
             status: 202,
             message: resposta

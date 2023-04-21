@@ -50,7 +50,7 @@ export const evento = (sequelize, Sequelize) => {
                         conc_limit_espera: 0,
                         conc_limit_checkin: 0,
                         conc_ativo: false,
-                        conc_data_ativ: Sequelize.NOW
+                        conc_data_ativ: "1900-01-01"
                     });
                 });
             }

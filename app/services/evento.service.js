@@ -1,3 +1,4 @@
+import verifica from "../helpers/verificacao.helpper.js";
 import db from "../models/db.model.js";
 import EventoRepository from "../repositories/evento.repository.js";
 import dataUtils from "../utils/data.util.js";
@@ -7,18 +8,111 @@ const criar = async (novo) => {
         const Evento = new EventoRepository(db.evento);
 
         novo.event_data = dataUtils.stringParaData(novo.event_data);
-        novo.event_EdiNome = `${novo.event_edicao}º ${novo.event_nome}`;
+        novo.event_ed_nome = `${novo.event_edicao}º ${novo.event_nome}`;
+
+        const evento = await Evento.buscaPorEdNome(novo.event_ed_nome);
+
+        verifica.registroDuplicado(evento, Evento);
 
         const resposta = await Evento.salvar(novo);
 
         return {
-            status: 200,
-            mesage: resposta
+            status: 201,
+            message: resposta,
         }
     } catch (erro) {
         throw erro;
     }
 };
+
+const listar = async () => {
+    try {
+        const Evento = new EventoRepository(db.evento);
+
+        const eventos = await Evento.buscarTodos();
+
+        verifica.registroExiste(eventos, Evento);
+
+        return {
+            status: 200,
+            message: eventos,
+        }
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const deletar = async (idEvento) => {
+    try {
+        const Evento = new EventoRepository(db.evento);
+
+        const evento = await Evento.buscarPorId(idEvento);
+
+        verifica.registroExiste(evento, Evento);
+
+        const resposta = await Evento.deletarPorId(idEvento);
+
+        return {
+            status: 202,
+            message: resposta,
+        }
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const atualizar = async (idEvento, alteracao) => {
+    try {
+        const Evento = new EventoRepository(db.evento);
+
+        verifica.faltaParametro(idEvento);
+
+        const evento = await Evento.buscarPorId(idEvento);
+
+        verifica.registroExiste(evento, Evento);
+
+        if (alteracao.event_nome || alteracao.event_edicao) {
+            alteracao.event_ed_nome = `${alteracao.event_edicao}º ${alteracao.event_nome}`;
+
+            const evento2 = await Evento.buscaPorEdNome(alteracao.event_ed_nome);
+
+            verifica.registroDuplicado(evento2, Evento);
+        }
+
+        if (alteracao.event_data) {
+            alteracao.event_data = dataUtils.stringParaData(alteracao.event_data);
+        }
+
+        const resposta = await Evento.atualizarPorId(idEvento, alteracao);
+
+        return {
+            status: 202,
+            message: resposta
+        };
+
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const buscarPorId = async (idEvento) => {
+    try {
+        const Evento = new EventoRepository(db.evento);
+
+        verifica.faltaParametro(idEvento);
+
+        const evento = await Evento.buscarPorId(idEvento);
+
+        verifica.registroExiste(evento, Evento);
+
+        return {
+            status: 200,
+            message: evento,
+        }
+    } catch (erro) {
+        throw erro;
+    }
+}
 
 const eventoService = {
     criar,

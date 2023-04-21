@@ -1,6 +1,5 @@
 import authJwt from "../middlewares/authJwt.js";
-import eventoCtrl from "../controllers/evento.controller.js";
-import verificaDuplicado from "../middleware/verificaDuplicado.js";
+import eventoController from "../controllers/evento.controller.js";
 
 const eventoRoutes = app => {
     app.use((req, res, next) => {
@@ -11,21 +10,20 @@ const eventoRoutes = app => {
         next();
     });
 
-    app.post('/api/admin/evento/create', [
-        authJwt.verificaToken,
-        authJwt.eAdmin,
-        verificaDuplicado.checaDuplicadoEvento
-    ], eventoCtrl.novoEvento);
-    app.put('/api/admin/evento/update/:id', [
+    app.get('/api/evento/listar', eventoController.listar);
+    app.get('/api/admin/evento/buscar/:idEvento', eventoController.buscarPorId);
+    app.post('/api/admin/evento/criar', [
         authJwt.verificaToken,
         authJwt.eAdmin
-    ], eventoCtrl.atualizaEvento);
-    app.delete('/api/admin/evento/delete/:id', [
+    ], eventoController.criar);
+    app.put('/api/admin/evento/atualizar/:idEvento', [
         authJwt.verificaToken,
         authJwt.eAdmin
-    ], eventoCtrl.deletaEvento);
-    app.get('/api/evento/listar', eventoCtrl.eventoLista);
-    app.get('/api/evento/buscar/:id', eventoCtrl.eventoPorId);
+    ], eventoController.atualizar);
+    app.delete('/api/admin/evento/deletar/:idEvento', [
+        authJwt.verificaToken,
+        authJwt.eAdmin
+    ], eventoController.deletar);
 };
 
 export default eventoRoutes;

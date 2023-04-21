@@ -8,7 +8,6 @@ import notaRoutes from './nota.route.js';
 import usuarioRoutes from './usuario.route.js';
 
 const indexRoutes = app => {
-    // eventoRoutes(app);
     // configRoutes(app);
     // desfileRoutes(app);
     // notaRoutes(app);
@@ -16,6 +15,7 @@ const indexRoutes = app => {
     authRoutes(app);
     usuarioRoutes(app);
     listaRoutes(app);
+    eventoRoutes(app);
     demoRoutes(app);
 };
 
