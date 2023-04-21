@@ -1,5 +1,6 @@
 import { mensagensConstant } from "../constants/mensagens.constant.js";
 import CustomError from "../helpers/customError.helper.js";
+import verifica from "../helpers/verificacao.helpper.js";
 import db from "../models/db.model.js";
 import CargoRepository from "../repositories/cargo.repository.js";
 import CidadeRepository from "../repositories/cidade.repository.js";
@@ -13,12 +14,7 @@ const listarCargos = async () => {
 
         const cargos = await Cargo.buscarTodos();
 
-        if (!cargos) {
-            throw new CustomError(
-                404,
-                Cargo.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(cargos, Cargo);
 
         return {
             status: 200,
@@ -35,12 +31,7 @@ const listarCategorias = async () => {
 
         const categorias = await Categoria.buscarTodos();
 
-        if (!categorias) {
-            throw new CustomError(
-                404,
-                Categoria.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(categorias, Categoria);
 
         return {
             status: 200,
@@ -51,25 +42,20 @@ const listarCategorias = async () => {
     }
 };
 
-const listarCidades = async (estado) => {
+const listarCidades = async (estadoId) => {
     try {
         const Cidade = new CidadeRepository(db.cidade);
+        const Estado = new EstadoRepository(db.estado);
 
-        if (!estado) {
-            throw new CustomError(
-                400,
-                mensagensConstant.estadoNaoEnviado
-            );
-        }
+        verifica.faltaParametro(estadoId);
 
-        const cidades = await Cidade.listarPorEstado(estado);
+        const estado = await Estado.buscarPorId(estadoId);
 
-        if (!cidades) {
-            throw new CustomError(
-                404,
-                Cidade.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(estado, Estado);
+
+        const cidades = await Cidade.listarPorEstado(estadoId);
+
+        verifica.registroExiste(cidades, Cidade);
 
         return {
             status: 200,
@@ -86,12 +72,7 @@ const listarEstados = async () => {
 
         const estados = await Estado.buscarTodos();
 
-        if (!estados) {
-            throw new CustomError(
-                404,
-                Estado.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(estados, Estado);
 
         return {
             status: 200,
@@ -108,12 +89,7 @@ const listarEstilos = async () => {
 
         const estilos = await Estilo.buscarTodos();
 
-        if (!estilos) {
-            throw new CustomError(
-                404,
-                Estilo.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(estilos, Estilo);
 
         return {
             status: 200,
@@ -130,12 +106,7 @@ const listarModalidades = async () => {
 
         const modalidades = await Modalidade.buscarTodos();
 
-        if (!modalidades) {
-            throw new CustomError(
-                404,
-                Modalidade.nomeModel + mensagensConstant.registroNaoEncontrado
-            );
-        }
+        verifica.registroExiste(modalidades, Modalidade);
 
         return {
             status: 200,

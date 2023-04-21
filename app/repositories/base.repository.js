@@ -1,6 +1,4 @@
-import { Sequelize } from "sequelize";
 import { mensagensConstant } from "../constants/mensagens.constant.js";
-import CustomError from "../helpers/customError.helper.js";
 
 export default class BaseRepository {
     constructor(m) {
@@ -11,10 +9,7 @@ export default class BaseRepository {
     async salvar(registro) {
         try {
             return await this.model.create(registro).then(() => {
-                return {
-                    status: 201,
-                    message: this.nomeModel + mensagensConstant.registroCriado,
-                };
+                return this.nomeModel + mensagensConstant.registroCriado
             });
         } catch (erro) {
             throw erro;
@@ -33,8 +28,6 @@ export default class BaseRepository {
         try {
             const registro = await this.model.findByPk(id);
 
-            this.verificaRegistro(registro);
-
             return registro;
         } catch (erro) {
             throw erro;
@@ -46,10 +39,7 @@ export default class BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.destroy().then(() => {
-                return {
-                    status: 202,
-                    message: this.nomeModel + mensagensConstant.registroDeletado,
-                };
+                return this.nomeModel + mensagensConstant.registroDeletado
             });
         } catch (erro) {
             throw erro;
@@ -61,10 +51,7 @@ export default class BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.update(alteracoes).then(() => {
-                return {
-                    status: 202,
-                    message: this.nomeModel + mensagensConstant.registroAtualizado,
-                };
+                return this.nomeModel + mensagensConstant.registroAtualizado
             });
         } catch (erro) {
             throw erro;
@@ -82,14 +69,5 @@ export default class BaseRepository {
     pegarNomeModel() {
         const nomeTabela = this.model.getTableName();
         return nomeTabela.charAt(0).toUpperCase() + nomeTabela.slice(1, -1);
-    }
-
-    verificaRegistro(registro) {
-        if (!registro) {
-            throw new CustomError(
-                404,
-                this.nomeModel + mensagensConstant.registroNaoEncontrado,
-            );
-        }
     }
 }

@@ -11,8 +11,6 @@ export default class RefreshTokenRepository extends BaseRepository {
                 }
             });
 
-            this.verificaRegistro(registro);
-
             return registro;
         } catch (erro) {
             throw erro;

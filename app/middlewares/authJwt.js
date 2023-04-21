@@ -3,6 +3,8 @@ import db from '../models/db.model.js';
 import config from '../config/config.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
+import CustomError from '../helpers/customError.helper.js';
+import verifica from '../helpers/verificacao.helpper.js';
 
 const catchError = (err, res) => {
     if (err instanceof jwt.TokenExpiredError) {
@@ -74,10 +76,19 @@ const eOProprio = async (req, res, next) => {
     const Usuario = new UsuarioRepository(db.usuario);
     let idUsuarioAltera = Number(req.params.idUsuario);
 
-    if (!idUsuarioAltera) {
-        const usuario = await Usuario.buscarPorLogin(req.query.login);
+    try {
+        if (!idUsuarioAltera) {
+            const usuario = await Usuario.buscarPorLogin(req.query.login);
 
-        idUsuarioAltera = usuario.usuario_id;
+            verifica.registroExiste(usuario, Usuario);
+
+            idUsuarioAltera = usuario.usuario_id;
+        }
+    } catch (erro) {
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
     }
 
     const usuario = await Usuario.buscarPorId(req.usuario_id);

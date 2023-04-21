@@ -541,10 +541,13 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Nenhum estado fornecido!"
+                    },
+                    "404": {
+                        "description": "Estado não encontrado!"
                     }
-                },
-                "400": {
-                    "description": "Nenhum estado fornecido!"
                 }
             }
         },

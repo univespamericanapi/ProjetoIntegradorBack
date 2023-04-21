@@ -1,11 +1,9 @@
 import bcrypt from 'bcryptjs';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
-import UsuarioRepository from '../repositories/usuario.repository.js';
-import senhaValida from '../utils/senha.util.js';
-import CustomError from '../helpers/customError.helper.js';
-import { mensagensConstant } from '../constants/mensagens.constant.js';
+import UsuarioRepository from '../repositories/usuario.repository.js'
 import usuarioUtils from '../utils/usuario.util.js';
+import verifica from '../helpers/verificacao.helpper.js';
 
 const criar = async (novo) => {
     try {
@@ -14,14 +12,11 @@ const criar = async (novo) => {
 
         const cargo = await Cargo.buscarPorNome(novo.usuario_cargo);
 
+        verifica.registroExiste(cargo, Cargo);
+
         novo.usuario_cargo = cargo.cargo_id;
 
-        if (!senhaValida(novo.usuario_senha)) {
-            throw new CustomError(
-                406,
-                mensagensConstant.senhaInvalida,
-            );
-        }
+        verifica.senhaValida(novo.usuario_senha);
 
         novo.usuario_senha = bcrypt.hashSync(novo.usuario_senha, 8);
 
@@ -29,7 +24,10 @@ const criar = async (novo) => {
 
         delete novo.usuario_senha;
 
-        return resposta;
+        return {
+            status: 201,
+            message: resposta
+        };
     } catch (erro) {
         throw erro;
     }
@@ -55,12 +53,7 @@ const listar = async () => {
             listaUsuarios.push(temp);
         }
 
-        if (!listaUsuarios) {
-            throw new CustomError(
-                404,
-                mensagensConstant.usuarioNaoEncontrado,
-            );
-        }
+        verifica.registroExiste(listaUsuarios, Usuario);
 
         return {
             status: 200,
@@ -75,9 +68,20 @@ const deletar = async (idUsuario) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
+        verifica.faltaParametro(idUsuario);
+
+        const usuario = await Usuario.buscarPorId(idUsuario);
+
+        verifica.registroExiste(usuario, Usuario);
+
         const resposta = await Usuario.deletarPorId(idUsuario);
 
-        return resposta;
+        console.log(resposta);
+
+        return {
+            status: 202,
+            message: resposta
+        };
     } catch (erro) {
         throw erro;
     }
@@ -87,8 +91,16 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
+        verifica.faltaParametro(idUsuario);
+
+        const usuario1 = await Usuario.buscarPorId(idUsuario);
+
+        verifica.registroExiste(usuario1, Usuario);
+
         if (alteracao.usuario_login) {
-            await Usuario.checaUsuarioExiste(alteracao.usuario_login);
+            const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
+
+            verifica.registroDuplicado(usuario2, Usuario);
         }
 
         if (alteracao.usuario_cargo) {
@@ -96,22 +108,23 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 
             const cargo = await Cargo.buscarPorNome(alteracao.usuario_cargo);
 
-            console.log(cargo);
+            verifica.registroExiste(cargo, Cargo);
 
             alteracao.usuario_cargo = cargo.cargo_id;
         }
 
         if (alteracao.usuario_senha) {
+            verifica.senhaValida(alteracao.usuario_senha);
+
             alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
         }
 
         const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
 
-        if (alteracao.usuario_senha) {
-            delete alteracao.usuario_senha;
-        }
-
-        return resposta;
+        return {
+            status: 202,
+            message: resposta
+        };
     } catch (erro) {
         throw erro;
     }
@@ -121,13 +134,23 @@ const atualizar = async (idUsuario, alteracao) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
+        verifica.faltaParametro(idUsuario);
+
+        const usuario1 = await Usuario.buscarPorId(idUsuario);
+
+        verifica.registroExiste(usuario1, Usuario);
+
         delete alteracao.usuario_cargo;
 
         if (alteracao.usuario_login) {
-            await Usuario.checaUsuarioExiste(alteracao.usuario_login);
+            const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
+
+            verifica.registroDuplicado(usuario2, Usuario);
         }
 
         if (alteracao.usuario_senha) {
+            verifica.senhaValida(alteracao.usuario_senha);
+
             alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
         }
 
@@ -137,7 +160,10 @@ const atualizar = async (idUsuario, alteracao) => {
             delete alteracao.usuario_senha;
         }
 
-        return resposta;
+        return {
+            status: 202,
+            message: resposta
+        };
     } catch (erro) {
         throw erro;
     }
@@ -148,6 +174,8 @@ const buscarPorId = async (idUsuario) => {
         const Usuario = new UsuarioRepository(db.usuario);
 
         const temp = await Usuario.buscarPorId(idUsuario);
+
+        verifica.registroExiste(temp, Usuario);
 
         const resposta = {
             usuario_id: temp.usuario_id,
@@ -170,6 +198,8 @@ const buscarPorLogin = async (loginUsuario) => {
         const Usuario = new UsuarioRepository(db.usuario);
 
         const temp = await Usuario.buscarPorLogin(loginUsuario);
+
+        verifica.registroExiste(temp, Usuario);
 
         const resposta = {
             usuario_id: temp.usuario_id,

@@ -1,6 +1,6 @@
 import PasswordValidator from "password-validator";
 
-const senhaValida = (senha) => {
+const senhaVerifica = (senha) => {
     const schema = new PasswordValidator();
 
     schema
@@ -18,4 +18,4 @@ const senhaValida = (senha) => {
     return schema.validate(senha);
 }
 
-export default senhaValida;
+export default senhaVerifica;

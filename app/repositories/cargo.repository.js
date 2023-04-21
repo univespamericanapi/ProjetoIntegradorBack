@@ -9,8 +9,6 @@ export default class CargoRepository extends BaseRepository {
                 }
             });
 
-            this.verificaRegistro(cargo);
-
             return cargo;
         } catch (erro) {
             throw erro;

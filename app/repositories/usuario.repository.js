@@ -11,10 +11,6 @@ export default class UsuarioRepository extends BaseRepository {
                 }
             });
 
-            this.verificaRegistro(usuario);
-
-            delete usuario.usuario_login;
-
             return usuario;
         } catch (erro) {
             throw erro;
@@ -26,10 +22,7 @@ export default class UsuarioRepository extends BaseRepository {
             await this.checaUsuarioExiste(registro.usuario_login);
 
             return await this.model.create(registro).then(() => {
-                return {
-                    status: 201,
-                    message: this.nomeModel + mensagensConstant.registroCriado,
-                };
+                return this.nomeModel + mensagensConstant.registroCriado
             });
         } catch (erro) {
             throw erro;
@@ -41,10 +34,7 @@ export default class UsuarioRepository extends BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.update(alteracoes).then(() => {
-                return {
-                    status: 202,
-                    message: this.nomeModel + mensagensConstant.registroAtualizado,
-                };
+                return this.nomeModel + mensagensConstant.registroAtualizado
             });
         } catch (erro) {
             throw erro;

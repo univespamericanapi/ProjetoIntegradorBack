@@ -15,6 +15,13 @@ const login = async (login) => {
 
         const usuario = await Usuario.buscarPorLogin(login.usuario_login);
 
+        if (!usuario) {
+            throw new CustomError(
+                404,
+                Usuario.nomeModel + mensagensConstant.registroNaoEncontrado,
+            );
+        }
+
         const senhaEValida = bcrypt.compareSync(
             login.usuario_senha,
             usuario.usuario_senha
@@ -63,6 +70,13 @@ const refreshToken = async (requestToken) => {
         }
 
         const refreshToken = await RefreshToken.buscaPorToken(requestToken);
+
+        if (!refreshToken) {
+            throw new CustomError(
+                404,
+                RefreshToken.nomeModel + mensagensConstant.registroNaoEncontrado,
+            );
+        }
 
         if (await RefreshToken.verificaExpirado(refreshToken)) {
             await RefreshToken.deletarPorId(refreshToken.id);

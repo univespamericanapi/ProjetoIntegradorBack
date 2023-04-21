@@ -12,6 +12,7 @@ export const mensagensConstant = {
     eventoJaCadastrado: 'Evento já cadastrado!',
     participanteJaCadastrado: 'Participante já foi cadastrado!',
     usuarioJaCadastrado: 'Usuário já está em uso!',
+    registroJaCadastrado: ' já cadastrado!',
 
     // not found
     cargoNaoEncontrado: 'Cargo não existe!',
@@ -49,6 +50,7 @@ export const mensagensConstant = {
     estadoNaoEnviado: 'Nenhum estado fornecido!',
     cidadeNaoEnviada: 'Nenhuma cidade fornecida!',
     usuarioNaoEnviado: 'Nenhum usuario foi fornecido!',
+    parametroNaoEnviado: 'Parametro não enviado!',
 
     // invalid
     senhaInvalida: 'Senha inválida!',
