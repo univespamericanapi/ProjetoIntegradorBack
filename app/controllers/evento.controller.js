@@ -1,3 +1,4 @@
+import { coresLog } from "../constants/coresLog.constant.js";
 import eventoService from "../services/evento.service.js";
 
 const criar = async (req, res) => {
@@ -7,8 +8,10 @@ const criar = async (req, res) => {
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
+            console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
             return res.status(erro.status).send(erro.message);
         }
+        console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
         return res.status(500).send(erro.message);
     }
 };
@@ -20,8 +23,10 @@ const listar = async (req, res) => {
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
+            console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
             return res.status(erro.status).send(erro.message);
         }
+        console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
         return res.status(500).send(erro.message);
     }
 };
@@ -33,8 +38,10 @@ const deletar = async (req, res) => {
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
+            console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
             return res.status(erro.status).send(erro.message);
         }
+        console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
         return res.status(500).send(erro.message);
     }
 };
@@ -46,8 +53,10 @@ const atualizar = async (req, res) => {
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
+            console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
             return res.status(erro.status).send(erro.message);
         }
+        console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
         return res.status(500).send(erro.message);
     }
 };
@@ -59,8 +68,10 @@ const buscarPorId = async (req, res) => {
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {
         if (erro.status) {
+            console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
             return res.status(erro.status).send(erro.message);
         }
+        console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
         return res.status(500).send(erro.message);
     }
 };
