@@ -1,5 +1,5 @@
 import authJwt from "../middlewares/authJwt.js";
-import eventoCtrl from "../controllers/evento.ctrl.js";
+import eventoCtrl from "../controllers/evento.controller.js";
 import verificaDuplicado from "../middleware/verificaDuplicado.js";
 
 const eventoRoutes = app => {
@@ -24,8 +24,8 @@ const eventoRoutes = app => {
         authJwt.verificaToken,
         authJwt.eAdmin
     ], eventoCtrl.deletaEvento);
-    app.get('/api/lista/evento', eventoCtrl.eventoLista);
-    app.get('/api/lista/evento/:id', eventoCtrl.eventoPorId);
+    app.get('/api/evento/listar', eventoCtrl.eventoLista);
+    app.get('/api/evento/buscar/:id', eventoCtrl.eventoPorId);
 };
 
 export default eventoRoutes;

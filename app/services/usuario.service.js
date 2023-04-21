@@ -5,7 +5,6 @@ import UsuarioRepository from '../repositories/usuario.repository.js';
 import senhaValida from '../utils/senha.util.js';
 import CustomError from '../helpers/customError.helper.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
-import authJwt from '../middlewares/authJwt.js';
 import usuarioUtils from '../utils/usuario.util.js';
 
 const criar = async (novo) => {

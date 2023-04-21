@@ -447,14 +447,195 @@
                     }
                 }
             }
-        }        
+        },
+        "/api/lista/cargo": {
+            "get": {
+                "summary": "Lista de cargos do sistema.",
+                "description": "Rota responsável pela listagem de todos os cargos cadastrados.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lista/categoria": {
+            "get": {
+                "summary": "Lista de categorias do sistema.",
+                "description": "Rota responsável pela listagem de todas as categorias cadastradas.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lista/cidade": {
+            "get": {
+                "summary": "Lista de cidades do sistema.",
+                "description": "Rota responsável pela listagem de todas as cidades cadastradas.",
+                "tags": [
+                    "Listas"
+                ],
+                "parameters": [
+                    {
+                        "name": "estado",
+                        "in": "query",
+                        "description": "Id do estado.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cid_id": {
+                                            "type": "number"
+                                        },
+                                        "cid_desc": {
+                                            "type": "string"
+                                        },
+                                        "estado": {
+                                            "type": "object",
+                                            "properties": {
+                                                "est_sigla": {
+                                                    "type": "string"
+                                                },
+                                                "est_desc": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Nenhum estado fornecido!"
+                }
+            }
+        },
+        "/api/lista/estado": {
+            "get": {
+                "summary": "Lista de estados do sistema.",
+                "description": "Rota responsável pela listagem de todos os estados cadastrados.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "est_id": {
+                                            "type": "number"
+                                        },
+                                        "est_sigla": {
+                                            "type": "string"
+                                        },
+                                        "est_desc": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lista/estilo": {
+            "get": {
+                "summary": "Lista de estilos do sistema.",
+                "description": "Rota responsável pela listagem de todos os estilos cadastrados.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lista/modalidade": {
+            "get": {
+                "summary": "Lista de modalidades do sistema.",
+                "description": "Rota responsável pela listagem de todas as modalidades cadastradas.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "components": {
         "schemas": {
             "login": {
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "usuario_id": {
                         "type": "number"
                     },
                     "usuario_login": {
@@ -477,7 +658,7 @@
             "usuario": {
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "usuario_id": {
                         "type": "number"
                     },
                     "usuario_login": {
@@ -497,7 +678,7 @@
             "usuarioView": {
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "usuario_id": {
                         "type": "number"
                     },
                     "usuario_login": {
@@ -507,6 +688,17 @@
                         "type": "string"
                     },
                     "usuario_cargo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "listaView": {
+                "type": "object",
+                "properties": {
+                    "item_id": {
+                        "type": "number"
+                    },
+                    "item_nome": {
                         "type": "string"
                     }
                 }

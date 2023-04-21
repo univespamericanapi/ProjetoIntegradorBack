@@ -17,10 +17,7 @@ export default class UsuarioRepository extends BaseRepository {
 
             return usuario;
         } catch (erro) {
-            throw new CustomError(
-                500,
-                erro.message,
-            );
+            throw erro;
         }
     }
 
