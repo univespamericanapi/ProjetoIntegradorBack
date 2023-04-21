@@ -9,7 +9,7 @@ export const cidade = (sequelize, Sequelize) => {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        cid_estado: {
+        cid_estado: { // FK para tabela estado
             type: Sequelize.INTEGER,
             allowNull: false
         }

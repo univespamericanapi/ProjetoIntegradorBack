@@ -1,7 +1,7 @@
 // import db from "../models/db.model.js";
 
 const allAccess = async (req, res) => {
-    // res.status(200).send('Public Content.');
+    res.status(200).send('Public Content.');
 };
 
 const userBoard = (req, res) => {

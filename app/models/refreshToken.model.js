@@ -6,7 +6,7 @@ export const refreshToken = (sequelize, Sequelize) => {
         expiryDate: {
             type: Sequelize.DATE
         },
-        userId: {
+        refreshToken_usuario: {  // FK para tabela usuario
             type: Sequelize.INTEGER
         }
     }, { timestamps: false });

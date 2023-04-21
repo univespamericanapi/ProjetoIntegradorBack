@@ -1,31 +1,31 @@
-export const personagem = (sequelize, Sequelize) => {
-    const Personagem = sequelize.define("personagens", {
-        pers_id: {
+export const apresentacao = (sequelize, Sequelize) => {
+    const Apresentacao = sequelize.define("apresentacoes", {
+        apres_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        pers_part: {
+        apres_comp: { // FK para tabela competidor
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        pers_nome: {
+        apres_nome: {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        pers_origem: {
+        apres_origem: {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        pers_link: {
+        apres_link_ref: {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        pers_aceite: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false
+        apres_media: {
+            type: Sequelize.FLOAT,
+            defaultValue: 0.00
         }
     }, { timestamps: false });
 
-    return Personagem;
+    return Apresentacao;
 };

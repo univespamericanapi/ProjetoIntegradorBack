@@ -1,8 +1,8 @@
 export const cargosConstant = [
     'admin',
     'staff',
-    'user',
     'judge',
+    'competidor',
 ];
 
 export const categoriasConstant = [
@@ -15,6 +15,19 @@ export const categoriasConstant = [
 ];
 
 export const concursosConstant = [
-    'Desfile Cosplay',
-    'Circuito Cosplay'
+    'Cosplay Circuito',
+    'Cosplay Desfile',
+    'Karaoke',
+    'Kpop Circuito',
+    'Kpop Solo / Duo',
+];
+
+export const estilosConstant = [
+    'Livre',
+    'Tradicional',
+];
+
+export const modalidadesConstant = [
+    'Duo (Dupla)',
+    'Solo (Individual)',
 ];

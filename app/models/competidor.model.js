@@ -1,47 +1,43 @@
-export const participante = (sequelize, Sequelize) => {
-    const Participante = sequelize.define("participantes", {
-        part_id: {
+export const competidor = (sequelize, Sequelize) => {
+    const Competidor = sequelize.define("competidores", {
+        comp_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        part_user: {
-            type: Sequelize.STRING(255),
-            allowNull: true
-        },
-        part_senha: {
-            type: Sequelize.STRING(255),
-            allowNull: true
-        },
-        part_nome: {
-            type: Sequelize.STRING(500),
-            allowNull: false
-        },
-        part_nomeSocial: {
-            type: Sequelize.STRING(500),
-            allowNull: false
-        },
-        part_cpf: {
-            type: Sequelize.STRING(11),
-            allowNull: false
-        },
-        part_nasc: {
-            type: Sequelize.DATE,
-            allowNull: false
-        },
-        part_whats: {
-            type: Sequelize.STRING(11),
-            allowNull: false
-        },
-        part_est: {
+        comp_usua: { // FK para a tabela usuários
             type: Sequelize.INTEGER,
+            allowNull: true
+        },
+        comp_email: {
+            type: Sequelize.STRING(500),
             allowNull: false
         },
-        part_cidade: {
+        comp_nome: {
+            type: Sequelize.STRING(500),
+            allowNull: false
+        },
+        comp_nome_social: {
+            type: Sequelize.STRING(500),
+            allowNull: false
+        },
+        comp_cpf: {
+            type: Sequelize.STRING(11),
+            allowNull: false
+        },
+        comp_nasc: {
+            type: Sequelize.DATEONLY,
+            allowNull: false
+        },
+        comp_whats: {
+            type: Sequelize.STRING(11),
+            allowNull: false
+        },
+        comp_cidade: { // FK para a tabela cidades
             type: Sequelize.INTEGER,
             allowNull: false
         }
     }, { timestamps: false });
 
-    return Participante;
+    return Competidor;
 };

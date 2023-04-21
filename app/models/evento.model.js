@@ -1,3 +1,5 @@
+import { concursosConstant } from "../constants/listas.constant.js";
+
 export const evento = (sequelize, Sequelize) => {
     const Evento = sequelize.define("eventos", {
         event_id: {
@@ -17,19 +19,15 @@ export const evento = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        event_estado: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        event_cidade: {
+        event_cidade: { // FK para tabela cidade
             type: Sequelize.INTEGER,
             allowNull: false
         },
         event_data: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: false
         },
-        event_EdiNome: {
+        event_ed_nome: {
             type: Sequelize.STRING(255),
             allowNull: false
         }
@@ -37,23 +35,22 @@ export const evento = (sequelize, Sequelize) => {
         timestamps: false,
         hooks: {
             beforeDestroy: (eventos) => {
-                sequelize.models.configs_concursos.destroy({
+                sequelize.models.concursos.destroy({
                     where: {
-                        config_event: eventos.event_id
+                        conc_event: eventos.event_id
                     }
                 });
             },
             afterCreate: (eventos) => {
-                sequelize.models.concursos.findAll().then(concursoLista => {
-                    concursoLista.forEach(concurso => {
-                        sequelize.models.configs_concursos.create({
-                            config_event: eventos.event_id,
-                            config_concurso: concurso.concur_id,
-                            config_limit_inscr: 1,
-                            config_limit_espera: 1,
-                            config_limit_checkin: 1,
-                            config_ativo: false
-                        });
+                concursosConstant.forEach(concurso => {
+                    sequelize.models.concursos.create({
+                        conc_event: eventos.event_id,
+                        conc_nome: concurso,
+                        conc_limit_inscr: 0,
+                        conc_limit_espera: 0,
+                        conc_limit_checkin: 0,
+                        conc_ativo: false,
+                        conc_data_ativ: Sequelize.NOW
                     });
                 });
             }

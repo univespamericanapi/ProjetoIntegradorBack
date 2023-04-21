@@ -124,9 +124,135 @@
                 }
             }
         },
+        "/api/admin/usuario/listar": {
+            "get": {
+                "summary": "Listagem de todos os usuários.",
+                "description": "Rota responsável pela listagem de todos usuários cadastrados.",
+                "tags": [
+                    "Usuário"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/usuarioView"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/usuario/buscar/{idUsuario}": {
+            "get": {
+                "summary": "Buscar um usuário pelo id",
+                "description": "Rota responsável por buscar um usuário utilizando o id.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "idUsuario",
+                        "in": "path",
+                        "description": "Id do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/usuarioView"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/usuario/buscar": {
+            "get": {
+                "summary": "Buscar um usuário pelo nome de login",
+                "description": "Rota responsável por buscar um usuário utilizando o nome de login.",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "Login do usuário.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/usuarioView"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
         "/api/admin/usuario/criar": {
             "post": {
-                "summary": "Cadastro de usuário.",
+                "summary": "Cadastrar de usuário.",
                 "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
                 "tags": [
                     "Usuário"
@@ -173,80 +299,6 @@
                     },
                     "406": {
                         "description": "Senha inválida!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/listar": {
-            "get": {
-                "summary": "Listagem de todos os usuários.",
-                "description": "Rota responsável pela listagem de todos usuários cadastrados.",
-                "tags": [
-                    "Usuário"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/usuarioView"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/deletar/{idUsuario}": {
-            "delete": {
-                "summary": "Deletar um usuário pelo id",
-                "description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "idUsuario",
-                        "in": "path",
-                        "description": "Id do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Usuario deletado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
                     }
                 }
             }
@@ -360,10 +412,10 @@
                 }
             }
         },
-        "/api/usuario/buscar/{idUsuario}": {
-            "get": {
-                "summary": "Buscar um usuário pelo id",
-                "description": "Rota responsável por buscar um usuário utilizando o id.",
+        "/api/admin/usuario/deletar/{idUsuario}": {
+            "delete": {
+                "summary": "Deletar um usuário pelo id",
+                "description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
                 "tags": [
                     "Usuário"
                 ],
@@ -381,16 +433,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/usuarioView"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Usuario deletado com sucesso!"
                     },
                     "401": {
                         "description": "Não autorizado!"
@@ -403,51 +447,7 @@
                     }
                 }
             }
-        },
-        "/api/usuario/buscar": {
-            "get": {
-                "summary": "Buscar um usuário pelo id",
-                "description": "Rota responsável por buscar um usuário utilizando o id.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "login",
-                        "in": "query",
-                        "description": "Login do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/usuarioView"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        }
+        }        
     },
     "components": {
         "schemas": {

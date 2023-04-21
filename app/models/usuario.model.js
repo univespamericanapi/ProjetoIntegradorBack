@@ -17,7 +17,7 @@ export const usuario = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: false
         },
-        usuario_cargo: {
+        usuario_cargo: { // FK para tabela cargo
             type: Sequelize.INTEGER,
             allowNull: false
         }
