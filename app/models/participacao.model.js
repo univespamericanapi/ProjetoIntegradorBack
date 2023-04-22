@@ -9,6 +9,10 @@ export const participacao = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        part_conc: { // FK para tabela concurso
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         part_apres: { // FK para tabela apresentacao
             type: Sequelize.INTEGER,
             allowNull: false

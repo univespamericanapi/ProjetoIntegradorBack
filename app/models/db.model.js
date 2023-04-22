@@ -201,6 +201,14 @@ db.participacao.belongsTo(db.apresentacao, {
     foreignKey: 'part_apres'
 });
 
+// participacao - concurso
+db.concurso.hasMany(db.participacao, {
+    foreignKey: 'part_conc'
+});
+db.participacao.belongsTo(db.concurso, {
+    foreignKey: 'part_conc'
+});
+
 // refreshToken - user
 db.refreshToken.belongsTo(db.usuario, {
     foreignKey: 'refreshToken_usuario',
