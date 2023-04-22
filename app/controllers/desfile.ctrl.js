@@ -1,5 +1,4 @@
 import db from "../models/db.model.js";
-import utils from "../middleware/utils.js";
 
 const novoDesfile = async (req, res) => {
     const Evento = db.evento;

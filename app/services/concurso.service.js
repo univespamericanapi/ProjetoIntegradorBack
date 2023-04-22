@@ -9,7 +9,7 @@ const buscarPorEvento = async (idEvento) => {
 
         const concursos = await Concurso.buscarPorEvento(idEvento);
 
-        verifica.registroExiste(concursos);
+        verifica.registroVazio(concursos, Concurso);
 
         return {
             status: 200,
@@ -23,8 +23,6 @@ const buscarPorEvento = async (idEvento) => {
 const atualizar = async (idConcurso, alteracao) => {
     try {
         const Concurso = new ConcursoRepository(db.concurso);
-
-        verifica.faltaParametro(idConcurso);
 
         const concurso = await Concurso.buscarPorId(idConcurso);
 

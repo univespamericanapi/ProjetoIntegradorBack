@@ -3,9 +3,9 @@ import BaseRepository from "./base.repository.js";
 export default class ConcursoRepository extends BaseRepository {
     async buscarPorEvento(idEvento) {
         try {
-            return await Config.findAll({
+            return await this.model.findAll({
                 where: {
-                    config_event: idEvento
+                    conc_event: idEvento
                 }
             });
         } catch (erro) {

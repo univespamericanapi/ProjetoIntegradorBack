@@ -11,6 +11,15 @@ const registroExiste = (registro, Model) => {
     }
 };
 
+const registroVazio = (registro, Model) => {
+    if (registro.length === 0) {
+        throw new CustomError(
+            404,
+            Model.nomeModel + mensagensConstant.registroNaoEncontrado,
+        );
+    }
+};
+
 const senhaValida = (senha) => {
     if (!senhaVerifica(senha)) {
         throw new CustomError(
@@ -40,6 +49,7 @@ const faltaParametro = (parametro) => {
 
 const verifica = {
     registroExiste,
+    registroVazio,
     senhaValida,
     registroDuplicado,
     faltaParametro,

@@ -848,6 +848,106 @@
                     }
                 }
             }
+        },
+        "/api/admin/concurso/buscar/{idEvento}": {
+            "get": {
+                "summary": "Listar concursos pelo id do evento.",
+                "description": "Rota responsável por listar os concursos utilizando o id do evento.",
+                "tags": [
+                    "Concursos"
+                ],
+                "parameters": [
+                    {
+                        "name": "idEvento",
+                        "in": "path",
+                        "description": "Id do evento.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "schema": {
+                                    "$ref": "#/components/schemas/concurso"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
+        },
+        "/api/admin/concurso/atualizar/{idConcurso}": {
+            "put": {
+                "summary": "Atualizar um concurso pelo id.",
+                "description": "Rota responsável por atualizar um concurso utilizando o id para encontrá-lo.",
+                "tags": [
+                    "Concursos"
+                ],
+                "parameters": [
+                    {
+                        "name": "idConcurso",
+                        "in": "path",
+                        "description": "Id do concurso.",
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/concurso"
+                            },
+                            "examples": {
+                                "concurso": {
+                                    "value": {
+                                        "conc_limit_inscr": 0,
+                                        "conc_limit_espera": 0,
+                                        "conc_limit_checkin": 0,
+                                        "conc_ativo": true,
+                                        "conc_data_ativ": "2023-04-22"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Evento atualizado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -947,6 +1047,36 @@
                     },
                     "event_ed_nome": {
                         "type": "string"
+                    }
+                }
+            },
+            "concurso": {
+                "type": "object",
+                "properties": {
+                    "conc_id": {
+                        "type": "number"
+                    },
+                    "conc_event": {
+                        "type": "number"
+                    },
+                    "conc_nome": {
+                        "type": "string"
+                    },
+                    "conc_limit_inscr": {
+                        "type": "number"
+                    },
+                    "conc_limit_espera": {
+                        "type": "number"
+                    },
+                    "conc_limit_checkin": {
+                        "type": "number"
+                    },
+                    "conc_ativo": {
+                        "type": "boolean"
+                    },
+                    "conc_data_ativ": {
+                        "type": "string",
+                        "format": "date"
                     }
                 }
             }

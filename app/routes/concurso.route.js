@@ -14,7 +14,7 @@ const concursoRoutes = app => {
         authJwt.verificaToken,
         authJwt.eAdmin
     ], concursoController.listarPorEvento);
-    app.put('/api/admin/concurso/atualizar/:idConcurso',[
+    app.put('/api/admin/concurso/atualizar/:idConcurso', [
         authJwt.verificaToken,
         authJwt.eAdmin
     ], concursoController.atualizar);
