@@ -49,22 +49,4 @@ const validaCpf = cpf => {
     return true;
 }
 
-const dataConverter = dataString => {
-    const dataArray = dataString.split("/");
-    return new Date(dataArray[2], dataArray[1] - 1, dataArray[0])
-        .toLocaleDateString(
-            'en-CA',
-            {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            }
-        );
-};
-
-const utils = {
-    validaCpf,
-    dataConverter
-}
-
-export default utils;
+export default validaCpf;
