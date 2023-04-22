@@ -48,7 +48,7 @@ const deletar = async (req, res) => {
 
 const atualizar = async (req, res) => {
     try {
-        const resposta = await eventoService.atualizar(req.params.idEvento, req.body);;
+        const resposta = await eventoService.atualizar(req.params.idEvento, req.body);
 
         return res.status(resposta.status).send(resposta.message);
     } catch (erro) {

@@ -4,13 +4,25 @@ import db from "../models/db.model.js";
 export default class EventoRepository extends BaseRepository {
     async buscaPorEdNome(edNome) {
         try {
-            const evento = await this.model.findOne({
+            return await this.model.findOne({
                 where: {
                     event_ed_nome: edNome
-                }
+                },
+                attributes: {
+                    exclude: ['event_cidade']
+                },
+                include: {
+                    model: db.cidade,
+                    attributes: ['cid_desc'],
+                    include: {
+                        model: db.estado,
+                        attributes: ['est_sigla', 'est_desc']
+                    }
+                },
+                order: [
+                    ['event_data', 'DESC']
+                ]
             });
-
-            return evento;
         } catch (erro) {
             throw erro;
         }

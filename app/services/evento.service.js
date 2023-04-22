@@ -87,9 +87,8 @@ const atualizar = async (idEvento, alteracao) => {
 
         return {
             status: 202,
-            message: resposta
+            message: resposta,
         };
-
     } catch (erro) {
         throw erro;
     }
