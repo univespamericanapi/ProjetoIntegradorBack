@@ -17,6 +17,7 @@ import { modalidade } from "./modalidade.model.js";
 import { nota } from "./nota.model.js";
 import { participacao } from "./participacao.model.js";
 import { refreshToken } from "./refreshToken.model.js";
+import { emailToken } from "./emailToken.model.js";
 import { usuario } from "./usuario.model.js";
 
 // Instance of Sequelize
@@ -48,6 +49,7 @@ db.modalidade = modalidade(sequelize, Sequelize);
 db.nota = nota(sequelize, Sequelize);
 db.participacao = participacao(sequelize, Sequelize);
 db.refreshToken = refreshToken(sequelize, Sequelize);
+db.emailToken = emailToken(sequelize, Sequelize);
 db.usuario = usuario(sequelize, Sequelize);
 
 // Database Relationships
@@ -209,7 +211,7 @@ db.participacao.belongsTo(db.concurso, {
     foreignKey: 'part_conc'
 });
 
-// refreshToken - user
+// refreshToken - usuario
 db.refreshToken.belongsTo(db.usuario, {
     foreignKey: 'refreshToken_usuario',
     targetKey: 'usuario_id'
@@ -217,6 +219,16 @@ db.refreshToken.belongsTo(db.usuario, {
 db.usuario.hasOne(db.refreshToken, {
     foreignKey: 'refreshToken_usuario',
     targetKey: 'usuario_id'
+});
+
+// emailToken - competidor
+db.emailToken.belongsTo(db.competidor, {
+    foreignKey: 'emailToken_comp',
+    targetKey: 'comp_id'
+});
+db.competidor.hasOne(db.emailToken, {
+    foreignKey: 'emailToken_comp',
+    targetKey: 'comp_id'
 });
 
 // usuario - cargo

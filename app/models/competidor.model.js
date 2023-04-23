@@ -13,6 +13,11 @@ export const competidor = (sequelize, Sequelize) => {
             type: Sequelize.STRING(500),
             allowNull: true
         },
+        comp_email_verif: { // Has the email been verified?
+            type: Sequelize.BOOLEAN,
+            allowNull: true,
+            defaultValue: false
+        },
         comp_nome: {
             type: Sequelize.STRING(500),
             allowNull: false
