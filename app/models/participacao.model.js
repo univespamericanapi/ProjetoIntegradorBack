@@ -23,21 +23,25 @@ export const participacao = (sequelize, Sequelize) => {
         part_ordem: {
             type: Sequelize.INTEGER
         },
-        part_regul: {
+        part_aceit_regul: {
             type: Sequelize.BOOLEAN,
             allowNull: false,
             defaultValue: false
         },
-        part_status: {
+        part_status: { // Campo para controle dos organizadores
             type: Sequelize.STRING(250)
         },
-        part_obs: {
+        part_obs: { // Campo para controle dos organizadores
             type: Sequelize.TEXT('medium')
         },
-        part_extra: {
+        part_extra: { // Campo para controle dos organizadores
             type: Sequelize.STRING(250)
+        },
+        part_tipo_inscr: { // Campo de controle das inscrições Inscrição direta ou fila de espera
+            type: Sequelize.ENUM,
+            values: ['Inscrição', 'Espera']
         }
-    }, { timestamps: false });
+    });
 
     return Participacao;
 };

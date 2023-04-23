@@ -11,7 +11,7 @@ export const competidor = (sequelize, Sequelize) => {
         },
         comp_email: {
             type: Sequelize.STRING(500),
-            allowNull: false
+            allowNull: true
         },
         comp_nome: {
             type: Sequelize.STRING(500),

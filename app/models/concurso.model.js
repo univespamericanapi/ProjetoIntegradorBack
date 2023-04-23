@@ -17,11 +17,23 @@ export const concurso = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        conc_atual_inscr: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         conc_limit_espera: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        conc_atual_espera: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         conc_limit_checkin: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        conc_atual_checkin: {
             type: Sequelize.INTEGER,
             allowNull: false
         },

@@ -21,7 +21,7 @@ export const apresentacao = (sequelize, Sequelize) => {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        apres_media: {
+        apres_media: { // Média das notas
             type: Sequelize.FLOAT,
             defaultValue: 0.00
         }
