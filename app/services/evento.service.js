@@ -12,7 +12,7 @@ const criar = async (novo) => {
 
         const evento = await Evento.buscaPorEdNome(novo.event_ed_nome);
 
-        verifica.registroDuplicado(evento, Evento);
+        verifica.registroDuplicado(evento, "Evento");
 
         const resposta = await Evento.salvar(novo);
 
@@ -31,7 +31,7 @@ const listar = async () => {
 
         const eventos = await Evento.buscarTodos();
 
-        verifica.registroExiste(eventos, Evento);
+        verifica.registroExiste(eventos, "Evento");
 
         return {
             status: 200,
@@ -48,7 +48,7 @@ const deletar = async (idEvento) => {
 
         const evento = await Evento.buscarPorId(idEvento);
 
-        verifica.registroExiste(evento, Evento);
+        verifica.registroExiste(evento, "Evento");
 
         const resposta = await Evento.deletarPorId(idEvento);
 
@@ -69,14 +69,14 @@ const atualizar = async (idEvento, alteracao) => {
 
         const evento = await Evento.buscarPorId(idEvento);
 
-        verifica.registroExiste(evento, Evento);
+        verifica.registroExiste(evento, "Evento");
 
         if (alteracao.event_nome || alteracao.event_edicao) {
             alteracao.event_ed_nome = `${alteracao.event_edicao}º ${alteracao.event_nome}`;
 
             const evento2 = await Evento.buscaPorEdNome(alteracao.event_ed_nome);
 
-            verifica.registroDuplicado(evento2, Evento);
+            verifica.registroDuplicado(evento2, "Evento");
         }
 
         if (alteracao.event_data) {
@@ -102,7 +102,7 @@ const buscarPorId = async (idEvento) => {
 
         const evento = await Evento.buscarPorId(idEvento);
 
-        verifica.registroExiste(evento, Evento);
+        verifica.registroExiste(evento, "Evento");
 
         return {
             status: 200,

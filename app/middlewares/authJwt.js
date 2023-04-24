@@ -83,7 +83,7 @@ const eOProprio = async (req, res, next) => {
         if (!idUsuarioAltera) {
             const usuario = await Usuario.buscarPorLogin(req.query.login);
 
-            verifica.registroExiste(usuario, Usuario);
+            verifica.registroExiste(usuario, "Usuario");
 
             idUsuarioAltera = usuario.usuario_id;
         }

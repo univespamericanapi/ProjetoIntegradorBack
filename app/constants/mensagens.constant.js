@@ -28,7 +28,7 @@ export const mensagensConstant = {
 
     // successfully registered
     usuarioRegistrado: 'Usuário foi registrado com sucesso!',
-    participacaoRegistrada: 'Cadastro concluído com sucesso!',
+    participacaoRegistrada: 'Um e-mail foi enviado para sua conta para confirmar o cadastro.',
     eventoRegistrado: 'Novo evento criado com sucesso!',
     notaRegistrada: 'Notas registradas com sucesso!',
     registroCriado: ' registrado com sucesso!',
@@ -55,12 +55,17 @@ export const mensagensConstant = {
     // invalid
     senhaInvalida: 'Senha inválida!',
     cpfInvalido: 'CPF inválido!',
+    dataInvalida: 'Data inválida!',
+    emailInvalido: 'E-mail inválido!',
 
     // others
     limiteAlcancado: 'Limite de participantes no concurso alcançado!',
     checkinFeito: 'Checkin efetuado com sucesso!',
     checkinDesfeito: 'Checkin desfeito com sucesso!',
-    eventoInativo: 'Evento inativo, aguarde até abrir as inscrições!',
+    concursoInativo: 'Concurso inativo, aguarde até abrir as inscrições!',
     filaEsperaEncerrada: 'Não há mais vagas para inscrição!',
     vagasEncerradas: 'As vagas para o concurso acabaram, sua inscrição foi registrada na fila de espera!',
+    filaDeEspera: 'E-mail verificado com sucesso. As vagas efetivas para o concurso acabaram, sua inscrição foi registrada na fila de espera!',
+    inscrito: 'E-mail verificado com sucesso. Você está inscrito no concurso!',
+    termosNaoAceitos: 'Você não aceitou as regras e termos do concurso.',
 }

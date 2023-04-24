@@ -47,8 +47,11 @@ export const evento = (sequelize, Sequelize) => {
                         conc_event: eventos.event_id,
                         conc_nome: concurso,
                         conc_limit_inscr: 0,
+                        conc_atual_inscr: 0,
                         conc_limit_espera: 0,
+                        conc_atual_espera: 0,
                         conc_limit_checkin: 0,
+                        conc_atual_checkin: 0,
                         conc_ativo: false,
                         conc_data_ativ: "1900-01-01"
                     });

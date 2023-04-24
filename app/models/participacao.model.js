@@ -18,15 +18,15 @@ export const participacao = (sequelize, Sequelize) => {
             allowNull: false
         },
         part_checkin: {
-            type: Sequelize.BOOLEAN
+            type: Sequelize.BOOLEAN,
+            allowNull: false
         },
         part_ordem: {
             type: Sequelize.INTEGER
         },
         part_aceit_regul: {
             type: Sequelize.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
+            allowNull: false
         },
         part_status: { // Campo para controle dos organizadores
             type: Sequelize.STRING(250)
@@ -41,7 +41,7 @@ export const participacao = (sequelize, Sequelize) => {
             type: Sequelize.ENUM,
             values: ['Inscrição', 'Espera']
         }
-    });
+    }, { timestamps: false });
 
     return Participacao;
 };

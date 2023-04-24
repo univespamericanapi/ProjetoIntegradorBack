@@ -9,7 +9,7 @@ const buscarPorEvento = async (idEvento) => {
 
         const concursos = await Concurso.buscarPorEvento(idEvento);
 
-        verifica.registroVazio(concursos, Concurso);
+        verifica.registroVazio(concursos, "Concurso");
 
         return {
             status: 200,
@@ -26,7 +26,7 @@ const atualizar = async (idConcurso, alteracao) => {
 
         const concurso = await Concurso.buscarPorId(idConcurso);
 
-        verifica.registroExiste(concurso);
+        verifica.registroExiste(concurso, "Concurso");
 
         if(alteracao.conc_data_ativ) {
             alteracao.conc_data_ativ = dataUtils.stringParaData(alteracao.conc_data_ativ);

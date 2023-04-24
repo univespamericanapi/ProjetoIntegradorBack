@@ -8,7 +8,7 @@ import config from './app/config/config.js';
 
 const app = express();
 
-const fast = true;
+const fast = 0;
 
 // Configuração do aplicativo
 app.use(cors({ origin: config.corsOrigin }));

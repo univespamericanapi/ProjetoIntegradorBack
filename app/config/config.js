@@ -34,13 +34,14 @@ const config = {
     email: {
         host: process.env.EMAIL_HOST,
         service: process.env.EMAIL_SERVICE,
-        port: process.env.EMAIL_PORT,
+        port: 465,
         secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
         },
     },
+    baseUrlEmail: process.env.BASE_URL_EMAIL,
 }
 
 export default config;

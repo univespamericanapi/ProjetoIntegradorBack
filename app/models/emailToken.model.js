@@ -5,7 +5,11 @@ export const emailToken = (sequelize, Sequelize) => {
         },
         emailToken_comp: {  // FK para tabela competidor
             type: Sequelize.INTEGER
-        }
+        },
+        tipo_inscr: {
+            type: Sequelize.ENUM,
+            values: ['Inscrição', 'Espera']
+        },
     }, { timestamps: false });
 
     return EmailToken;

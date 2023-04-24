@@ -12,7 +12,7 @@ const criar = async (novo) => {
 
         const cargo = await Cargo.buscarPorNome(novo.usuario_cargo);
 
-        verifica.registroExiste(cargo, Cargo);
+        verifica.registroExiste(cargo, "Cargo");
 
         novo.usuario_cargo = cargo.cargo_id;
 
@@ -53,7 +53,7 @@ const listar = async () => {
             listaUsuarios.push(temp);
         }
 
-        verifica.registroExiste(listaUsuarios, Usuario);
+        verifica.registroExiste(listaUsuarios, "Usuario");
 
         return {
             status: 200,
@@ -72,7 +72,7 @@ const deletar = async (idUsuario) => {
 
         const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, Usuario);
+        verifica.registroExiste(usuario, "Usuario");
 
         const resposta = await Usuario.deletarPorId(idUsuario);
 
@@ -95,7 +95,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 
         const usuario1 = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario1, Usuario);
+        verifica.registroExiste(usuario1, "Usuario");
 
         if (alteracao.usuario_login) {
             const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
@@ -108,7 +108,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 
             const cargo = await Cargo.buscarPorNome(alteracao.usuario_cargo);
 
-            verifica.registroExiste(cargo, Cargo);
+            verifica.registroExiste(cargo, "Cargo");
 
             alteracao.usuario_cargo = cargo.cargo_id;
         }
@@ -138,14 +138,14 @@ const atualizar = async (idUsuario, alteracao) => {
 
         const usuario1 = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario1, Usuario);
+        verifica.registroExiste(usuario1, "Usuario");
 
         delete alteracao.usuario_cargo;
 
         if (alteracao.usuario_login) {
             const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
 
-            verifica.registroDuplicado(usuario2, Usuario);
+            verifica.registroDuplicado(usuario2, "Usuario");
         }
 
         if (alteracao.usuario_senha) {
@@ -171,7 +171,7 @@ const buscarPorId = async (idUsuario) => {
 
         const temp = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(temp, Usuario);
+        verifica.registroExiste(temp, "Usuario");
 
         const resposta = {
             usuario_id: temp.usuario_id,
@@ -195,7 +195,7 @@ const buscarPorLogin = async (loginUsuario) => {
 
         const temp = await Usuario.buscarPorLogin(loginUsuario);
 
-        verifica.registroExiste(temp, Usuario);
+        verifica.registroExiste(temp, "Usuario");
 
         const resposta = {
             usuario_id: temp.usuario_id,

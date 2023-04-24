@@ -1,5 +1,3 @@
-import { mensagensConstant } from "../constants/mensagens.constant.js";
-import CustomError from "../helpers/customError.helper.js";
 import verifica from "../helpers/verificacao.helpper.js";
 import db from "../models/db.model.js";
 import CargoRepository from "../repositories/cargo.repository.js";
@@ -14,7 +12,7 @@ const listarCargos = async () => {
 
         const cargos = await Cargo.buscarTodos();
 
-        verifica.registroExiste(cargos, Cargo);
+        verifica.registroExiste(cargos, "Cargo");
 
         return {
             status: 200,
@@ -31,7 +29,7 @@ const listarCategorias = async () => {
 
         const categorias = await Categoria.buscarTodos();
 
-        verifica.registroExiste(categorias, Categoria);
+        verifica.registroExiste(categorias, "Categoria");
 
         return {
             status: 200,
@@ -51,11 +49,11 @@ const listarCidades = async (estadoId) => {
 
         const estado = await Estado.buscarPorId(estadoId);
 
-        verifica.registroExiste(estado, Estado);
+        verifica.registroExiste(estado, "Estado");
 
         const cidades = await Cidade.listarPorEstado(estadoId);
 
-        verifica.registroExiste(cidades, Cidade);
+        verifica.registroExiste(cidades, "Cidade");
 
         return {
             status: 200,
@@ -72,7 +70,7 @@ const listarEstados = async () => {
 
         const estados = await Estado.buscarTodos();
 
-        verifica.registroExiste(estados, Estado);
+        verifica.registroExiste(estados, "Estado");
 
         return {
             status: 200,
@@ -89,7 +87,7 @@ const listarEstilos = async () => {
 
         const estilos = await Estilo.buscarTodos();
 
-        verifica.registroExiste(estilos, Estilo);
+        verifica.registroExiste(estilos, "Estilo");
 
         return {
             status: 200,
@@ -106,7 +104,7 @@ const listarModalidades = async () => {
 
         const modalidades = await Modalidade.buscarTodos();
 
-        verifica.registroExiste(modalidades, Modalidade);
+        verifica.registroExiste(modalidades, "Modalidade");
 
         return {
             status: 200,

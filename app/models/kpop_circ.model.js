@@ -1,22 +1,22 @@
 export const kpopCirc = (sequelize, Sequelize) => {
-    const KpopCirc = sequelize.define("kpop_circs", {
-        kpop_circ_id: {
+    const KpopCirc = sequelize.define("kpop_circ", {
+        extra_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        kpop_circ_part: { // FK para tabela participacao
+        extra_part: { // FK para tabela participacao
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        kpop_circ_integ: {
+        extra_integ: {
             type: Sequelize.TEXT('tiny')
         },
-        kpop_circ_link_av: {
+        extra_link_av: {
             type: Sequelize.STRING(250),
             allowNull: false
         },
-        kpop_circ_mat: {
+        extra_mat: {
             type: Sequelize.STRING(250),
         }
     }, { timestamps: false });

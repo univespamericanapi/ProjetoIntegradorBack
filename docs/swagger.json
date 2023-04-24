@@ -948,6 +948,72 @@
                     }
                 }
             }
+        },
+        "/api/cosplay/desfile/criar": {
+            "post": {
+                "summary": "Cadastro de competidor.",
+                "description": "Rota responsável pelo cadastro de competidores no Desfile Cosplay.",
+                "tags": [
+                    "Desfile Cosplay"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/desfileCosplayCriar"
+                            },
+                            "examples": {
+                                "desfileCosplay": {
+                                    "value": {
+                                        "competidor": {
+                                            "comp_email": "joao@gmail.com",
+                                            "comp_nome": "João da Silva",
+                                            "comp_nome_social": "",
+                                            "comp_cpf": "12345678901",
+                                            "comp_nasc": "01/01/2000",
+                                            "comp_whats": "19991111111",
+                                            "comp_cidade": 4730
+                                        },
+                                        "apresentacao": {
+                                            "apres_nome": "Goku",
+                                            "apres_origem": "Dragon Ball Z",
+                                            "apres_link_ref": "http://imagensdeanime.com.br/goku.png"
+                                        },
+                                        "participacao": {
+                                            "part_event": 1,
+                                            "part_conc": 2,
+                                            "part_aceit_regul": true
+                                        },
+                                        "cospDesfile": {
+                                            "extra_categ": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Evento registrado com sucesso!"
+                    },
+                    "400": {
+                        "description": "Evento já cadastrado!"
+                    },
+                    "401": {
+                        "description": "Não autorizado!"
+                    },
+                    "403": {
+                        "description": "Nenhum token foi fornecido!"
+                    },
+                    "404": {
+                        "description": "Não encontrado!"
+                    },
+                    "406": {
+                        "description": "Senha inválida!"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1077,6 +1143,75 @@
                     "conc_data_ativ": {
                         "type": "string",
                         "format": "date"
+                    }
+                }
+            },
+            "desfileCosplayCriar": {
+                "type": "object",
+                "properties": {
+                    "competidor": {
+                        "type": "object",
+                        "properties": {
+                            "comp_email": {
+                                "type": "string",
+                                "format": "email"
+                            },
+                            "comp_nome": {
+                                "type": "string"
+                            },
+                            "comp_nome_social": {
+                                "type": "string"
+                            },
+                            "comp_cpf": {
+                                "type": "string"
+                            },
+                            "comp_nasc": {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            "comp_whats": {
+                                "type": "string"
+                            },
+                            "comp_cidade": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "apresentacao": {
+                        "type": "object",
+                        "properties": {
+                            "apres_nome": {
+                                "type": "string"
+                            },
+                            "apres_origem": {
+                                "type": "string"
+                            },
+                            "apres_link_ref": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "participacao": {
+                        "type": "object",
+                        "properties": {
+                            "part_conc": {
+                                "type": "number"
+                            },
+                            "part_event": {
+                                "type": "number"
+                            },
+                            "part_aceit_regul": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "cospDesfile": {
+                        "type": "object",
+                        "properties": {
+                            "extra_categ": {
+                                "type": "number"
+                            }
+                        }
                     }
                 }
             }
