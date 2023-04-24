@@ -3,13 +3,12 @@ import { mensagensConstant } from "../constants/mensagens.constant.js";
 export default class BaseRepository {
     constructor(m) {
         this.model = m;
-        this.nomeModel = this.pegarNomeModel();
     }
 
     async salvar(registro) {
         try {
             return await this.model.create(registro).then(() => {
-                return this.nomeModel + mensagensConstant.registroCriado
+                return this.nome + mensagensConstant.registroCriado
             });
         } catch (erro) {
             throw erro;
@@ -39,7 +38,7 @@ export default class BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.destroy().then(() => {
-                return this.nomeModel + mensagensConstant.registroDeletado
+                return this.nome + mensagensConstant.registroDeletado
             });
         } catch (erro) {
             throw erro;
@@ -51,7 +50,7 @@ export default class BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.update(alteracoes).then(() => {
-                return this.nomeModel + mensagensConstant.registroAtualizado
+                return this.nome + mensagensConstant.registroAtualizado
             });
         } catch (erro) {
             throw erro;

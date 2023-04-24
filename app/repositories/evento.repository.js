@@ -2,6 +2,11 @@ import BaseRepository from "./base.repository.js";
 import db from "../models/db.model.js";
 
 export default class EventoRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Evento';
+    }
+
     async buscaPorEdNome(edNome) {
         try {
             return await this.model.findOne({
@@ -18,10 +23,7 @@ export default class EventoRepository extends BaseRepository {
                         model: db.estado,
                         attributes: ['est_sigla', 'est_desc']
                     }
-                },
-                order: [
-                    ['event_data', 'DESC']
-                ]
+                }
             });
         } catch (erro) {
             throw erro;
@@ -46,6 +48,17 @@ export default class EventoRepository extends BaseRepository {
                     ['event_data', 'DESC']
                 ]
             });
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
+    async idNomeView(evento) {
+        try {
+            return {
+                event_id: evento.event_id,
+                event_ed_nome: evento.event_ed_nome,
+            };
         } catch (erro) {
             throw erro;
         }

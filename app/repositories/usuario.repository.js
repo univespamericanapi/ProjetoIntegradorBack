@@ -3,6 +3,11 @@ import CustomError from "../helpers/customError.helper.js";
 import { mensagensConstant } from "../constants/mensagens.constant.js";
 
 export default class UsuarioRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Usuário';
+    }
+
     async buscarPorLogin(login) {
         try {
             const usuario = await this.model.findOne({
@@ -17,12 +22,12 @@ export default class UsuarioRepository extends BaseRepository {
         }
     }
 
-    async salvar(registro) {
+    async buscarTodos() {
         try {
-            await this.checaUsuarioExiste(registro.usuario_login);
-
-            return await this.model.create(registro).then(() => {
-                return this.nomeModel + mensagensConstant.registroCriado
+            return await this.model.findAll({
+                attributes: {
+                    exclude: ['usuario_senha'],
+                },
             });
         } catch (erro) {
             throw erro;
@@ -34,27 +39,21 @@ export default class UsuarioRepository extends BaseRepository {
             const registro = await this.buscarPorId(id);
 
             return await registro.update(alteracoes).then(() => {
-                return this.nomeModel + mensagensConstant.registroAtualizado
+                return this.nome + mensagensConstant.registroAtualizado
             });
         } catch (erro) {
             throw erro;
         }
     }
 
-    async checaUsuarioExiste(login) {
+    async usuarioView(usuario) {
         try {
-            const usuario = await this.model.findOne({
-                where: {
-                    usuario_login: login
-                }
-            });
-
-            if (usuario) {
-                throw new CustomError(
-                    400,
-                    mensagensConstant.usuarioJaCadastrado,
-                );
-            }
+            return {
+                usuario_id: usuario.usuario_id,
+                usuario_login: usuario.usuario_login,
+                usuario_nome: usuario.usuario_nome,
+                cargo: await usuario.getCargo(),
+            };
         } catch (erro) {
             throw erro;
         }

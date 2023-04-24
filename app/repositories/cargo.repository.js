@@ -1,6 +1,11 @@
 import BaseRepository from "./base.repository.js";
 
 export default class CargoRepository extends BaseRepository {
+    constructor (model) {
+        super(model);
+        this.nome = 'Cargo';
+    }
+
     async buscarPorNome(nome) {
         try {
             const cargo = await this.model.findOne({

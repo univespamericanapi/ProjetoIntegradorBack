@@ -7,6 +7,8 @@ const listaRoutes = app => {
     app.get('/api/lista/estado', listaController.estado);
     app.get('/api/lista/estilo', listaController.estilo);
     app.get('/api/lista/modalidade', listaController.modalidade);
+    app.get('/api/lista/evento', listaController.evento);
+    app.get('/api/lista/concurso/:idEvento', listaController.concurso);
 };
 
 export default listaRoutes;

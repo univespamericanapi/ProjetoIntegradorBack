@@ -2,27 +2,21 @@ import bcrypt from 'bcryptjs';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
 import UsuarioRepository from '../repositories/usuario.repository.js'
-import usuarioUtils from '../utils/usuario.util.js';
 import verifica from '../helpers/verificacao.helpper.js';
 
 const criar = async (novo) => {
     try {
-        const Cargo = new CargoRepository(db.cargo);
         const Usuario = new UsuarioRepository(db.usuario);
 
-        const cargo = await Cargo.buscarPorNome(novo.usuario_cargo);
+        const usuario = Usuario.buscarPorLogin(novo.usuario_login);
 
-        verifica.registroExiste(cargo, "Cargo");
-
-        novo.usuario_cargo = cargo.cargo_id;
+        verifica.registroDuplicado(usuario, Usuario.nome);
 
         verifica.senhaValida(novo.usuario_senha);
 
         novo.usuario_senha = bcrypt.hashSync(novo.usuario_senha, 8);
 
         const resposta = await Usuario.salvar(novo);
-
-        delete novo.usuario_senha;
 
         return {
             status: 201,
@@ -41,19 +35,10 @@ const listar = async () => {
         const listaUsuarios = [];
 
         for (let usuario of usuarios) {
-            const autoridade = await usuarioUtils.cargoExibir(usuario);
-
-            const temp = {
-                usuario_id: usuario.usuario_id,
-                usuario_login: usuario.usuario_login,
-                usuario_nome: usuario.usuario_nome,
-                usuario_cargo: autoridade,
-            };
-
-            listaUsuarios.push(temp);
+            listaUsuarios.push(await Usuario.usuarioView(usuario));
         }
 
-        verifica.registroExiste(listaUsuarios, "Usuario");
+        verifica.registroVazio(listaUsuarios, Usuario.nome);
 
         return {
             status: 200,
@@ -68,11 +53,9 @@ const deletar = async (idUsuario) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
-        verifica.faltaParametro(idUsuario);
-
         const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, "Usuario");
+        verifica.registroExiste(usuario, Usuario.nome);
 
         const resposta = await Usuario.deletarPorId(idUsuario);
 
@@ -91,26 +74,22 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
-        verifica.faltaParametro(idUsuario);
+        const usuario = await Usuario.buscarPorId(idUsuario);
 
-        const usuario1 = await Usuario.buscarPorId(idUsuario);
-
-        verifica.registroExiste(usuario1, "Usuario");
+        verifica.registroExiste(usuario, Usuario.nome);
 
         if (alteracao.usuario_login) {
             const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
 
-            verifica.registroDuplicado(usuario2, Usuario);
+            verifica.registroDuplicado(usuario2, Usuario.nome);
         }
 
         if (alteracao.usuario_cargo) {
             const Cargo = new CargoRepository(db.cargo);
 
-            const cargo = await Cargo.buscarPorNome(alteracao.usuario_cargo);
+            const cargo = await Cargo.buscarPorId(alteracao.usuario_cargo);
 
-            verifica.registroExiste(cargo, "Cargo");
-
-            alteracao.usuario_cargo = cargo.cargo_id;
+            verifica.registroExiste(cargo, Cargo.nome);
         }
 
         if (alteracao.usuario_senha) {
@@ -134,18 +113,16 @@ const atualizar = async (idUsuario, alteracao) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
-        verifica.faltaParametro(idUsuario);
-
-        const usuario1 = await Usuario.buscarPorId(idUsuario);
-
-        verifica.registroExiste(usuario1, "Usuario");
-
         delete alteracao.usuario_cargo;
+
+        const usuario = await Usuario.buscarPorId(idUsuario);
+
+        verifica.registroExiste(usuario, Usuario.nome);
 
         if (alteracao.usuario_login) {
             const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
 
-            verifica.registroDuplicado(usuario2, "Usuario");
+            verifica.registroDuplicado(usuario2, Usuario.nome);
         }
 
         if (alteracao.usuario_senha) {
@@ -169,16 +146,11 @@ const buscarPorId = async (idUsuario) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
-        const temp = await Usuario.buscarPorId(idUsuario);
+        const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(temp, "Usuario");
+        verifica.registroExiste(usuario, Usuario.nome);
 
-        const resposta = {
-            usuario_id: temp.usuario_id,
-            usuario_login: temp.usuario_login,
-            usuario_nome: temp.usuario_nome,
-            usuario_cargo: await usuarioUtils.cargoExibir(temp),
-        };
+        const resposta = await Usuario.usuarioView(usuario);
 
         return {
             status: 200,
@@ -193,16 +165,11 @@ const buscarPorLogin = async (loginUsuario) => {
     try {
         const Usuario = new UsuarioRepository(db.usuario);
 
-        const temp = await Usuario.buscarPorLogin(loginUsuario);
+        const usuario = await Usuario.buscarPorLogin(loginUsuario);
 
-        verifica.registroExiste(temp, "Usuario");
+        verifica.registroExiste(usuario, Usuario.nome);
 
-        const resposta = {
-            usuario_id: temp.usuario_id,
-            usuario_login: temp.usuario_login,
-            usuario_nome: temp.usuario_nome,
-            usuario_cargo: await usuarioUtils.cargoExibir(temp),
-        };
+        const resposta = await Usuario.usuarioView(usuario);
 
         return {
             status: 200,

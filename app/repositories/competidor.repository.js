@@ -1,6 +1,11 @@
 import BaseRepository from "./base.repository.js";
 
 export default class CompetidorRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Competidor';
+    }
+
     async buscarPorCpf(cpf) {
         try {
             const competidor = await this.model.findOne({

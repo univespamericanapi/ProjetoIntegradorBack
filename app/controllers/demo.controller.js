@@ -1,5 +1,3 @@
-// import db from "../models/db.model.js";
-
 const allAccess = async (req, res) => {
     res.status(200).send('Public Content.');
 };
@@ -16,11 +14,11 @@ const adminBoard = (req, res) => {
     res.status(200).send('Admin Content.');
 };
 
-const demoCtrl = {
+const demoController = {
     allAccess,
     userBoard,
     staffBoard,
     adminBoard
 };
 
-export default demoCtrl;
+export default demoController;

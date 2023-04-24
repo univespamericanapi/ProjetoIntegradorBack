@@ -14,11 +14,11 @@ const verificarEmail = async (id, token) => {
 
         const competidor = await Competidor.buscarPorId(id);
 
-        verifica.registroExiste(competidor, "Competidor");
+        verifica.registroExiste(competidor, Competidor.nome);
 
         const emailToken = await EmailToken.buscaPorToken(id, token);
 
-        verifica.registroExiste(emailToken, "Token");
+        verifica.registroExiste(emailToken, EmailToken.nome);
 
         let message;
 

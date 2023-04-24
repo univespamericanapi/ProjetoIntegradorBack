@@ -3,6 +3,11 @@ import BaseRepository from "./base.repository.js";
 import { v4 as uuidv4 } from 'uuid';
 
 export default class RefreshTokenRepository extends BaseRepository {
+    constructor (model) {
+        super(model);
+        this.nome = 'Refresh Token';
+    }
+
     buscaPorToken = async (token) => {
         try {
             const registro = await this.model.findOne({

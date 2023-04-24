@@ -1,5 +1,4 @@
 import { coresLog } from "../constants/coresLog.constant.js";
-import EmailTokenRepository from "../repositories/emailToken.repository.js";
 import cosplayDesfileService from "../services/cosplayDesfile.service.js";
 
 const criar = async (req, res) => {

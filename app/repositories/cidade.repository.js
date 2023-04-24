@@ -2,6 +2,11 @@ import db from "../models/db.model.js";
 import BaseRepository from "./base.repository.js";
 
 export default class CidadeRepository extends BaseRepository {
+    constructor (model) {
+        super(model);
+        this.nome = 'Cidade';
+    }
+
     async listarPorEstado(estadoId) {
         try {
             const cidades = await this.model.findAll({

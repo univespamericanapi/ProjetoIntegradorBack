@@ -4,9 +4,7 @@ import db from '../models/db.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import { mensagensConstant } from '../constants/mensagens.constant.js';
-import CustomError from '../helpers/customError.helper.js';
-import usuarioUtils from '../utils/usuario.util.js';
+import verifica from '../helpers/verificacao.helpper.js';
 
 const login = async (login) => {
     try {
@@ -15,24 +13,14 @@ const login = async (login) => {
 
         const usuario = await Usuario.buscarPorLogin(login.usuario_login);
 
-        if (!usuario) {
-            throw new CustomError(
-                404,
-                Usuario.nomeModel + mensagensConstant.registroNaoEncontrado,
-            );
-        }
+        verifica.registroExiste(usuario, Usuario.nome);
 
         const senhaEValida = bcrypt.compareSync(
             login.usuario_senha,
             usuario.usuario_senha
         );
 
-        if (!senhaEValida) {
-            throw new CustomError(
-                401,
-                mensagensConstant.senhaInvalida,
-            );
-        }
+        verifica.senha(senhaEValida);
 
         const token = jwt.sign({ id: usuario.usuario_id }, config.segredo, {
             expiresIn: config.jwtExpira
@@ -40,18 +28,16 @@ const login = async (login) => {
 
         let refreshToken = await RefreshToken.criarToken(usuario);
 
-        let autoridade = await usuarioUtils.cargoExibir(usuario);
+        const resposta = {
+            ...await Usuario.usuarioView(usuario),
+            accessToken: token,
+            refreshToken: refreshToken
+        };
+
 
         return {
             status: 200,
-            message: {
-                usuario_id: usuario.usuario_id,
-                usuario_login: usuario.usuario_login,
-                usuario_nome: usuario.usuario_nome,
-                usuario_cargo: autoridade,
-                accessToken: token,
-                refreshToken: refreshToken,
-            },
+            message: resposta,
         };
     } catch (erro) {
         throw erro;
@@ -62,29 +48,16 @@ const refreshToken = async (requestToken) => {
     try {
         const RefreshToken = new RefreshTokenRepository(db.refreshToken);
 
-        if (!requestToken) {
-            throw new CustomError(
-                403,
-                mensagensConstant.refreshTokenNaoEnviado,
-            );
-        }
+        verifica.faltaParametro(requestToken, RefreshToken.nome);
 
         const refreshToken = await RefreshToken.buscaPorToken(requestToken);
 
-        if (!refreshToken) {
-            throw new CustomError(
-                404,
-                RefreshToken.nomeModel + mensagensConstant.registroNaoEncontrado,
-            );
-        }
+        verifica.registroExiste(refreshToken, RefreshToken.nome);
 
         if (await RefreshToken.verificaExpirado(refreshToken)) {
             await RefreshToken.deletarPorId(refreshToken.id);
 
-            throw new CustomError(
-                403,
-                mensagensConstant.refreshTokenExpirou,
-            );
+            verifica.refreshTokenExpirado();
         }
 
         const usuario = await refreshToken.getUsuario();

@@ -22,11 +22,7 @@ const catchError = (err, res) => {
 const verificaToken = (req, res, next) => {
     const token = req.headers['x-access-token'];
 
-    if (!token) {
-        return res.status(403).send({
-            message: mensagensConstant.tokenNaoEnviado
-        });
-    }
+    verifica.faltaParametro(token, 'Token');
 
     jwt.verify(token, config.segredo, (err, decoded) => {
         if (err) {
@@ -83,7 +79,7 @@ const eOProprio = async (req, res, next) => {
         if (!idUsuarioAltera) {
             const usuario = await Usuario.buscarPorLogin(req.query.login);
 
-            verifica.registroExiste(usuario, "Usuario");
+            verifica.registroExiste(usuario, Usuario.nome);
 
             idUsuarioAltera = usuario.usuario_id;
         }

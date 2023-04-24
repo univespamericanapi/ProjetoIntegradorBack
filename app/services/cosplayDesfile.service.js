@@ -8,11 +8,9 @@ import TransacaoRepository from "../repositories/transacao.repository.js";
 import db from "../models/db.model.js";
 import verifica from "../helpers/verificacao.helpper.js";
 import dataUtils from "../utils/data.util.js";
-import { mensagensConstant } from "../constants/mensagens.constant.js";
 import emailService from "./email.service.js";
 import config from "../config/config.js";
 import EmailTokenRepository from "../repositories/emailToken.repository.js";
-import { coresLog } from "../constants/coresLog.constant.js";
 
 const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
     try {
@@ -22,12 +20,6 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
         const Apresentacao = new ApresentacaoRepository(db.apresentacao);
         const Participacao = new ParticipacaoRepository(db.participacao);
         const CospDesfile = new CosplayDesfileRepository(db.cospDesf);
-        // const Transacao = new TransacaoRepository(
-        //     Competidor,
-        //     Apresentacao,
-        //     Participacao,
-        //     CospDesfile
-        // );
         const Transacao = new TransacaoRepository(db.sequelize);
         const EmailToken = new EmailTokenRepository(db.emailToken);
 
@@ -48,11 +40,11 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
         verifica.aceitouTermos(novoPart.part_aceit_regul);
 
-        verifica.registroExiste(concurso, "Concurso");
+        verifica.registroExiste(concurso, Concurso.nome);
 
         verifica.concursoInativo(concurso);
 
-        verifica.registroDuplicado(participacao, "Participação");
+        verifica.registroDuplicado(participacao, Participacao.nome);
 
         verifica.cpfValido(novoComp.comp_cpf);
         verifica.emailValida(novoComp.comp_email);
@@ -65,25 +57,12 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
         verifica.vagasEspera(concurso);
 
-        if (verifica.vagasInscri(concurso)) {
-            novoPart.part_tipo_inscr = "Espera";
-        } else {
-            novoPart.part_tipo_inscr = "Inscrição";
-        }
+        novoPart.part_tipo_inscr = verifica.vagasInscri(concurso)
 
         competidor = Competidor.selecionaDadosCriar(novoComp);
         apresentacao = Apresentacao.selecionaDadosCriar(novoApres);
         participacao = Participacao.selecionaDadosCriar(novoPart);
         const cospDesfile = CospDesfile.selecionaDadosCriar(novoCospDesf);
-
-        // const resposta = await Transacao.iniciar(
-        //     competidor,
-        //     apresentacao,
-        //     participacao,
-        //     concurso,
-        //     cospDesfile,
-        //     db.sequelize
-        // );
 
         const transacao = await Transacao.iniciar();
         const compCriado = await Transacao.buscarOuCriar(
@@ -134,7 +113,8 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
         );
         await Transacao.finalizar(transacao);
 
-        const mensagem = `${config.baseUrlEmail}/cadastro/verificar/${compCriado.comp_id}/${emailToken.token}`;
+        const mensagem = `Verifique seu e-mail clicando no link abaixo: </br>
+            ${config.baseUrlEmail}/cadastro/verificar/${compCriado.comp_id}/${emailToken.token}`;
         const resposta = await emailService.enviarEmail(
             compCriado.comp_email,
             "E-mail de verificação.",

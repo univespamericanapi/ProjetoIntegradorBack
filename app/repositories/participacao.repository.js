@@ -1,6 +1,11 @@
 import BaseRepository from "./base.repository.js";
 
 export default class ParticipacaoRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Participação';
+    }
+
     async buscarPorApresentacao(apresId, eventId) {
         try {
             const participacao = await this.model.findOne({

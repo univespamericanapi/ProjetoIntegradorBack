@@ -9,7 +9,10 @@ const config = {
     segredo: process.env.APP_SECRET,
     jwtExpira: (3600 * 1),
     jwtRefreshExpira: (3600 * 8),
-    corsOrigin: process.env.ORIGIN,
+    corsOrigin: 'http://localhost:8081',
+    baseUrlEmail: 'http://localhost:8080/api',
+    adminCargoNome: process.env.ADMIN_CARGO_NOME,
+    staffNomeCargo: process.env.STAF_CARGO_NOME,
     bancoDeDados: {
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
@@ -29,8 +32,6 @@ const config = {
         senha: process.env.ADM_PASSWORD,
         cargo: process.env.ADM_ROLE,
     },
-    adminCargoNome: process.env.ADMIN_CARGO_NOME,
-    staffNomeCargo: process.env.STAF_CARGO_NOME,
     email: {
         host: process.env.EMAIL_HOST,
         service: process.env.EMAIL_SERVICE,
@@ -41,7 +42,6 @@ const config = {
             pass: process.env.EMAIL_PASS,
         },
     },
-    baseUrlEmail: process.env.BASE_URL_EMAIL,
 }
 
 export default config;

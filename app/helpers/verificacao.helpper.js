@@ -1,7 +1,6 @@
 import { mensagensConstant } from "../constants/mensagens.constant.js";
 import CustomError from "./customError.helper.js";
 import senhaVerifica from "../utils/senha.util.js";
-import dataUtils from "../utils/data.util.js";
 import validaCpf from "./cpf.helper.js";
 import validator from "email-validator";
 
@@ -18,7 +17,16 @@ const registroVazio = (registro, nome) => {
     if (registro.length === 0) {
         throw new CustomError(
             404,
-            nome + mensagensConstant.registroNaoEncontrado,
+            'Nenhum' + nome.LowerCase() + 'foi encontrado.',
+        );
+    }
+};
+
+const senha = (senha) => {
+    if (!senha) {
+        throw new CustomError(
+            401,
+            mensagensConstant.senhaInvalida,
         );
     }
 };
@@ -41,11 +49,11 @@ const registroDuplicado = (registro, nome) => {
     }
 };
 
-const faltaParametro = (parametro) => {
+const faltaParametro = (parametro, nome) => {
     if (!parametro) {
         throw new CustomError(
             400,
-            mensagensConstant.parametroNaoEnviado,
+            nome + mensagensConstant.parametroNaoEnviado,
         );
     }
 };
@@ -69,7 +77,11 @@ const emailValida = (email) => {
 };
 
 const vagasInscri = (concurso) => {
-    return concurso.conc_atual_inscr >= concurso.conc_limit_inscr;
+    if (concurso.conc_atual_inscr >= concurso.conc_limit_inscr) {
+        return "Espera";
+    } else {
+        return "Inscrição";
+    }
 };
 
 const vagasEspera = (concurso) => {
@@ -99,9 +111,17 @@ const concursoInativo = (concurso) => {
     }
 };
 
+const refreshTokenExpirado = () => {
+    throw new CustomError(
+        403,
+        mensagensConstant.refreshTokenExpirou,
+    );
+};
+
 const verifica = {
     registroExiste,
     registroVazio,
+    senha,
     senhaValida,
     registroDuplicado,
     faltaParametro,
@@ -111,6 +131,7 @@ const verifica = {
     vagasEspera,
     aceitouTermos,
     concursoInativo,
+    refreshTokenExpirado,
 }
 
 export default verifica;

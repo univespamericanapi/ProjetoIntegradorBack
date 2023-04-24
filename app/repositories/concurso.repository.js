@@ -1,6 +1,11 @@
 import BaseRepository from "./base.repository.js";
 
 export default class ConcursoRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Concurso';
+    }
+
     async buscarPorEvento(idEvento) {
         try {
             return await this.model.findAll({
@@ -73,6 +78,17 @@ export default class ConcursoRepository extends BaseRepository {
                     conc_nome: 'Kpop Solo / Duo',
                 }
             });
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
+    async idNomeView(concurso) {
+        try {
+            return {
+                conc_id: concurso.conc_id,
+                conc_nome: concurso.conc_nome,
+            };
         } catch (erro) {
             throw erro;
         }

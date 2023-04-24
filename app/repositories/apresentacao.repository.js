@@ -1,6 +1,11 @@
 import BaseRepository from "./base.repository.js";
 
 export default class ApresentacaoRepository extends BaseRepository {
+    constructor(model) {
+        super(model);
+        this.nome = 'Apresentação';
+    }
+
     async buscarPorCompetidor(compId) {
         try {
             const apresentacao = await this.model.findOne({
