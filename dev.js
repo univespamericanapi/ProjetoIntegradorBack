@@ -5,6 +5,8 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerDocs from './docs/swagger.json' assert {type: 'json'};
 import { createSeeder } from './app/database/seeders/index.seeder.js';
 import config from './app/config/config.js';
+import { coresLog } from './app/constants/coresLog.constant.js';
+import indexRoutes from './app/routes/index.route.js';
 
 const app = express();
 
@@ -23,8 +25,6 @@ app.get('/', (req, res) => {
 });
 
 // Rotas
-import indexRoutes from './app/routes/index.route.js';
-
 indexRoutes(app);
 
 // Executando na porta
@@ -55,7 +55,8 @@ async function conectarAoBanco() {
             });
         }
 
-        console.log("Todos os modelos foram sincronizados com sucesso.");
+        console.log(`${coresLog.FgGreen}Todos os modelos foram sincronizados com sucesso.${coresLog.Reset}`);
+        console.log(`${coresLog.FgYellow}Conectado em: ${coresLog.FgCyan}${process.env.DB_HOST}.${coresLog.Reset}`);
     } catch (error) {
         console.error("Não foi possível se conectar ao banco de dados:", error);
     }

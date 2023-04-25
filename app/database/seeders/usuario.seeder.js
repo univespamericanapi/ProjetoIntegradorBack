@@ -6,12 +6,12 @@ const usuarioSeeder = async (Usuario, Cargo) => {
         where: {
             cargo_nome: config.contaAdmin.cargo
         }
-    }).then(cargo => {
-        Usuario.create({
+    }).then(async cargo => {
+        await Usuario.create({
             usuario_login: config.contaAdmin.login,
             usuario_senha: bcrypt.hashSync(config.contaAdmin.senha, 8),
             usuario_nome: config.contaAdmin.nome,
-            usuario_cargo: cargo.cargo_id
+            usuario_cargo: 1
         });
     });
     console.log("Criando usuário...");

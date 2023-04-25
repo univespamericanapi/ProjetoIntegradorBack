@@ -5,7 +5,7 @@ const senhaVerifica = (senha) => {
 
     schema
         .is().min(8)
-        .is().max(16)
+        .is().max(50)
         .has().uppercase()
         .has().lowercase()
         .has().digits(2)
