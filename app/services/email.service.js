@@ -1,7 +1,7 @@
 import db from "../models/db.model.js";
 import EmailTokenRepository from "../repositories/emailToken.repository.js";
 import CompetidorRepository from "../repositories/competidor.repository.js";
-import verifica from "../helpers/verificacao.helpper.js";
+import verifica from "../helpers/verificacao.helper.js";
 import nodemailer from 'nodemailer';
 import config from '../config/config.js';
 import { v4 as uuidv4 } from 'uuid';

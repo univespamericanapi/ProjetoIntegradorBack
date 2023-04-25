@@ -6,7 +6,7 @@ import EventoRepository from "../repositories/evento.repository.js";
 import ConcursoRepository from "../repositories/concurso.repository.js";
 import TransacaoRepository from "../repositories/transacao.repository.js";
 import db from "../models/db.model.js";
-import verifica from "../helpers/verificacao.helpper.js";
+import verifica from "../helpers/verificacao.helper.js";
 import dataUtils from "../utils/data.util.js";
 import emailService from "./email.service.js";
 import config from "../config/config.js";

@@ -1,4 +1,4 @@
-import verifica from "../helpers/verificacao.helpper.js";
+import verifica from "../helpers/verificacao.helper.js";
 import db from "../models/db.model.js";
 import CargoRepository from "../repositories/cargo.repository.js";
 import CidadeRepository from "../repositories/cidade.repository.js";

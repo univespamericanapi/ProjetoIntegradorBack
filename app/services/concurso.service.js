@@ -1,4 +1,4 @@
-import verifica from "../helpers/verificacao.helpper.js";
+import verifica from "../helpers/verificacao.helper.js";
 import db from "../models/db.model.js";
 import ConcursoRepository from "../repositories/concurso.repository.js";
 import dataUtils from "../utils/data.util.js";
