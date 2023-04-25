@@ -30,7 +30,7 @@ const config = {
         login: process.env.ADM_LOGIN,
         nome: process.env.ADM_NAME,
         senha: process.env.ADM_PASSWORD,
-        cargo: process.env.ADM_ROLE,
+        cargo: 1,
     },
     email: {
         host: process.env.EMAIL_HOST,
