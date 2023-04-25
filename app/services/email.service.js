@@ -76,13 +76,15 @@ const reenviar = async (email) => {
             emailToken.token,
         );
 
+        const resposta = await enviarEmail(
+            competidor.comp_id,
+            emailCorpo.assunto,
+            emailCorpo.mensagem,
+        );
+
         return {
             status: 200,
-            message: await enviarEmail(
-                competidor.comp_id,
-                emailCorpo.assunto,
-                emailCorpo.mensagem,
-            )
+            message: resposta,
         };
     } catch (erro) {
         throw erro;

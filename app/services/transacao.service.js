@@ -66,6 +66,7 @@ const transacaoService = async (Instancias, dados) => {
             emailCorpo.assunto,
             emailCorpo.mensagem,
         );
+
         await Transacao.finalizar(transacao);
 
         return resposta;

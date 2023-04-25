@@ -69,7 +69,7 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
             concurso,
         };
 
-        const resposta = transacaoService(
+        const resposta = await transacaoService(
             instanciasTransacao,
             dadosTransacao
         );
