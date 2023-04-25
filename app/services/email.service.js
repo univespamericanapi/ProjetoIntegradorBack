@@ -60,6 +60,56 @@ const enviarEmail = async (email, assunto, texto) => {
     }
 };
 
+const reenviar = async (email) => {
+    try {
+        const Competidor = new CompetidorRepository(db.competidor);
+        const EmailToken = new EmailTokenRepository(db.emailToken);
+
+        const competidor = await Competidor.buscarPorEmail(email);
+        verifica.registroExiste(competidor);
+        const emailToken = await EmailToken.buscaPorCompetidor(competidor.comp_id);
+        verifica.registroExiste(emailToken);
+
+        const emailCorpo = gerarMensagem(
+            competidor.comp_nome_social,
+            competidor.comp_id,
+            emailToken.token,
+        );
+
+        return {
+            status: 200,
+            message: await enviarEmail(
+                competidor.comp_id,
+                emailCorpo.assunto,
+                emailCorpo.mensagem,
+            )
+        };
+    } catch (erro) {
+        throw erro;
+    }
+};
+
+const alterarEmail = async (cpf, nasc, email) => {
+    try {
+        const Competidor = new CompetidorRepository(db.competidor);
+
+        const competidor = await Competidor.buscarPorCpfNasc(cpf, nasc);
+        verifica.registroExiste(competidor);
+
+        const resposta = await Competidor.atualizarPorId(
+            competidor.comp_id,
+            { comp_email: email }
+        );
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        throw erro;
+    }
+};
+
 const criarToken = async (competidor, tipo) => {
     try {
         const registro = {
@@ -74,10 +124,26 @@ const criarToken = async (competidor, tipo) => {
     }
 };
 
+const gerarMensagem = (nome, comp_id, token) => {
+    return {
+        assunto: 'E-mail de verificação. Não responda esse e-mail!',
+        mensagem: `Olá ${nome},
+
+    Verifique seu e-mail clicando no link abaixo:
+        
+    ${config.baseUrlEmail}/cadastro/verificar/${comp_id}/${token}
+        
+    A Avalon Eventos agradece a sua participação.`,
+    };
+}
+
 const emailService = {
     verificarEmail,
     enviarEmail,
     criarToken,
+    reenviar,
+    alterarEmail,
+    gerarMensagem,
 };
 
 export default emailService;

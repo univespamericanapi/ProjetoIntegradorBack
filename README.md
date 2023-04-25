@@ -64,7 +64,7 @@ Essa opção executará o arquivo dev.js, que pode ser configurado para execuç�
     
 ## Autores
 
-- [Guilherme Celestino de Lima](https://www.github.com/)
+- [Guilherme Celestino de Lima](https://www.github.com/gcelestinodelima)
 - [Guilherme Cioldin Dainese](https://www.github.com/)
 - [Jhonatan Cassante de Brito](https://www.github.com/jhonatancassante)
 - [João Pedro de Oliveira Ferrera](https://www.github.com/JPedroUNIVESP)

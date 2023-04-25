@@ -20,4 +20,18 @@ export default class EmailTokenRepository extends BaseRepository {
             throw erro;
         }
     };
+
+    buscaPorCompetidor = async (idComp) => {
+        try {
+            const registro = await this.model.findOne({
+                where: {
+                    emailToken_comp: idComp,
+                }
+            });
+
+            return registro;
+        } catch (erro) {
+            throw erro;
+        }
+    };
 }

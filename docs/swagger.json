@@ -20,6 +20,7 @@
             "url": "http://localhost:8080",
             "description": "API de teste"
         }
+        
     ],
     "paths": {
         "/api/auth/login": {
@@ -448,12 +449,17 @@
                 }
             }
         },
-        "/api/lista/cargo": {
+        "/api/admin/lista/cargo": {
             "get": {
                 "summary": "Lista de cargos do sistema.",
                 "description": "Rota responsável pela listagem de todos os cargos cadastrados.",
                 "tags": [
                     "Listas"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
                 ],
                 "responses": {
                     "200": {

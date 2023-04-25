@@ -10,7 +10,7 @@ import indexRoutes from './app/routes/index.route.js';
 
 const app = express();
 
-const fast = 1;
+const fast = 0;
 
 // Configuração do aplicativo
 app.use(cors({ origin: config.corsOrigin }));
@@ -21,7 +21,7 @@ app.use(urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to Avalon back-end application.' });
+    res.json({ message: 'Bem vindo a Avalon Concursos - API de gerancimento de concursos.' });
 });
 
 // Rotas
@@ -56,7 +56,7 @@ async function conectarAoBanco() {
         }
 
         console.log(`${coresLog.FgGreen}Todos os modelos foram sincronizados com sucesso.${coresLog.Reset}`);
-        console.log(`${coresLog.FgYellow}Conectado em: ${coresLog.FgCyan}${process.env.DB_HOST}.${coresLog.Reset}`);
+        console.log(`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgCyan}${process.env.DB_HOST}.${coresLog.Reset}`);
     } catch (error) {
         console.error("Não foi possível se conectar ao banco de dados:", error);
     }

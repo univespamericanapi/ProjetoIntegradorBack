@@ -4,13 +4,11 @@ import CosplayDesfileRepository from "../repositories/cosp_desf.repository.js";
 import ParticipacaoRepository from "../repositories/participacao.repository.js";
 import EventoRepository from "../repositories/evento.repository.js";
 import ConcursoRepository from "../repositories/concurso.repository.js";
-import TransacaoRepository from "../repositories/transacao.repository.js";
 import db from "../models/db.model.js";
 import verifica from "../helpers/verificacao.helper.js";
 import dataUtils from "../utils/data.util.js";
 import emailService from "./email.service.js";
-import config from "../config/config.js";
-import EmailTokenRepository from "../repositories/emailToken.repository.js";
+import transacaoService from "./transacao.service.js";
 
 const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
     try {
@@ -20,8 +18,6 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
         const Apresentacao = new ApresentacaoRepository(db.apresentacao);
         const Participacao = new ParticipacaoRepository(db.participacao);
         const CospDesfile = new CosplayDesfileRepository(db.cospDesf);
-        const Transacao = new TransacaoRepository(db.sequelize);
-        const EmailToken = new EmailTokenRepository(db.emailToken);
 
         const evento = await Evento.buscarPorId(novoPart.part_event);
 
@@ -39,18 +35,14 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
         }
 
         verifica.aceitouTermos(novoPart.part_aceit_regul);
-
         verifica.registroExiste(concurso, Concurso.nome);
-
         verifica.concursoInativo(concurso);
-
         verifica.registroDuplicado(participacao, Participacao.nome);
-
         verifica.cpfValido(novoComp.comp_cpf);
         verifica.emailValida(novoComp.comp_email);
 
         competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
-        verifica.emailDuplicado(competidor)
+        verifica.emailDuplicado(competidor);
 
         novoComp.comp_nasc = dataUtils.stringParaData(novoComp.comp_nasc);
 
@@ -60,76 +52,26 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
         verifica.vagasEspera(concurso);
 
-        novoPart.part_tipo_inscr = verifica.vagasInscri(concurso)
+        novoPart.part_tipo_inscr = verifica.vagasInscri(concurso);
 
-        competidor = Competidor.selecionaDadosCriar(novoComp);
-        apresentacao = Apresentacao.selecionaDadosCriar(novoApres);
-        participacao = Participacao.selecionaDadosCriar(novoPart);
-        const cospDesfile = CospDesfile.selecionaDadosCriar(novoCospDesf);
+        const instanciasTransacao = {
+            Competidor,
+            Apresentacao,
+            Participacao,
+            Extra: CospDesfile,
+        };
 
-        const transacao = await Transacao.iniciar();
-        const compCriado = await Transacao.buscarOuCriar(
-            Competidor.model,
-            { comp_cpf: competidor.comp_cpf },
-            competidor,
-            transacao
-        );
-        apresentacao.apres_comp = compCriado.comp_id;
-        const apresCriado = await Transacao.criar(
-            Apresentacao.model,
-            apresentacao,
-            transacao
-        );
-        participacao.part_apres = apresCriado.apres_id;
-        const partCriada = await Transacao.criar(
-            Participacao.model,
-            participacao,
-            transacao
-        );
-        cospDesfile.extra_part = partCriada.part_id;
-        await Transacao.criar(
-            CospDesfile.model,
-            cospDesfile,
-            transacao
-        );
-        if (participacao.part_tipo_inscr === "Inscrição") {
-            await Transacao.incrementar(
-                concurso,
-                { conc_atual_inscr: 1 },
-                transacao
-            );
-        } else {
-            await Transacao.incrementar(
-                concurso,
-                { conc_atual_espera: 1 },
-                transacao
-            );
-        }
-        const emailToken = await emailService.criarToken(
-            compCriado,
-            participacao.part_tipo_inscr
-        );
-        await Transacao.criar(
-            EmailToken.model,
-            emailToken,
-            transacao
-        );
-        await Transacao.finalizar(transacao);
+        const dadosTransacao = {
+            competidor: Competidor.selecionaDadosCriar(novoComp),
+            apresentacao: Apresentacao.selecionaDadosCriar(novoApres),
+            participacao: Participacao.selecionaDadosCriar(novoPart),
+            extra: CospDesfile.selecionaDadosCriar(novoCospDesf),
+            concurso,
+        };
 
-        const mensagemEmail = `
-        Olá ${competidor.comp_nome_social},
-
-        Verifique seu e-mail clicando no link abaixo:
-        
-        ${config.baseUrlEmail}/cadastro/verificar/${compCriado.comp_id}/${emailToken.token}
-        
-        A Avalon Eventos agradece a sua participação.
-        `;
-
-        const resposta = await emailService.enviarEmail(
-            compCriado.comp_email,
-            "E-mail de verificação. Não responda esse e-mail!",
-            mensagemEmail
+        const resposta = transacaoService(
+            instanciasTransacao,
+            dadosTransacao
         );
 
         return {

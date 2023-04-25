@@ -1,0 +1,13 @@
+service: avalon-concursos
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: sa-east-1
+
+functions:
+  api:
+    handler: server.handler
+    events:
+      - httpApi: "*"

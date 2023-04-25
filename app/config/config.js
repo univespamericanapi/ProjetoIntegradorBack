@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 dotenv.config({
-    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+    path: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
 });
 
 const config = {
@@ -9,8 +9,8 @@ const config = {
     segredo: process.env.APP_SECRET,
     jwtExpira: (3600 * 1),
     jwtRefreshExpira: (3600 * 8),
-    corsOrigin: 'http://localhost:8081',
-    baseUrlEmail: 'http://localhost:8080/api',
+    corsOrigin: process.env.CORS_ORIGIN,
+    baseUrlEmail: process.env.EMAIL_BASE_URL,
     adminCargoNome: process.env.ADMIN_CARGO_NOME,
     staffNomeCargo: process.env.STAF_CARGO_NOME,
     bancoDeDados: {

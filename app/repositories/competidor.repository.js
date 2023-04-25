@@ -20,6 +20,21 @@ export default class CompetidorRepository extends BaseRepository {
         }
     }
 
+    async buscarPorCpfNasc(cpf, nasc) {
+        try {
+            const competidor = await this.model.findOne({
+                where: {
+                    comp_cpf: cpf,
+                    comp_nasc: nasc
+                }
+            });
+
+            return competidor;
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
     async buscarPorEmail(email) {
         try {
             const competidor = await this.model.findOne({

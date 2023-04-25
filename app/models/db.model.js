@@ -23,6 +23,7 @@ import { usuario } from "./usuario.model.js";
 // Instance of Sequelize
 const sequelize = new Sequelize(config.bancoDeDados.dbname, config.bancoDeDados.user, config.bancoDeDados.password, {
     host: config.bancoDeDados.host,
+    port: 3306,
     dialect: config.bancoDeDados.dialect,
     operatorsAliases: false,
     pool: config.bancoDeDados.pool

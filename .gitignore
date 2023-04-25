@@ -1,5 +1,7 @@
 /.env
-/.env.test
+/.env.dev
 /node_modules
+/jspm_packages
 /app/config/segredos.config.js
 /app/config/db.config.js
+/.serverless

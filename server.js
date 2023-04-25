@@ -1,4 +1,5 @@
 import express, { json, urlencoded } from 'express';
+import serverless from "serverless-http";
 import cors from 'cors';
 import db from './app/models/db.model.js';
 import swaggerUI from 'swagger-ui-express'
@@ -19,7 +20,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to Avalon back-end application.' });
+    res.json({ message: 'Bem vindo a Avalon Concursos - API de gerancimento de concursos.' });
 });
 
 // Rotas
@@ -42,8 +43,10 @@ async function conectarAoBanco() {
 
         await db.sequelize.sync();
         console.log(`${coresLog.FgGreen}Todos os modelos foram sincronizados com sucesso.${coresLog.Reset}`);
-        console.log(`${coresLog.FgYellow}Conectado em: ${coresLog.FgGreen}${process.env.DB_HOST}.${coresLog.Reset}`);
+        console.log(`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgGreen}${process.env.DB_HOST}.${coresLog.Reset}`);
     } catch (error) {
         console.error("Não foi possível se conectar ao banco de dados:", error);
     }
 }
+
+export const handler = serverless(app);
