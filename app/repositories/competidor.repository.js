@@ -20,6 +20,20 @@ export default class CompetidorRepository extends BaseRepository {
         }
     }
 
+    async buscarPorEmail(email) {
+        try {
+            const competidor = await this.model.findOne({
+                where: {
+                    comp_email: email
+                }
+            });
+
+            return competidor;
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
     selecionaDadosCriar(competidor) {
         const dados = {};
 

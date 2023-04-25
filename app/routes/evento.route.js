@@ -10,8 +10,14 @@ const eventoRoutes = app => {
         next();
     });
 
-    app.get('/api/evento/listar', eventoController.listar);
-    app.get('/api/admin/evento/buscar/:idEvento', eventoController.buscarPorId);
+    app.get('/api/admin/evento/listar', [
+        authJwt.verificaToken,
+        authJwt.eAdmin
+    ], eventoController.listar);
+    app.get('/api/admin/evento/buscar/:idEvento', [
+        authJwt.verificaToken,
+        authJwt.eAdmin
+    ], eventoController.buscarPorId);
     app.post('/api/admin/evento/criar', [
         authJwt.verificaToken,
         authJwt.eAdmin

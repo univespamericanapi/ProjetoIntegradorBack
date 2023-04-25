@@ -25,7 +25,7 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
         const evento = await Evento.buscarPorId(novoPart.part_event);
 
-        verifica.registroExiste(evento, "Evento");
+        verifica.registroExiste(evento, Evento.nome);
 
         const concurso = await Concurso.buscarPorId(novoPart.part_conc);
         let competidor = await Competidor.buscarPorCpf(novoComp.comp_cpf);
@@ -48,6 +48,9 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
         verifica.cpfValido(novoComp.comp_cpf);
         verifica.emailValida(novoComp.comp_email);
+
+        competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
+        verifica.emailDuplicado(competidor)
 
         novoComp.comp_nasc = dataUtils.stringParaData(novoComp.comp_nasc);
 
@@ -113,12 +116,20 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
         );
         await Transacao.finalizar(transacao);
 
-        const mensagem = `Verifique seu e-mail clicando no link abaixo: </br>
-            ${config.baseUrlEmail}/cadastro/verificar/${compCriado.comp_id}/${emailToken.token}`;
+        const mensagemEmail = `
+        Olá ${competidor.comp_nome_social},
+
+        Verifique seu e-mail clicando no link abaixo:
+        
+        ${config.baseUrlEmail}/cadastro/verificar/${compCriado.comp_id}/${emailToken.token}
+        
+        A Avalon Eventos agradece a sua participação.
+        `;
+
         const resposta = await emailService.enviarEmail(
             compCriado.comp_email,
-            "E-mail de verificação.",
-            mensagem
+            "E-mail de verificação. Não responda esse e-mail!",
+            mensagemEmail
         );
 
         return {

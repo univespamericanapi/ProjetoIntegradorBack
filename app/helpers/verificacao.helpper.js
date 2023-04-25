@@ -17,7 +17,7 @@ const registroVazio = (registro, nome) => {
     if (registro.length === 0) {
         throw new CustomError(
             404,
-            'Nenhum' + nome.LowerCase() + 'foi encontrado.',
+            'Nenhum ' + nome.toLowerCase() + ' foi encontrado.',
         );
     }
 };
@@ -45,6 +45,15 @@ const registroDuplicado = (registro, nome) => {
         throw new CustomError(
             400,
             nome + mensagensConstant.registroJaCadastrado,
+        );
+    }
+};
+
+const emailDuplicado = (registro) => {
+    if (registro) {
+        throw new CustomError(
+            400,
+            mensagensConstant.emailJaCadastrado,
         );
     }
 };
@@ -124,6 +133,7 @@ const verifica = {
     senha,
     senhaValida,
     registroDuplicado,
+    emailDuplicado,
     faltaParametro,
     cpfValido,
     emailValida,

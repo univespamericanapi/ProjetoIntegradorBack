@@ -33,13 +33,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/usuario"
+                                "$ref": "#/components/schemas/usuarioLogin"
                             },
                             "examples": {
                                 "usuario": {
                                     "value": {
                                         "usuario_login": "joao",
-                                        "usuario_senha": "1234"
+                                        "usuario_senha": "1234ABcd"
                                     }
                                 }
                             }
@@ -53,7 +53,7 @@
                             "application/json": {
                                 "type": "object",
                                 "schema": {
-                                    "$ref": "#/components/schemas/login"
+                                    "$ref": "#/components/schemas/loginReturn"
                                 }
                             }
                         }
@@ -274,7 +274,7 @@
                                         "usuario_login": "joao",
                                         "usuario_senha": "1234ABcd",
                                         "usuario_nome": "João Silva",
-                                        "usuario_cargo": "staff"
+                                        "usuario_cargo": 2
                                     }
                                 }
                             }
@@ -335,7 +335,7 @@
                                         "usuario_login": "joao",
                                         "usuario_senha": "1234ABcd",
                                         "usuario_nome": "João Silva",
-                                        "usuario_cargo": "staff"
+                                        "usuario_cargo": 2
                                     }
                                 }
                             }
@@ -382,7 +382,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/usuario"
+                                "$ref": "#/components/schemas/usuarioSCargo"
                             },
                             "examples": {
                                 "usuario": {
@@ -551,6 +551,44 @@
                 }
             }
         },
+        "/api/lista/concurso/{idEvento}": {
+            "get": {
+                "summary": "Lista de concursos do sistema.",
+                "description": "Rota responsável pela listagem de todos os concursos cadastrados, exibindo apenas id e nome.",
+                "tags": [
+                    "Listas"
+                ],
+                "parameters": [
+                    {
+                        "name": "idEvento",
+                        "in": "path",
+                        "description": "Id do evento.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nenhum estado fornecido!"
+                    },
+                    "404": {
+                        "description": "Estado não encontrado!"
+                    }
+                }
+            }
+        },
         "/api/lista/estado": {
             "get": {
                 "summary": "Lista de estados do sistema.",
@@ -608,6 +646,30 @@
                 }
             }
         },
+        "/api/lista/evento": {
+            "get": {
+                "summary": "Lista de evento do sistema.",
+                "description": "Rota responsável pela listagem de todos os eventos cadastrados, exibindo apenas id e nome.",
+                "tags": [
+                    "Listas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "type": "array",
+                                "items": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/listaView"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/lista/modalidade": {
             "get": {
                 "summary": "Lista de modalidades do sistema.",
@@ -632,12 +694,17 @@
                 }
             }
         },
-        "/api/evento/listar": {
+        "/api/admin/evento/listar": {
             "get": {
                 "summary": "Listagem de todos os eventos.",
                 "description": "Rota responsável pela listagem de todos eventos cadastrados.",
                 "tags": [
                     "Eventos"
+                ],
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -1018,45 +1085,44 @@
     },
     "components": {
         "schemas": {
-            "login": {
+            "usuarioLogin": {
                 "type": "object",
                 "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_nome": {
-                        "type": "string"
-                    },
-                    "usuario_cargo": {
-                        "type": "string"
-                    },
-                    "accessToken": {
-                        "type": "string"
-                    },
-                    "refreshToken": {
-                        "type": "string"
-                    }
-                }
-            },
-            "usuario": {
-                "type": "object",
-                "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
                     "usuario_login": {
                         "type": "string"
                     },
                     "usuario_senha": {
                         "type": "string"
+                    }
+                }
+            },
+            "loginReturn": {
+                "type": "object",
+                "properties": {
+                    "usuario_id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
+                        "type": "string"
                     },
                     "usuario_nome": {
                         "type": "string"
                     },
-                    "usuario_cargo": {
+                    "cargo": {
+                        "type": "object",
+                        "properties": {
+                            "cargo_id": {
+                                "type": "number"
+                            },
+                            "cargo_nome": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
                         "type": "string"
                     }
                 }
@@ -1073,7 +1139,46 @@
                     "usuario_nome": {
                         "type": "string"
                     },
+                    "cargo": {
+                        "type": "object",
+                        "properties": {
+                            "cargo_id": {
+                                "type": "number"
+                            },
+                            "cargo_nome": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "usuario": {
+                "type": "object",
+                "properties": {
+                    "usuario_id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
+                        "type": "string"
+                    },
+                    "usuario_nome": {
+                        "type": "string"
+                    },
                     "usuario_cargo": {
+                        "type": "number"
+                    }
+                }
+            },
+            "usuarioSCargo": {
+                "type": "object",
+                "properties": {
+                    "usuario_id": {
+                        "type": "number"
+                    },
+                    "usuario_login": {
+                        "type": "string"
+                    },
+                    "usuario_nome": {
                         "type": "string"
                     }
                 }

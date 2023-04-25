@@ -10,6 +10,7 @@ export const mensagensConstant = {
 
     // registered
     registroJaCadastrado: ' já cadastrado!',
+    emailJaCadastrado: 'E-mail já cadastrado!',
 
     // not found
     registroNaoEncontrado: ' não encontrado!',

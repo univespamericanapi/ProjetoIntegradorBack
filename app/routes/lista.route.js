@@ -4,11 +4,11 @@ const listaRoutes = app => {
     app.get('/api/lista/cargo', listaController.cargo);
     app.get('/api/lista/categoria', listaController.categoria);
     app.get('/api/lista/cidade', listaController.cidade);
+    app.get('/api/lista/concurso/:idEvento', listaController.concurso);
     app.get('/api/lista/estado', listaController.estado);
     app.get('/api/lista/estilo', listaController.estilo);
-    app.get('/api/lista/modalidade', listaController.modalidade);
     app.get('/api/lista/evento', listaController.evento);
-    app.get('/api/lista/concurso/:idEvento', listaController.concurso);
+    app.get('/api/lista/modalidade', listaController.modalidade);
 };
 
 export default listaRoutes;

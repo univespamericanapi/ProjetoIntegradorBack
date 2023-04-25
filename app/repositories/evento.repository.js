@@ -53,6 +53,29 @@ export default class EventoRepository extends BaseRepository {
         }
     }
 
+    async buscarPorId(id) {
+        try {
+            return await this.model.findByPk(id, {
+                attributes: {
+                    exclude: ['event_cidade']
+                },
+                include: {
+                    model: db.cidade,
+                    attributes: ['cid_desc'],
+                    include: {
+                        model: db.estado,
+                        attributes: ['est_sigla', 'est_desc']
+                    }
+                },
+                order: [
+                    ['event_data', 'DESC']
+                ]
+            });
+        } catch (erro) {
+            throw erro;
+        }
+    }
+
     async idNomeView(evento) {
         try {
             return {
