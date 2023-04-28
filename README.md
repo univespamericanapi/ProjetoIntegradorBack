@@ -2,9 +2,6 @@
 
 Esse é o Backend em Node.js com MySQL do Projeto Integrador do Grupo 001, da Turma 001 de 2023 da Região de Campinas, da UNIVESP.
 
-
-
-
 ## Instalação
 
 Instale backend-nodejs com npm
@@ -61,7 +58,7 @@ Use o comando para executar o servidor:
 ```
 
 Essa opção executará o arquivo dev.js, que pode ser configurado para execução rápida, onde não fará o drop table de todo banco, e a opção que fará o drop table. Para configurar basta verificar a constante `fast` no arquivo, se estiver como `false`, irá executar o drop table.
-    
+
 ## Autores
 
 - [Guilherme Celestino de Lima](https://www.github.com/gcelestinodelima)

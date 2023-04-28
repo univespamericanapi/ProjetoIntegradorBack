@@ -1,200 +1,227 @@
 import bcrypt from 'bcryptjs';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
-import UsuarioRepository from '../repositories/usuario.repository.js'
+import UsuarioRepository from '../repositories/usuario.repository.js';
 import verifica from '../helpers/verificacao.helper.js';
 
 const criar = async (novo) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuario = Usuario.buscarPorLogin(novo.usuario_login);
+		const usuario = Usuario.buscarPorLogin(
+			novo.usuario_login
+		);
 
-        verifica.registroDuplicado(usuario, Usuario.nome);
+		verifica.registroDuplicado(usuario, Usuario.nome);
 
-        verifica.senhaValida(novo.usuario_senha);
+		verifica.senhaValida(novo.usuario_senha);
 
-        novo.usuario_senha = bcrypt.hashSync(novo.usuario_senha, 8);
+		novo.usuario_senha = bcrypt.hashSync(
+			novo.usuario_senha,
+			8
+		);
 
-        const resposta = await Usuario.salvar(novo);
+		const resposta = await Usuario.salvar(novo);
 
-        return {
-            status: 201,
-            message: resposta
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 201,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const listar = async () => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuarios = await Usuario.buscarTodos();
-        const listaUsuarios = [];
+		const usuarios = await Usuario.buscarTodos();
+		const listaUsuarios = [];
 
-        for (let usuario of usuarios) {
-            listaUsuarios.push(await Usuario.usuarioView(usuario));
-        }
+		for (let usuario of usuarios) {
+			listaUsuarios.push(
+				await Usuario.usuarioView(usuario)
+			);
+		}
 
-        verifica.registroVazio(listaUsuarios, Usuario.nome);
+		verifica.registroVazio(listaUsuarios, Usuario.nome);
 
-        return {
-            status: 200,
-            message: listaUsuarios,
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 200,
+			message: listaUsuarios,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const deletar = async (idUsuario) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuario = await Usuario.buscarPorId(idUsuario);
+		const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        const resposta = await Usuario.deletarPorId(idUsuario);
+		const resposta = await Usuario.deletarPorId(idUsuario);
 
-        console.log(resposta);
+		console.log(resposta);
 
-        return {
-            status: 202,
-            message: resposta
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 202,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const atualizarPorAdmin = async (idUsuario, alteracao) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuario = await Usuario.buscarPorId(idUsuario);
+		const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        if (alteracao.usuario_login) {
-            const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
+		if (alteracao.usuario_login) {
+			const usuario2 = await Usuario.buscarPorLogin(
+				alteracao.usuario_login
+			);
 
-            verifica.registroDuplicado(usuario2, Usuario.nome);
-        }
+			verifica.registroDuplicado(usuario2, Usuario.nome);
+		}
 
-        if (alteracao.usuario_cargo) {
-            const Cargo = new CargoRepository(db.cargo);
+		if (alteracao.usuario_cargo) {
+			const Cargo = new CargoRepository(db.cargo);
 
-            const cargo = await Cargo.buscarPorId(alteracao.usuario_cargo);
+			const cargo = await Cargo.buscarPorId(
+				alteracao.usuario_cargo
+			);
 
-            verifica.registroExiste(cargo, Cargo.nome);
-        }
+			verifica.registroExiste(cargo, Cargo.nome);
+		}
 
-        if (alteracao.usuario_senha) {
-            verifica.senhaValida(alteracao.usuario_senha);
+		if (alteracao.usuario_senha) {
+			verifica.senhaValida(alteracao.usuario_senha);
 
-            alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
-        }
+			alteracao.usuario_senha = bcrypt.hashSync(
+				alteracao.usuario_senha,
+				8
+			);
+		}
 
-        const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
+		const resposta = await Usuario.atualizarPorId(
+			idUsuario,
+			alteracao
+		);
 
-        return {
-            status: 202,
-            message: resposta
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 202,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const atualizar = async (idUsuario, alteracao) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        delete alteracao.usuario_cargo;
+		delete alteracao.usuario_cargo;
 
-        const usuario = await Usuario.buscarPorId(idUsuario);
+		const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        if (alteracao.usuario_login) {
-            const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
+		if (alteracao.usuario_login) {
+			const usuario2 = await Usuario.buscarPorLogin(
+				alteracao.usuario_login
+			);
 
-            verifica.registroDuplicado(usuario2, Usuario.nome);
-        }
+			verifica.registroDuplicado(usuario2, Usuario.nome);
+		}
 
-        if (alteracao.usuario_senha) {
-            verifica.senhaValida(alteracao.usuario_senha);
+		if (alteracao.usuario_senha) {
+			verifica.senhaValida(alteracao.usuario_senha);
 
-            alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
-        }
+			alteracao.usuario_senha = bcrypt.hashSync(
+				alteracao.usuario_senha,
+				8
+			);
+		}
 
-        const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
+		const resposta = await Usuario.atualizarPorId(
+			idUsuario,
+			alteracao
+		);
 
-        return {
-            status: 202,
-            message: resposta
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 202,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const buscarPorId = async (idUsuario) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuario = await Usuario.buscarPorId(idUsuario);
+		const usuario = await Usuario.buscarPorId(idUsuario);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        const resposta = await Usuario.usuarioView(usuario);
+		const resposta = await Usuario.usuarioView(usuario);
 
-        return {
-            status: 200,
-            message: resposta,
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 200,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const buscarPorLogin = async (loginUsuario) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
 
-        const usuario = await Usuario.buscarPorLogin(loginUsuario);
+		const usuario = await Usuario.buscarPorLogin(
+			loginUsuario
+		);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        const resposta = await Usuario.usuarioView(usuario);
+		const resposta = await Usuario.usuarioView(usuario);
 
-        return {
-            status: 200,
-            message: resposta,
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 200,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const usuarioService = {
-    criar,
-    listar,
-    deletar,
-    atualizarPorAdmin,
-    atualizar,
-    buscarPorId,
-    buscarPorLogin,
-}
+	criar,
+	listar,
+	deletar,
+	atualizarPorAdmin,
+	atualizar,
+	buscarPorId,
+	buscarPorLogin,
+};
 
 export default usuarioService;

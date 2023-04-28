@@ -1,24 +1,26 @@
-import db from "../models/db.model.js";
+import db from '../models/db.model.js';
 
 const inserirNota = async (req, res) => {
-    const Nota = db.nota;
+	const Nota = db.nota;
 
-    await Nota.findOrCreate({
-        where: {
-            nota_desfile: req.body.nota_desfile,
-            nota_jurado: req.body.nota_jurado,
-        },
-        defaults: req.body
-    }).then(async ([nota, notaCriado]) => {
-        if (!notaCriado) {
-            nota.update(req.body);
-        }
-        res.status(202).send({ message: `Notas registradas com sucesso!` });
-    });
+	await Nota.findOrCreate({
+		where: {
+			nota_desfile: req.body.nota_desfile,
+			nota_jurado: req.body.nota_jurado,
+		},
+		defaults: req.body,
+	}).then(async ([nota, notaCriado]) => {
+		if (!notaCriado) {
+			nota.update(req.body);
+		}
+		res
+			.status(202)
+			.send({ message: `Notas registradas com sucesso!` });
+	});
 };
 
 const notaCtrl = {
-    inserirNota
+	inserirNota,
 };
 
 export default notaCtrl;

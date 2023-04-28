@@ -7,15 +7,15 @@ import concursoRoutes from './concurso.route.js';
 import cosplayDesfileRoutes from './cosplayDesfile.route.js';
 import emailRoutes from './email.route.js';
 
-const indexRoutes = app => {
-    authRoutes(app);
-    usuarioRoutes(app);
-    listaRoutes(app);
-    eventoRoutes(app);
-    demoRoutes(app);
-    concursoRoutes(app);
-    cosplayDesfileRoutes(app);
-    emailRoutes(app);
+const indexRoutes = (app) => {
+	authRoutes(app);
+	usuarioRoutes(app);
+	listaRoutes(app);
+	eventoRoutes(app);
+	demoRoutes(app);
+	concursoRoutes(app);
+	cosplayDesfileRoutes(app);
+	emailRoutes(app);
 };
 
 export default indexRoutes;

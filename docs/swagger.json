@@ -1,1338 +1,1287 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "API Avalon Concursos",
-        "Description": "Essa API tem como objetivo o gerenciomento de concursos cosplay da Avalon Eventos.",
-        "termsOfService": "",
-        "contact": {
-            "email": "jhonatan.cassante@live.com"
-        },
-        "version": "1.0.0",
-        "license": {
-            "name": "MIT License",
-            "url": "https://github.com/univespamericanapi/ProjetoIntegradorBack/blob/main/LICENSE"
-        }
-    },
-    "host": "localhost",
-    "basePath": "/",
-    "servers": [
-        {
-            "url": "http://localhost:8080",
-            "description": "API de teste"
-        }
-        
-    ],
-    "paths": {
-        "/api/auth/login": {
-            "post": {
-                "summary": "Login de usuário.",
-                "description": "Rota responsável pelo login dos usuários ao sistema.",
-                "tags": [
-                    "Autenticação"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/usuarioLogin"
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "usuario_login": "joao",
-                                        "usuario_senha": "1234ABcd"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/loginReturn"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Senha inválida!"
-                    },
-                    "404": {
-                        "description": "Usuário não encontrado."
-                    }
-                }
-            }
-        },
-        "/api/auth/refreshToken": {
-            "post": {
-                "summary": "Refresh JWT Token.",
-                "description": "Rota responsável pelo refresh do JWT Token.",
-                "tags": [
-                    "Autenticação"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "refreshToken": {
-                                        "type": "string"
-                                    }
-                                }
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "refreshToken": "cb986898-bd91-4251-809f-1b37fa91e8ae"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "accessToken": {
-                                            "type": "string"
-                                        },
-                                        "refreshToken": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "RefreshToken é requerido!"
-                    },
-                    "404": {
-                        "description": "RefreshToken não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/listar": {
-            "get": {
-                "summary": "Listagem de todos os usuários.",
-                "description": "Rota responsável pela listagem de todos usuários cadastrados.",
-                "tags": [
-                    "Usuário"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/usuarioView"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/usuario/buscar/{idUsuario}": {
-            "get": {
-                "summary": "Buscar um usuário pelo id",
-                "description": "Rota responsável por buscar um usuário utilizando o id.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "idUsuario",
-                        "in": "path",
-                        "description": "Id do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/usuarioView"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/usuario/buscar": {
-            "get": {
-                "summary": "Buscar um usuário pelo nome de login",
-                "description": "Rota responsável por buscar um usuário utilizando o nome de login.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "login",
-                        "in": "query",
-                        "description": "Login do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/usuarioView"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/criar": {
-            "post": {
-                "summary": "Cadastrar de usuário.",
-                "description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
-                "tags": [
-                    "Usuário"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/usuario"
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "usuario_login": "joao",
-                                        "usuario_senha": "1234ABcd",
-                                        "usuario_nome": "João Silva",
-                                        "usuario_cargo": 2
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Usuario registrado com sucesso!"
-                    },
-                    "400": {
-                        "description": "Usuário já está em uso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    },
-                    "406": {
-                        "description": "Senha inválida!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/atualizar/{idUsuario}": {
-            "put": {
-                "summary": "Atualizar um usuário pelo id, acesso de admin",
-                "description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo, com acesso de administrador.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "idUsuario",
-                        "in": "path",
-                        "description": "Id do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/usuario"
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "usuario_login": "joao",
-                                        "usuario_senha": "1234ABcd",
-                                        "usuario_nome": "João Silva",
-                                        "usuario_cargo": 2
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "202": {
-                        "description": "Usuario atualizado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/usuario/atualizar/{idUsuario}": {
-            "put": {
-                "summary": "Atualizar um usuário pelo id",
-                "description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "idUsuario",
-                        "in": "path",
-                        "description": "Id do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/usuarioSCargo"
-                            },
-                            "examples": {
-                                "usuario": {
-                                    "value": {
-                                        "usuario_login": "joao",
-                                        "usuario_senha": "1234ABcd",
-                                        "usuario_nome": "João Silva"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "202": {
-                        "description": "Usuario atualizado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/usuario/deletar/{idUsuario}": {
-            "delete": {
-                "summary": "Deletar um usuário pelo id",
-                "description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Usuário"
-                ],
-                "parameters": [
-                    {
-                        "name": "idUsuario",
-                        "in": "path",
-                        "description": "Id do usuário.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Usuario deletado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/lista/cargo": {
-            "get": {
-                "summary": "Lista de cargos do sistema.",
-                "description": "Rota responsável pela listagem de todos os cargos cadastrados.",
-                "tags": [
-                    "Listas"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/lista/categoria": {
-            "get": {
-                "summary": "Lista de categorias do sistema.",
-                "description": "Rota responsável pela listagem de todas as categorias cadastradas.",
-                "tags": [
-                    "Listas"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/lista/cidade": {
-            "get": {
-                "summary": "Lista de cidades do sistema.",
-                "description": "Rota responsável pela listagem de todas as cidades cadastradas.",
-                "tags": [
-                    "Listas"
-                ],
-                "parameters": [
-                    {
-                        "name": "estado",
-                        "in": "query",
-                        "description": "Id do estado.",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "cid_id": {
-                                            "type": "number"
-                                        },
-                                        "cid_desc": {
-                                            "type": "string"
-                                        },
-                                        "estado": {
-                                            "type": "object",
-                                            "properties": {
-                                                "est_sigla": {
-                                                    "type": "string"
-                                                },
-                                                "est_desc": {
-                                                    "type": "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Nenhum estado fornecido!"
-                    },
-                    "404": {
-                        "description": "Estado não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/lista/concurso/{idEvento}": {
-            "get": {
-                "summary": "Lista de concursos do sistema.",
-                "description": "Rota responsável pela listagem de todos os concursos cadastrados, exibindo apenas id e nome.",
-                "tags": [
-                    "Listas"
-                ],
-                "parameters": [
-                    {
-                        "name": "idEvento",
-                        "in": "path",
-                        "description": "Id do evento.",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Nenhum estado fornecido!"
-                    },
-                    "404": {
-                        "description": "Estado não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/lista/estado": {
-            "get": {
-                "summary": "Lista de estados do sistema.",
-                "description": "Rota responsável pela listagem de todos os estados cadastrados.",
-                "tags": [
-                    "Listas"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "est_id": {
-                                            "type": "number"
-                                        },
-                                        "est_sigla": {
-                                            "type": "string"
-                                        },
-                                        "est_desc": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/lista/estilo": {
-            "get": {
-                "summary": "Lista de estilos do sistema.",
-                "description": "Rota responsável pela listagem de todos os estilos cadastrados.",
-                "tags": [
-                    "Listas"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/lista/evento": {
-            "get": {
-                "summary": "Lista de evento do sistema.",
-                "description": "Rota responsável pela listagem de todos os eventos cadastrados, exibindo apenas id e nome.",
-                "tags": [
-                    "Listas"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/lista/modalidade": {
-            "get": {
-                "summary": "Lista de modalidades do sistema.",
-                "description": "Rota responsável pela listagem de todas as modalidades cadastradas.",
-                "tags": [
-                    "Listas"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/listaView"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/admin/evento/listar": {
-            "get": {
-                "summary": "Listagem de todos os eventos.",
-                "description": "Rota responsável pela listagem de todos eventos cadastrados.",
-                "tags": [
-                    "Eventos"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "items": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/evento"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/evento/buscar/{idEvento}": {
-            "get": {
-                "summary": "Buscar um evento pelo id",
-                "description": "Rota responsável por buscar um evento utilizando o id.",
-                "tags": [
-                    "Eventos"
-                ],
-                "parameters": [
-                    {
-                        "name": "idEvento",
-                        "in": "path",
-                        "description": "Id do evento.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/evento"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/evento/criar": {
-            "post": {
-                "summary": "Cadastrar de evento.",
-                "description": "Rota responsável pelo cadastro de novos eventos ao sistema.",
-                "tags": [
-                    "Eventos"
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/evento"
-                            },
-                            "examples": {
-                                "evento": {
-                                    "value": {
-                                        "event_nome": "Mega Campinas Anime Fest",
-                                        "event_local": "Liceu Salesiano",
-                                        "event_edicao": 27,
-                                        "event_cidade": 4820,
-                                        "event_data": "20/08/2023"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Evento registrado com sucesso!"
-                    },
-                    "400": {
-                        "description": "Evento já cadastrado!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    },
-                    "406": {
-                        "description": "Senha inválida!"
-                    }
-                }
-            }
-        },
-        "/api/admin/evento/atualizar/{idEvento}": {
-            "put": {
-                "summary": "Atualizar um evento pelo id.",
-                "description": "Rota responsável por atualizar um evento utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Eventos"
-                ],
-                "parameters": [
-                    {
-                        "name": "idEvento",
-                        "in": "path",
-                        "description": "Id do evento.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/evento"
-                            },
-                            "examples": {
-                                "evento": {
-                                    "value": {
-                                        "event_nome": "Mega Campinas Anime Fest",
-                                        "event_local": "Liceu Salesiano",
-                                        "event_edicao": 27,
-                                        "event_cidade": 4820,
-                                        "event_data": "20/08/2023"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "202": {
-                        "description": "Evento atualizado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/evento/deletar/{idEvento}": {
-            "delete": {
-                "summary": "Deletar um evento pelo id",
-                "description": "Rota responsável por deletar um evento utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Eventos"
-                ],
-                "parameters": [
-                    {
-                        "name": "idEvento",
-                        "in": "path",
-                        "description": "Id do evento.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "202": {
-                        "description": "Evento deletado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/concurso/buscar/{idEvento}": {
-            "get": {
-                "summary": "Listar concursos pelo id do evento.",
-                "description": "Rota responsável por listar os concursos utilizando o id do evento.",
-                "tags": [
-                    "Concursos"
-                ],
-                "parameters": [
-                    {
-                        "name": "idEvento",
-                        "in": "path",
-                        "description": "Id do evento.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "type": "array",
-                                "schema": {
-                                    "$ref": "#/components/schemas/concurso"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/admin/concurso/atualizar/{idConcurso}": {
-            "put": {
-                "summary": "Atualizar um concurso pelo id.",
-                "description": "Rota responsável por atualizar um concurso utilizando o id para encontrá-lo.",
-                "tags": [
-                    "Concursos"
-                ],
-                "parameters": [
-                    {
-                        "name": "idConcurso",
-                        "in": "path",
-                        "description": "Id do concurso.",
-                        "required": true
-                    }
-                ],
-                "security": [
-                    {
-                        "JwtToken": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/concurso"
-                            },
-                            "examples": {
-                                "concurso": {
-                                    "value": {
-                                        "conc_limit_inscr": 0,
-                                        "conc_limit_espera": 0,
-                                        "conc_limit_checkin": 0,
-                                        "conc_ativo": true,
-                                        "conc_data_ativ": "2023-04-22"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "202": {
-                        "description": "Evento atualizado com sucesso!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    }
-                }
-            }
-        },
-        "/api/cosplay/desfile/criar": {
-            "post": {
-                "summary": "Cadastro de competidor.",
-                "description": "Rota responsável pelo cadastro de competidores no Desfile Cosplay.",
-                "tags": [
-                    "Desfile Cosplay"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/desfileCosplayCriar"
-                            },
-                            "examples": {
-                                "desfileCosplay": {
-                                    "value": {
-                                        "competidor": {
-                                            "comp_email": "joao@gmail.com",
-                                            "comp_nome": "João da Silva",
-                                            "comp_nome_social": "",
-                                            "comp_cpf": "12345678901",
-                                            "comp_nasc": "01/01/2000",
-                                            "comp_whats": "19991111111",
-                                            "comp_cidade": 4730
-                                        },
-                                        "apresentacao": {
-                                            "apres_nome": "Goku",
-                                            "apres_origem": "Dragon Ball Z",
-                                            "apres_link_ref": "http://imagensdeanime.com.br/goku.png"
-                                        },
-                                        "participacao": {
-                                            "part_event": 1,
-                                            "part_conc": 2,
-                                            "part_aceit_regul": true
-                                        },
-                                        "cospDesfile": {
-                                            "extra_categ": 1
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Evento registrado com sucesso!"
-                    },
-                    "400": {
-                        "description": "Evento já cadastrado!"
-                    },
-                    "401": {
-                        "description": "Não autorizado!"
-                    },
-                    "403": {
-                        "description": "Nenhum token foi fornecido!"
-                    },
-                    "404": {
-                        "description": "Não encontrado!"
-                    },
-                    "406": {
-                        "description": "Senha inválida!"
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "usuarioLogin": {
-                "type": "object",
-                "properties": {
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_senha": {
-                        "type": "string"
-                    }
-                }
-            },
-            "loginReturn": {
-                "type": "object",
-                "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_nome": {
-                        "type": "string"
-                    },
-                    "cargo": {
-                        "type": "object",
-                        "properties": {
-                            "cargo_id": {
-                                "type": "number"
-                            },
-                            "cargo_nome": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "accessToken": {
-                        "type": "string"
-                    },
-                    "refreshToken": {
-                        "type": "string"
-                    }
-                }
-            },
-            "usuarioView": {
-                "type": "object",
-                "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_nome": {
-                        "type": "string"
-                    },
-                    "cargo": {
-                        "type": "object",
-                        "properties": {
-                            "cargo_id": {
-                                "type": "number"
-                            },
-                            "cargo_nome": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "usuario": {
-                "type": "object",
-                "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_nome": {
-                        "type": "string"
-                    },
-                    "usuario_cargo": {
-                        "type": "number"
-                    }
-                }
-            },
-            "usuarioSCargo": {
-                "type": "object",
-                "properties": {
-                    "usuario_id": {
-                        "type": "number"
-                    },
-                    "usuario_login": {
-                        "type": "string"
-                    },
-                    "usuario_nome": {
-                        "type": "string"
-                    }
-                }
-            },
-            "listaView": {
-                "type": "object",
-                "properties": {
-                    "item_id": {
-                        "type": "number"
-                    },
-                    "item_nome": {
-                        "type": "string"
-                    }
-                }
-            },
-            "evento": {
-                "type": "object",
-                "properties": {
-                    "event_id": {
-                        "type": "number"
-                    },
-                    "event_nome": {
-                        "type": "string"
-                    },
-                    "event_local": {
-                        "type": "string"
-                    },
-                    "event_edicao": {
-                        "type": "number"
-                    },
-                    "event_cidade": {
-                        "type": "number"
-                    },
-                    "event_data": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "event_ed_nome": {
-                        "type": "string"
-                    }
-                }
-            },
-            "concurso": {
-                "type": "object",
-                "properties": {
-                    "conc_id": {
-                        "type": "number"
-                    },
-                    "conc_event": {
-                        "type": "number"
-                    },
-                    "conc_nome": {
-                        "type": "string"
-                    },
-                    "conc_limit_inscr": {
-                        "type": "number"
-                    },
-                    "conc_limit_espera": {
-                        "type": "number"
-                    },
-                    "conc_limit_checkin": {
-                        "type": "number"
-                    },
-                    "conc_ativo": {
-                        "type": "boolean"
-                    },
-                    "conc_data_ativ": {
-                        "type": "string",
-                        "format": "date"
-                    }
-                }
-            },
-            "desfileCosplayCriar": {
-                "type": "object",
-                "properties": {
-                    "competidor": {
-                        "type": "object",
-                        "properties": {
-                            "comp_email": {
-                                "type": "string",
-                                "format": "email"
-                            },
-                            "comp_nome": {
-                                "type": "string"
-                            },
-                            "comp_nome_social": {
-                                "type": "string"
-                            },
-                            "comp_cpf": {
-                                "type": "string"
-                            },
-                            "comp_nasc": {
-                                "type": "string",
-                                "format": "date"
-                            },
-                            "comp_whats": {
-                                "type": "string"
-                            },
-                            "comp_cidade": {
-                                "type": "number"
-                            }
-                        }
-                    },
-                    "apresentacao": {
-                        "type": "object",
-                        "properties": {
-                            "apres_nome": {
-                                "type": "string"
-                            },
-                            "apres_origem": {
-                                "type": "string"
-                            },
-                            "apres_link_ref": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "participacao": {
-                        "type": "object",
-                        "properties": {
-                            "part_conc": {
-                                "type": "number"
-                            },
-                            "part_event": {
-                                "type": "number"
-                            },
-                            "part_aceit_regul": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "cospDesfile": {
-                        "type": "object",
-                        "properties": {
-                            "extra_categ": {
-                                "type": "number"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "securitySchemes": {
-            "JwtToken": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "x-access-token"
-            }
-        }
-    }
+	"openapi": "3.0.0",
+	"info": {
+		"title": "API Avalon Concursos",
+		"Description": "Essa API tem como objetivo o gerenciomento de concursos cosplay da Avalon Eventos.",
+		"termsOfService": "",
+		"contact": {
+			"email": "jhonatan.cassante@live.com"
+		},
+		"version": "1.0.0",
+		"license": {
+			"name": "MIT License",
+			"url": "https://github.com/univespamericanapi/ProjetoIntegradorBack/blob/main/LICENSE"
+		}
+	},
+	"host": "localhost",
+	"basePath": "/",
+	"servers": [
+		{
+			"url": "http://localhost:8080",
+			"description": "API de teste"
+		}
+	],
+	"paths": {
+		"/api/auth/login": {
+			"post": {
+				"summary": "Login de usuário.",
+				"description": "Rota responsável pelo login dos usuários ao sistema.",
+				"tags": ["Autenticação"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/usuarioLogin"
+							},
+							"examples": {
+								"usuario": {
+									"value": {
+										"usuario_login": "joao",
+										"usuario_senha": "1234ABcd"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"schema": {
+									"$ref": "#/components/schemas/loginReturn"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Senha inválida!"
+					},
+					"404": {
+						"description": "Usuário não encontrado."
+					}
+				}
+			}
+		},
+		"/api/auth/refreshToken": {
+			"post": {
+				"summary": "Refresh JWT Token.",
+				"description": "Rota responsável pelo refresh do JWT Token.",
+				"tags": ["Autenticação"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"refreshToken": {
+										"type": "string"
+									}
+								}
+							},
+							"examples": {
+								"usuario": {
+									"value": {
+										"refreshToken": "cb986898-bd91-4251-809f-1b37fa91e8ae"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"schema": {
+									"type": "object",
+									"properties": {
+										"accessToken": {
+											"type": "string"
+										},
+										"refreshToken": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "RefreshToken é requerido!"
+					},
+					"404": {
+						"description": "RefreshToken não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/usuario/listar": {
+			"get": {
+				"summary": "Listagem de todos os usuários.",
+				"description": "Rota responsável pela listagem de todos usuários cadastrados.",
+				"tags": ["Usuário"],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/usuarioView"
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/usuario/buscar/{idUsuario}": {
+			"get": {
+				"summary": "Buscar um usuário pelo id",
+				"description": "Rota responsável por buscar um usuário utilizando o id.",
+				"tags": ["Usuário"],
+				"parameters": [
+					{
+						"name": "idUsuario",
+						"in": "path",
+						"description": "Id do usuário.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"schema": {
+									"$ref": "#/components/schemas/usuarioView"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/usuario/buscar": {
+			"get": {
+				"summary": "Buscar um usuário pelo nome de login",
+				"description": "Rota responsável por buscar um usuário utilizando o nome de login.",
+				"tags": ["Usuário"],
+				"parameters": [
+					{
+						"name": "login",
+						"in": "query",
+						"description": "Login do usuário.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"schema": {
+									"$ref": "#/components/schemas/usuarioView"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/usuario/criar": {
+			"post": {
+				"summary": "Cadastrar de usuário.",
+				"description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
+				"tags": ["Usuário"],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/usuario"
+							},
+							"examples": {
+								"usuario": {
+									"value": {
+										"usuario_login": "joao",
+										"usuario_senha": "1234ABcd",
+										"usuario_nome": "João Silva",
+										"usuario_cargo": 2
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Usuario registrado com sucesso!"
+					},
+					"400": {
+						"description": "Usuário já está em uso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					},
+					"406": {
+						"description": "Senha inválida!"
+					}
+				}
+			}
+		},
+		"/api/admin/usuario/atualizar/{idUsuario}": {
+			"put": {
+				"summary": "Atualizar um usuário pelo id, acesso de admin",
+				"description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo, com acesso de administrador.",
+				"tags": ["Usuário"],
+				"parameters": [
+					{
+						"name": "idUsuario",
+						"in": "path",
+						"description": "Id do usuário.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/usuario"
+							},
+							"examples": {
+								"usuario": {
+									"value": {
+										"usuario_login": "joao",
+										"usuario_senha": "1234ABcd",
+										"usuario_nome": "João Silva",
+										"usuario_cargo": 2
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "Usuario atualizado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/usuario/atualizar/{idUsuario}": {
+			"put": {
+				"summary": "Atualizar um usuário pelo id",
+				"description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo.",
+				"tags": ["Usuário"],
+				"parameters": [
+					{
+						"name": "idUsuario",
+						"in": "path",
+						"description": "Id do usuário.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/usuarioSCargo"
+							},
+							"examples": {
+								"usuario": {
+									"value": {
+										"usuario_login": "joao",
+										"usuario_senha": "1234ABcd",
+										"usuario_nome": "João Silva"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "Usuario atualizado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/usuario/deletar/{idUsuario}": {
+			"delete": {
+				"summary": "Deletar um usuário pelo id",
+				"description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
+				"tags": ["Usuário"],
+				"parameters": [
+					{
+						"name": "idUsuario",
+						"in": "path",
+						"description": "Id do usuário.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Usuario deletado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/lista/cargo": {
+			"get": {
+				"summary": "Lista de cargos do sistema.",
+				"description": "Rota responsável pela listagem de todos os cargos cadastrados.",
+				"tags": ["Listas"],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/lista/categoria": {
+			"get": {
+				"summary": "Lista de categorias do sistema.",
+				"description": "Rota responsável pela listagem de todas as categorias cadastradas.",
+				"tags": ["Listas"],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/lista/cidade": {
+			"get": {
+				"summary": "Lista de cidades do sistema.",
+				"description": "Rota responsável pela listagem de todas as cidades cadastradas.",
+				"tags": ["Listas"],
+				"parameters": [
+					{
+						"name": "estado",
+						"in": "query",
+						"description": "Id do estado.",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"cid_id": {
+											"type": "number"
+										},
+										"cid_desc": {
+											"type": "string"
+										},
+										"estado": {
+											"type": "object",
+											"properties": {
+												"est_sigla": {
+													"type": "string"
+												},
+												"est_desc": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Nenhum estado fornecido!"
+					},
+					"404": {
+						"description": "Estado não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/lista/concurso/{idEvento}": {
+			"get": {
+				"summary": "Lista de concursos do sistema.",
+				"description": "Rota responsável pela listagem de todos os concursos cadastrados, exibindo apenas id e nome.",
+				"tags": ["Listas"],
+				"parameters": [
+					{
+						"name": "idEvento",
+						"in": "path",
+						"description": "Id do evento.",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Nenhum estado fornecido!"
+					},
+					"404": {
+						"description": "Estado não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/lista/estado": {
+			"get": {
+				"summary": "Lista de estados do sistema.",
+				"description": "Rota responsável pela listagem de todos os estados cadastrados.",
+				"tags": ["Listas"],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"est_id": {
+											"type": "number"
+										},
+										"est_sigla": {
+											"type": "string"
+										},
+										"est_desc": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/lista/estilo": {
+			"get": {
+				"summary": "Lista de estilos do sistema.",
+				"description": "Rota responsável pela listagem de todos os estilos cadastrados.",
+				"tags": ["Listas"],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/lista/evento": {
+			"get": {
+				"summary": "Lista de evento do sistema.",
+				"description": "Rota responsável pela listagem de todos os eventos cadastrados, exibindo apenas id e nome.",
+				"tags": ["Listas"],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/lista/modalidade": {
+			"get": {
+				"summary": "Lista de modalidades do sistema.",
+				"description": "Rota responsável pela listagem de todas as modalidades cadastradas.",
+				"tags": ["Listas"],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/listaView"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/admin/evento/listar": {
+			"get": {
+				"summary": "Listagem de todos os eventos.",
+				"description": "Rota responsável pela listagem de todos eventos cadastrados.",
+				"tags": ["Eventos"],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"items": {
+									"schema": {
+										"$ref": "#/components/schemas/evento"
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/evento/buscar/{idEvento}": {
+			"get": {
+				"summary": "Buscar um evento pelo id",
+				"description": "Rota responsável por buscar um evento utilizando o id.",
+				"tags": ["Eventos"],
+				"parameters": [
+					{
+						"name": "idEvento",
+						"in": "path",
+						"description": "Id do evento.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"schema": {
+									"$ref": "#/components/schemas/evento"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/evento/criar": {
+			"post": {
+				"summary": "Cadastrar de evento.",
+				"description": "Rota responsável pelo cadastro de novos eventos ao sistema.",
+				"tags": ["Eventos"],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/evento"
+							},
+							"examples": {
+								"evento": {
+									"value": {
+										"event_nome": "Mega Campinas Anime Fest",
+										"event_local": "Liceu Salesiano",
+										"event_edicao": 27,
+										"event_cidade": 4820,
+										"event_data": "20/08/2023"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Evento registrado com sucesso!"
+					},
+					"400": {
+						"description": "Evento já cadastrado!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					},
+					"406": {
+						"description": "Senha inválida!"
+					}
+				}
+			}
+		},
+		"/api/admin/evento/atualizar/{idEvento}": {
+			"put": {
+				"summary": "Atualizar um evento pelo id.",
+				"description": "Rota responsável por atualizar um evento utilizando o id para encontrá-lo.",
+				"tags": ["Eventos"],
+				"parameters": [
+					{
+						"name": "idEvento",
+						"in": "path",
+						"description": "Id do evento.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/evento"
+							},
+							"examples": {
+								"evento": {
+									"value": {
+										"event_nome": "Mega Campinas Anime Fest",
+										"event_local": "Liceu Salesiano",
+										"event_edicao": 27,
+										"event_cidade": 4820,
+										"event_data": "20/08/2023"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "Evento atualizado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/evento/deletar/{idEvento}": {
+			"delete": {
+				"summary": "Deletar um evento pelo id",
+				"description": "Rota responsável por deletar um evento utilizando o id para encontrá-lo.",
+				"tags": ["Eventos"],
+				"parameters": [
+					{
+						"name": "idEvento",
+						"in": "path",
+						"description": "Id do evento.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Evento deletado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/concurso/buscar/{idEvento}": {
+			"get": {
+				"summary": "Listar concursos pelo id do evento.",
+				"description": "Rota responsável por listar os concursos utilizando o id do evento.",
+				"tags": ["Concursos"],
+				"parameters": [
+					{
+						"name": "idEvento",
+						"in": "path",
+						"description": "Id do evento.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "array",
+								"schema": {
+									"$ref": "#/components/schemas/concurso"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/admin/concurso/atualizar/{idConcurso}": {
+			"put": {
+				"summary": "Atualizar um concurso pelo id.",
+				"description": "Rota responsável por atualizar um concurso utilizando o id para encontrá-lo.",
+				"tags": ["Concursos"],
+				"parameters": [
+					{
+						"name": "idConcurso",
+						"in": "path",
+						"description": "Id do concurso.",
+						"required": true
+					}
+				],
+				"security": [
+					{
+						"JwtToken": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/concurso"
+							},
+							"examples": {
+								"concurso": {
+									"value": {
+										"conc_limit_inscr": 0,
+										"conc_limit_espera": 0,
+										"conc_limit_checkin": 0,
+										"conc_ativo": true,
+										"conc_data_ativ": "2023-04-22"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "Evento atualizado com sucesso!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					}
+				}
+			}
+		},
+		"/api/cosplay/desfile/criar": {
+			"post": {
+				"summary": "Cadastro de competidor.",
+				"description": "Rota responsável pelo cadastro de competidores no Desfile Cosplay.",
+				"tags": ["Desfile Cosplay"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/desfileCosplayCriar"
+							},
+							"examples": {
+								"desfileCosplay": {
+									"value": {
+										"competidor": {
+											"comp_email": "joao@gmail.com",
+											"comp_nome": "João da Silva",
+											"comp_nome_social": "",
+											"comp_cpf": "12345678901",
+											"comp_nasc": "01/01/2000",
+											"comp_whats": "19991111111",
+											"comp_cidade": 4730
+										},
+										"apresentacao": {
+											"apres_nome": "Goku",
+											"apres_origem": "Dragon Ball Z",
+											"apres_link_ref": "http://imagensdeanime.com.br/goku.png"
+										},
+										"participacao": {
+											"part_event": 1,
+											"part_conc": 2,
+											"part_aceit_regul": true
+										},
+										"cospDesfile": {
+											"extra_categ": 1
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Evento registrado com sucesso!"
+					},
+					"400": {
+						"description": "Evento já cadastrado!"
+					},
+					"401": {
+						"description": "Não autorizado!"
+					},
+					"403": {
+						"description": "Nenhum token foi fornecido!"
+					},
+					"404": {
+						"description": "Não encontrado!"
+					},
+					"406": {
+						"description": "Senha inválida!"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"usuarioLogin": {
+				"type": "object",
+				"properties": {
+					"usuario_login": {
+						"type": "string"
+					},
+					"usuario_senha": {
+						"type": "string"
+					}
+				}
+			},
+			"loginReturn": {
+				"type": "object",
+				"properties": {
+					"usuario_id": {
+						"type": "number"
+					},
+					"usuario_login": {
+						"type": "string"
+					},
+					"usuario_nome": {
+						"type": "string"
+					},
+					"cargo": {
+						"type": "object",
+						"properties": {
+							"cargo_id": {
+								"type": "number"
+							},
+							"cargo_nome": {
+								"type": "string"
+							}
+						}
+					},
+					"accessToken": {
+						"type": "string"
+					},
+					"refreshToken": {
+						"type": "string"
+					}
+				}
+			},
+			"usuarioView": {
+				"type": "object",
+				"properties": {
+					"usuario_id": {
+						"type": "number"
+					},
+					"usuario_login": {
+						"type": "string"
+					},
+					"usuario_nome": {
+						"type": "string"
+					},
+					"cargo": {
+						"type": "object",
+						"properties": {
+							"cargo_id": {
+								"type": "number"
+							},
+							"cargo_nome": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"usuario": {
+				"type": "object",
+				"properties": {
+					"usuario_id": {
+						"type": "number"
+					},
+					"usuario_login": {
+						"type": "string"
+					},
+					"usuario_nome": {
+						"type": "string"
+					},
+					"usuario_cargo": {
+						"type": "number"
+					}
+				}
+			},
+			"usuarioSCargo": {
+				"type": "object",
+				"properties": {
+					"usuario_id": {
+						"type": "number"
+					},
+					"usuario_login": {
+						"type": "string"
+					},
+					"usuario_nome": {
+						"type": "string"
+					}
+				}
+			},
+			"listaView": {
+				"type": "object",
+				"properties": {
+					"item_id": {
+						"type": "number"
+					},
+					"item_nome": {
+						"type": "string"
+					}
+				}
+			},
+			"evento": {
+				"type": "object",
+				"properties": {
+					"event_id": {
+						"type": "number"
+					},
+					"event_nome": {
+						"type": "string"
+					},
+					"event_local": {
+						"type": "string"
+					},
+					"event_edicao": {
+						"type": "number"
+					},
+					"event_cidade": {
+						"type": "number"
+					},
+					"event_data": {
+						"type": "string",
+						"format": "date"
+					},
+					"event_ed_nome": {
+						"type": "string"
+					}
+				}
+			},
+			"concurso": {
+				"type": "object",
+				"properties": {
+					"conc_id": {
+						"type": "number"
+					},
+					"conc_event": {
+						"type": "number"
+					},
+					"conc_nome": {
+						"type": "string"
+					},
+					"conc_limit_inscr": {
+						"type": "number"
+					},
+					"conc_limit_espera": {
+						"type": "number"
+					},
+					"conc_limit_checkin": {
+						"type": "number"
+					},
+					"conc_ativo": {
+						"type": "boolean"
+					},
+					"conc_data_ativ": {
+						"type": "string",
+						"format": "date"
+					}
+				}
+			},
+			"desfileCosplayCriar": {
+				"type": "object",
+				"properties": {
+					"competidor": {
+						"type": "object",
+						"properties": {
+							"comp_email": {
+								"type": "string",
+								"format": "email"
+							},
+							"comp_nome": {
+								"type": "string"
+							},
+							"comp_nome_social": {
+								"type": "string"
+							},
+							"comp_cpf": {
+								"type": "string"
+							},
+							"comp_nasc": {
+								"type": "string",
+								"format": "date"
+							},
+							"comp_whats": {
+								"type": "string"
+							},
+							"comp_cidade": {
+								"type": "number"
+							}
+						}
+					},
+					"apresentacao": {
+						"type": "object",
+						"properties": {
+							"apres_nome": {
+								"type": "string"
+							},
+							"apres_origem": {
+								"type": "string"
+							},
+							"apres_link_ref": {
+								"type": "string"
+							}
+						}
+					},
+					"participacao": {
+						"type": "object",
+						"properties": {
+							"part_conc": {
+								"type": "number"
+							},
+							"part_event": {
+								"type": "number"
+							},
+							"part_aceit_regul": {
+								"type": "boolean"
+							}
+						}
+					},
+					"cospDesfile": {
+						"type": "object",
+						"properties": {
+							"extra_categ": {
+								"type": "number"
+							}
+						}
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"JwtToken": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "x-access-token"
+			}
+		}
+	}
 }

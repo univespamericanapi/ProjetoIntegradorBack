@@ -1,5 +1,5 @@
 service: avalon-concursos
-frameworkVersion: "3"
+frameworkVersion: '3'
 
 provider:
   name: aws
@@ -10,4 +10,4 @@ functions:
   api:
     handler: server.handler
     events:
-      - httpApi: "*"
+      - httpApi: '*'

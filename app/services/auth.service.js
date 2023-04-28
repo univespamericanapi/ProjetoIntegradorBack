@@ -7,81 +7,104 @@ import config from '../config/config.js';
 import verifica from '../helpers/verificacao.helper.js';
 
 const login = async (login) => {
-    try {
-        const Usuario = new UsuarioRepository(db.usuario);
-        const RefreshToken = new RefreshTokenRepository(db.refreshToken);
+	try {
+		const Usuario = new UsuarioRepository(db.usuario);
+		const RefreshToken = new RefreshTokenRepository(
+			db.refreshToken
+		);
 
-        const usuario = await Usuario.buscarPorLogin(login.usuario_login);
+		const usuario = await Usuario.buscarPorLogin(
+			login.usuario_login
+		);
 
-        verifica.registroExiste(usuario, Usuario.nome);
+		verifica.registroExiste(usuario, Usuario.nome);
 
-        const senhaEValida = bcrypt.compareSync(
-            login.usuario_senha,
-            usuario.usuario_senha
-        );
+		const senhaEValida = bcrypt.compareSync(
+			login.usuario_senha,
+			usuario.usuario_senha
+		);
 
-        verifica.senha(senhaEValida);
+		verifica.senha(senhaEValida);
 
-        const token = jwt.sign({ id: usuario.usuario_id }, config.segredo, {
-            expiresIn: config.jwtExpira
-        });
+		const token = jwt.sign(
+			{ id: usuario.usuario_id },
+			config.segredo,
+			{
+				expiresIn: config.jwtExpira,
+			}
+		);
 
-        let refreshToken = await RefreshToken.criarToken(usuario);
+		let refreshToken = await RefreshToken.criarToken(
+			usuario
+		);
 
-        const resposta = {
-            ...await Usuario.usuarioView(usuario),
-            accessToken: token,
-            refreshToken: refreshToken
-        };
+		const resposta = {
+			...(await Usuario.usuarioView(usuario)),
+			accessToken: token,
+			refreshToken: refreshToken,
+		};
 
-
-        return {
-            status: 200,
-            message: resposta,
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 200,
+			message: resposta,
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const refreshToken = async (requestToken) => {
-    try {
-        const RefreshToken = new RefreshTokenRepository(db.refreshToken);
+	try {
+		const RefreshToken = new RefreshTokenRepository(
+			db.refreshToken
+		);
 
-        verifica.faltaParametro(requestToken, RefreshToken.nome);
+		verifica.faltaParametro(
+			requestToken,
+			RefreshToken.nome
+		);
 
-        const refreshToken = await RefreshToken.buscaPorToken(requestToken);
+		const refreshToken = await RefreshToken.buscaPorToken(
+			requestToken
+		);
 
-        verifica.registroExiste(refreshToken, RefreshToken.nome);
+		verifica.registroExiste(
+			refreshToken,
+			RefreshToken.nome
+		);
 
-        if (await RefreshToken.verificaExpirado(refreshToken)) {
-            await RefreshToken.deletarPorId(refreshToken.id);
+		if (await RefreshToken.verificaExpirado(refreshToken)) {
+			await RefreshToken.deletarPorId(refreshToken.id);
 
-            verifica.refreshTokenExpirado();
-        }
+			verifica.refreshTokenExpirado();
+		}
 
-        const usuario = await refreshToken.getUsuario();
-        const newAccessToken = jwt.sign({ id: usuario.usuario_id }, config.segredo, {
-            expiresIn: config.jwtExpira
-        });
+		const usuario = await refreshToken.getUsuario();
+		const newAccessToken = jwt.sign(
+			{ id: usuario.usuario_id },
+			config.segredo,
+			{
+				expiresIn: config.jwtExpira,
+			}
+		);
 
-        return {
-            status: 200,
-            message: {
-                accessToken: newAccessToken,
-                refreshToken: refreshToken.token,
-            },
-        };
-    } catch (erro) {
-        console.error(erro);
-        throw erro;
-    }
+		return {
+			status: 200,
+			message: {
+				accessToken: newAccessToken,
+				refreshToken: refreshToken.token,
+			},
+		};
+	} catch (erro) {
+		console.error(erro);
+		throw erro;
+	}
 };
 
 const authService = {
-    login,
-    refreshToken,
+	login,
+	refreshToken,
 };
 
 export default authService;

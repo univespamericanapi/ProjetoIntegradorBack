@@ -1,0 +1,10 @@
+{
+	"editor.formatOnSave": true,
+	"prettier.bracketSameLine": false,
+	"prettier.semi": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"files.autoSave": "onFocusChange",
+	"prettier.singleQuote": true,
+	"prettier.useTabs": true,
+	"prettier.printWidth": 60
+}
