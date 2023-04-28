@@ -27,9 +27,7 @@ export default class RefreshTokenRepository extends BaseRepository {
 		try {
 			const expiredAt = new Date();
 
-			expiredAt.setSeconds(
-				expiredAt.getSeconds() + config.jwtExpira
-			);
+			expiredAt.setSeconds(expiredAt.getSeconds() + config.jwtExpira);
 
 			const registro = {
 				token: uuidv4(),
@@ -47,9 +45,6 @@ export default class RefreshTokenRepository extends BaseRepository {
 	};
 
 	verificaExpirado = async (token) => {
-		return (
-			(await token.expiryDate.getTime()) <
-			new Date().getTime()
-		);
+		return (await token.expiryDate.getTime()) < new Date().getTime();
 	};
 }

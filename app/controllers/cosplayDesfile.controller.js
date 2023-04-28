@@ -10,9 +10,7 @@ const criar = async (req, res) => {
 			req.body.cospDesfile
 		);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -20,9 +18,7 @@ const criar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

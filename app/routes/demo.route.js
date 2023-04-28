@@ -11,11 +11,7 @@ const demoRoutes = (app) => {
 	});
 
 	app.get('/api/all', demoController.allAccess);
-	app.get(
-		'/api/user',
-		[authJwt.verificaToken],
-		demoController.userBoard
-	);
+	app.get('/api/user', [authJwt.verificaToken], demoController.userBoard);
 	app.get(
 		'/api/staff',
 		[authJwt.verificaToken, authJwt.eStaff],

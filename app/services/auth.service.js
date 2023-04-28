@@ -9,13 +9,9 @@ import verifica from '../helpers/verificacao.helper.js';
 const login = async (login) => {
 	try {
 		const Usuario = new UsuarioRepository(db.usuario);
-		const RefreshToken = new RefreshTokenRepository(
-			db.refreshToken
-		);
+		const RefreshToken = new RefreshTokenRepository(db.refreshToken);
 
-		const usuario = await Usuario.buscarPorLogin(
-			login.usuario_login
-		);
+		const usuario = await Usuario.buscarPorLogin(login.usuario_login);
 
 		verifica.registroExiste(usuario, Usuario.nome);
 
@@ -26,17 +22,11 @@ const login = async (login) => {
 
 		verifica.senha(senhaEValida);
 
-		const token = jwt.sign(
-			{ id: usuario.usuario_id },
-			config.segredo,
-			{
-				expiresIn: config.jwtExpira,
-			}
-		);
+		const token = jwt.sign({ id: usuario.usuario_id }, config.segredo, {
+			expiresIn: config.jwtExpira,
+		});
 
-		let refreshToken = await RefreshToken.criarToken(
-			usuario
-		);
+		let refreshToken = await RefreshToken.criarToken(usuario);
 
 		const resposta = {
 			...(await Usuario.usuarioView(usuario)),
@@ -56,23 +46,13 @@ const login = async (login) => {
 
 const refreshToken = async (requestToken) => {
 	try {
-		const RefreshToken = new RefreshTokenRepository(
-			db.refreshToken
-		);
+		const RefreshToken = new RefreshTokenRepository(db.refreshToken);
 
-		verifica.faltaParametro(
-			requestToken,
-			RefreshToken.nome
-		);
+		verifica.faltaParametro(requestToken, RefreshToken.nome);
 
-		const refreshToken = await RefreshToken.buscaPorToken(
-			requestToken
-		);
+		const refreshToken = await RefreshToken.buscaPorToken(requestToken);
 
-		verifica.registroExiste(
-			refreshToken,
-			RefreshToken.nome
-		);
+		verifica.registroExiste(refreshToken, RefreshToken.nome);
 
 		if (await RefreshToken.verificaExpirado(refreshToken)) {
 			await RefreshToken.deletarPorId(refreshToken.id);

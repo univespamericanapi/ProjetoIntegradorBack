@@ -10,10 +10,7 @@ const cosplayDesfileRoutes = (app) => {
 		next();
 	});
 
-	app.post(
-		'/api/cosplay/desfile/criar',
-		cosplayDesfileController.criar
-	);
+	app.post('/api/cosplay/desfile/criar', cosplayDesfileController.criar);
 };
 
 export default cosplayDesfileRoutes;

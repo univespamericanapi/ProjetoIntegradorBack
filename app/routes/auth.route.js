@@ -11,10 +11,7 @@ const authRoutes = (app) => {
 
 	app.post('/api/auth/login', authController.login);
 
-	app.post(
-		'/api/auth/refreshtoken',
-		authController.refreshToken
-	);
+	app.post('/api/auth/refreshtoken', authController.refreshToken);
 };
 
 export default authRoutes;

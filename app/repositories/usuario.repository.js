@@ -40,9 +40,7 @@ export default class UsuarioRepository extends BaseRepository {
 			const registro = await this.buscarPorId(id);
 
 			return await registro.update(alteracoes).then(() => {
-				return (
-					this.nome + mensagensConstant.registroAtualizado
-				);
+				return this.nome + mensagensConstant.registroAtualizado;
 			});
 		} catch (erro) {
 			console.error(erro);

@@ -5,9 +5,7 @@ const login = async (req, res) => {
 	try {
 		const resposta = await authService.login(req.body);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -15,22 +13,16 @@ const login = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const refreshToken = async (req, res) => {
 	try {
-		const resposta = await authService.refreshToken(
-			req.body.refreshToken
-		);
+		const resposta = await authService.refreshToken(req.body.refreshToken);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -38,9 +30,7 @@ const refreshToken = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

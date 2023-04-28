@@ -41,9 +41,7 @@ export default class BaseRepository {
 			const registro = await this.buscarPorId(id);
 
 			return await registro.destroy().then(() => {
-				return (
-					this.nome + mensagensConstant.registroDeletado
-				);
+				return this.nome + mensagensConstant.registroDeletado;
 			});
 		} catch (erro) {
 			console.error(erro);
@@ -56,9 +54,7 @@ export default class BaseRepository {
 			const registro = await this.buscarPorId(id);
 
 			return await registro.update(alteracoes).then(() => {
-				return (
-					this.nome + mensagensConstant.registroAtualizado
-				);
+				return this.nome + mensagensConstant.registroAtualizado;
 			});
 		} catch (erro) {
 			console.error(erro);
@@ -77,9 +73,6 @@ export default class BaseRepository {
 
 	pegarNomeModel() {
 		const nomeTabela = this.model.getTableName();
-		return (
-			nomeTabela.charAt(0).toUpperCase() +
-			nomeTabela.slice(1, -1)
-		);
+		return nomeTabela.charAt(0).toUpperCase() + nomeTabela.slice(1, -1);
 	}
 }

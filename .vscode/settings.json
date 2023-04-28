@@ -6,5 +6,5 @@
 	"files.autoSave": "onFocusChange",
 	"prettier.singleQuote": true,
 	"prettier.useTabs": true,
-	"prettier.printWidth": 60
+	"prettier.printWidth": 80
 }

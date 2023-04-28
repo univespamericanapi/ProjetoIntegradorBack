@@ -7,9 +7,7 @@ const criar = async (req, res) => {
 
 		delete req.body.usuario_senha;
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -17,9 +15,7 @@ const criar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -28,9 +24,7 @@ const listar = async (req, res) => {
 	try {
 		const resposta = await usuarioService.listar();
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -38,22 +32,16 @@ const listar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const deletar = async (req, res) => {
 	try {
-		const resposta = await usuarioService.deletar(
-			req.params.idUsuario
-		);
+		const resposta = await usuarioService.deletar(req.params.idUsuario);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -61,9 +49,7 @@ const deletar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -75,9 +61,7 @@ const atualizarPorAdmin = async (req, res) => {
 			req.body
 		);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -85,9 +69,7 @@ const atualizarPorAdmin = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -99,9 +81,7 @@ const atualizar = async (req, res) => {
 			req.body
 		);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -109,22 +89,16 @@ const atualizar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const buscarPorId = async (req, res) => {
 	try {
-		const resposta = await usuarioService.buscarPorId(
-			req.params.idUsuario
-		);
+		const resposta = await usuarioService.buscarPorId(req.params.idUsuario);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -132,22 +106,16 @@ const buscarPorId = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const buscarPorLogin = async (req, res) => {
 	try {
-		const resposta = await usuarioService.buscarPorLogin(
-			req.query.login
-		);
+		const resposta = await usuarioService.buscarPorLogin(req.query.login);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -155,9 +123,7 @@ const buscarPorLogin = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

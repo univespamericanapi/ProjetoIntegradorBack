@@ -8,18 +8,13 @@ const criar = async (novo) => {
 	try {
 		const Usuario = new UsuarioRepository(db.usuario);
 
-		const usuario = Usuario.buscarPorLogin(
-			novo.usuario_login
-		);
+		const usuario = Usuario.buscarPorLogin(novo.usuario_login);
 
 		verifica.registroDuplicado(usuario, Usuario.nome);
 
 		verifica.senhaValida(novo.usuario_senha);
 
-		novo.usuario_senha = bcrypt.hashSync(
-			novo.usuario_senha,
-			8
-		);
+		novo.usuario_senha = bcrypt.hashSync(novo.usuario_senha, 8);
 
 		const resposta = await Usuario.salvar(novo);
 
@@ -41,9 +36,7 @@ const listar = async () => {
 		const listaUsuarios = [];
 
 		for (let usuario of usuarios) {
-			listaUsuarios.push(
-				await Usuario.usuarioView(usuario)
-			);
+			listaUsuarios.push(await Usuario.usuarioView(usuario));
 		}
 
 		verifica.registroVazio(listaUsuarios, Usuario.nome);
@@ -89,9 +82,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 		verifica.registroExiste(usuario, Usuario.nome);
 
 		if (alteracao.usuario_login) {
-			const usuario2 = await Usuario.buscarPorLogin(
-				alteracao.usuario_login
-			);
+			const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
 
 			verifica.registroDuplicado(usuario2, Usuario.nome);
 		}
@@ -99,9 +90,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 		if (alteracao.usuario_cargo) {
 			const Cargo = new CargoRepository(db.cargo);
 
-			const cargo = await Cargo.buscarPorId(
-				alteracao.usuario_cargo
-			);
+			const cargo = await Cargo.buscarPorId(alteracao.usuario_cargo);
 
 			verifica.registroExiste(cargo, Cargo.nome);
 		}
@@ -109,16 +98,10 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 		if (alteracao.usuario_senha) {
 			verifica.senhaValida(alteracao.usuario_senha);
 
-			alteracao.usuario_senha = bcrypt.hashSync(
-				alteracao.usuario_senha,
-				8
-			);
+			alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
 		}
 
-		const resposta = await Usuario.atualizarPorId(
-			idUsuario,
-			alteracao
-		);
+		const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
 
 		return {
 			status: 202,
@@ -141,9 +124,7 @@ const atualizar = async (idUsuario, alteracao) => {
 		verifica.registroExiste(usuario, Usuario.nome);
 
 		if (alteracao.usuario_login) {
-			const usuario2 = await Usuario.buscarPorLogin(
-				alteracao.usuario_login
-			);
+			const usuario2 = await Usuario.buscarPorLogin(alteracao.usuario_login);
 
 			verifica.registroDuplicado(usuario2, Usuario.nome);
 		}
@@ -151,16 +132,10 @@ const atualizar = async (idUsuario, alteracao) => {
 		if (alteracao.usuario_senha) {
 			verifica.senhaValida(alteracao.usuario_senha);
 
-			alteracao.usuario_senha = bcrypt.hashSync(
-				alteracao.usuario_senha,
-				8
-			);
+			alteracao.usuario_senha = bcrypt.hashSync(alteracao.usuario_senha, 8);
 		}
 
-		const resposta = await Usuario.atualizarPorId(
-			idUsuario,
-			alteracao
-		);
+		const resposta = await Usuario.atualizarPorId(idUsuario, alteracao);
 
 		return {
 			status: 202,
@@ -196,9 +171,7 @@ const buscarPorLogin = async (loginUsuario) => {
 	try {
 		const Usuario = new UsuarioRepository(db.usuario);
 
-		const usuario = await Usuario.buscarPorLogin(
-			loginUsuario
-		);
+		const usuario = await Usuario.buscarPorLogin(loginUsuario);
 
 		verifica.registroExiste(usuario, Usuario.nome);
 

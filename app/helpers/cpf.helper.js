@@ -2,11 +2,7 @@ const validaCpf = (cpf) => {
 	let soma = 0;
 	let restante;
 
-	cpf = cpf
-		.replace('.', '')
-		.replace('.', '')
-		.replace('-', '')
-		.trim();
+	cpf = cpf.replace('.', '').replace('.', '').replace('-', '').trim();
 
 	let tudoIgual = true;
 
@@ -19,8 +15,7 @@ const validaCpf = (cpf) => {
 	}
 
 	for (let i = 1; i <= 9; i++) {
-		soma =
-			soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+		soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
 	}
 
 	restante = (soma * 10) % 11;
@@ -36,8 +31,7 @@ const validaCpf = (cpf) => {
 	soma = 0;
 
 	for (let i = 1; i <= 10; i++) {
-		soma =
-			soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+		soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
 		restante = (soma * 10) % 11;
 	}
 

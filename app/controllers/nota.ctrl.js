@@ -13,9 +13,7 @@ const inserirNota = async (req, res) => {
 		if (!notaCriado) {
 			nota.update(req.body);
 		}
-		res
-			.status(202)
-			.send({ message: `Notas registradas com sucesso!` });
+		res.status(202).send({ message: `Notas registradas com sucesso!` });
 	});
 };
 

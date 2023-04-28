@@ -1,9 +1,4 @@
-export const cargosConstant = [
-	'admin',
-	'staff',
-	'judge',
-	'competidor',
-];
+export const cargosConstant = ['admin', 'staff', 'judge', 'competidor'];
 
 export const categoriasConstant = [
 	'Anime/Mangá',
@@ -24,7 +19,4 @@ export const concursosConstant = [
 
 export const estilosConstant = ['Livre', 'Tradicional'];
 
-export const modalidadesConstant = [
-	'Duo (Dupla)',
-	'Solo (Individual)',
-];
+export const modalidadesConstant = ['Duo (Dupla)', 'Solo (Individual)'];

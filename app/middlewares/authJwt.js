@@ -25,9 +25,7 @@ const verificaToken = (req, res, next) => {
 
 	jwt.verify(token, config.segredo, (err, decoded) => {
 		if (err) {
-			console.log(
-				`${coresLog.FgRed}${err}${coresLog.Reset}`
-			);
+			console.log(`${coresLog.FgRed}${err}${coresLog.Reset}`);
 			return catchError(err, res);
 		}
 
@@ -78,9 +76,7 @@ const eOProprio = async (req, res, next) => {
 
 	try {
 		if (!idUsuarioAltera) {
-			const usuario = await Usuario.buscarPorLogin(
-				req.query.login
-			);
+			const usuario = await Usuario.buscarPorLogin(req.query.login);
 
 			verifica.registroExiste(usuario, Usuario.nome);
 
@@ -93,9 +89,7 @@ const eOProprio = async (req, res, next) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 

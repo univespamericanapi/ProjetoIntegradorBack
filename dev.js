@@ -18,16 +18,11 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 
 // Swagger
-app.use(
-	'/api-docs',
-	swaggerUI.serve,
-	swaggerUI.setup(swaggerDocs)
-);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
 	res.json({
-		message:
-			'Bem vindo a Avalon Concursos - API de gerancimento de concursos.',
+		message: 'Bem vindo a Avalon Concursos - API de gerancimento de concursos.',
 	});
 });
 
@@ -55,15 +50,11 @@ async function conectarAoBanco() {
 		} else {
 			// :::::::: Caution ::::::::
 			// This code will drop all tables everytime
-			await db.sequelize
-				.sync({ force: true })
-				.then(async () => {
-					console.log(
-						'Removendo e Resincronizando o Banco de Dados'
-					);
+			await db.sequelize.sync({ force: true }).then(async () => {
+				console.log('Removendo e Resincronizando o Banco de Dados');
 
-					await createSeeder();
-				});
+				await createSeeder();
+			});
 		}
 
 		console.log(
@@ -73,9 +64,6 @@ async function conectarAoBanco() {
 			`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgCyan}${process.env.DB_HOST}.${coresLog.Reset}`
 		);
 	} catch (error) {
-		console.error(
-			'Não foi possível se conectar ao banco de dados:',
-			error
-		);
+		console.error('Não foi possível se conectar ao banco de dados:', error);
 	}
 }

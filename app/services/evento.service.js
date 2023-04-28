@@ -7,14 +7,10 @@ const criar = async (novo) => {
 	try {
 		const Evento = new EventoRepository(db.evento);
 
-		novo.event_data = dataUtils.stringParaData(
-			novo.event_data
-		);
+		novo.event_data = dataUtils.stringParaData(novo.event_data);
 		novo.event_ed_nome = `${novo.event_edicao}º ${novo.event_nome}`;
 
-		const evento = await Evento.buscaPorEdNome(
-			novo.event_ed_nome
-		);
+		const evento = await Evento.buscaPorEdNome(novo.event_ed_nome);
 
 		verifica.registroDuplicado(evento, Evento.nome);
 
@@ -81,23 +77,16 @@ const atualizar = async (idEvento, alteracao) => {
 		if (alteracao.event_nome || alteracao.event_edicao) {
 			alteracao.event_ed_nome = `${alteracao.event_edicao}º ${alteracao.event_nome}`;
 
-			const evento2 = await Evento.buscaPorEdNome(
-				alteracao.event_ed_nome
-			);
+			const evento2 = await Evento.buscaPorEdNome(alteracao.event_ed_nome);
 
 			verifica.registroDuplicado(evento2, Evento.nome);
 		}
 
 		if (alteracao.event_data) {
-			alteracao.event_data = dataUtils.stringParaData(
-				alteracao.event_data
-			);
+			alteracao.event_data = dataUtils.stringParaData(alteracao.event_data);
 		}
 
-		const resposta = await Evento.atualizarPorId(
-			idEvento,
-			alteracao
-		);
+		const resposta = await Evento.atualizarPorId(idEvento, alteracao);
 
 		return {
 			status: 202,

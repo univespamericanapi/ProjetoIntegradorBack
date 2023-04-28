@@ -16,23 +16,17 @@ const novoDesfile = async (req, res) => {
 		return;
 	}
 
-	const evento = await Evento.findByPk(
-		desfDados.desf_event
-	);
+	const evento = await Evento.findByPk(desfDados.desf_event);
 
 	if (!evento) {
-		res
-			.status(400)
-			.send({ message: 'Evento não encontrado!' });
+		res.status(400).send({ message: 'Evento não encontrado!' });
 		return;
 	}
 
 	partDados.part_nome = req.body.part_nome;
 	partDados.part_nomeSocial = req.body.part_nomeSocial;
 	partDados.part_cpf = req.body.part_cpf;
-	partDados.part_nasc = utils.dataConverter(
-		req.body.part_nasc
-	);
+	partDados.part_nasc = utils.dataConverter(req.body.part_nasc);
 	partDados.part_whats = req.body.part_whats;
 	partDados.part_est = req.body.part_est;
 	partDados.part_cidade = req.body.part_cidade;
@@ -55,9 +49,7 @@ const novoDesfile = async (req, res) => {
 	desfDados.desf_extra = req.body.desf_extra;
 	desfDados.desf_conf = false;
 
-	const configsVerifica = await verificaConfigs(
-		desfDados.desf_event
-	);
+	const configsVerifica = await verificaConfigs(desfDados.desf_event);
 
 	if (configsVerifica.status === 400) {
 		res.status(configsVerifica.status).send({
@@ -68,20 +60,14 @@ const novoDesfile = async (req, res) => {
 
 	desfDados.desf_ordem = configsVerifica.total + 1;
 
-	let gravado = await criarDados(
-		partDados,
-		persDados,
-		desfDados
-	);
+	let gravado = await criarDados(partDados, persDados, desfDados);
 
 	if (configsVerifica.status === 201) {
 		gravado.status = configsVerifica.status;
 		gravado.message = configsVerifica.message;
 	}
 
-	res
-		.status(gravado.status)
-		.send({ message: gravado.message });
+	res.status(gravado.status).send({ message: gravado.message });
 };
 
 const desfileLista = async (req, res) => {
@@ -97,36 +83,24 @@ const desfileLista = async (req, res) => {
 	const configs = await getConfigs(idEvento);
 
 	if (!configs) {
-		res
-			.status(400)
-			.send({ message: 'Evento não encontrado!' });
+		res.status(400).send({ message: 'Evento não encontrado!' });
 		return;
 	}
 
 	let pula = 0;
 	let quant = configs.config_limit_inscr;
 
-	const listaInscri = await criarLista(
-		idEvento,
-		pula,
-		quant
-	);
+	const listaInscri = await criarLista(idEvento, pula, quant);
 
 	if (listaInscri.status === 400) {
-		res
-			.status(listaInscri.status)
-			.send({ message: listaInscri.message });
+		res.status(listaInscri.status).send({ message: listaInscri.message });
 		return;
 	}
 
 	pula = configs.config_limit_inscr;
 	quant = configs.config_limit_espera;
 
-	const listaEspera = await criarLista(
-		idEvento,
-		pula,
-		quant
-	);
+	const listaEspera = await criarLista(idEvento, pula, quant);
 
 	res.status(200).send({
 		listaInscri: listaInscri.lista,
@@ -138,9 +112,7 @@ const desfileCheckin = async (req, res) => {
 	const idDesfile = req.params.id;
 
 	if (!idDesfile) {
-		res
-			.status(400)
-			.send({ message: 'Nenhum parâmetro foi passado!' });
+		res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
 		return;
 	}
 
@@ -158,13 +130,9 @@ const desfileCheckin = async (req, res) => {
 
 	const configs = await getConfigs(alterDesfile.desf_event);
 
-	if (
-		contagem >= configs.config_limit_checkin &&
-		!alterDesfile.desf_conf
-	) {
+	if (contagem >= configs.config_limit_checkin && !alterDesfile.desf_conf) {
 		return res.status(400).send({
-			message:
-				'Limite de participantes no concurso alcançado!',
+			message: 'Limite de participantes no concurso alcançado!',
 		});
 	}
 
@@ -202,9 +170,7 @@ const desfileResultado = async (req, res) => {
 	const idEvento = req.params.idEvento;
 
 	if (!idEvento) {
-		res
-			.status(400)
-			.send({ message: 'Nenhum parâmetro foi passado!' });
+		res.status(400).send({ message: 'Nenhum parâmetro foi passado!' });
 		return;
 	}
 
@@ -256,14 +222,11 @@ const verificaConfigs = async (idEvento) => {
 	retorno.total = contagem;
 
 	const configs = await getConfigs(idEvento);
-	const maximo =
-		configs.config_limit_inscr +
-		configs.config_limit_espera;
+	const maximo = configs.config_limit_inscr + configs.config_limit_espera;
 
 	if (!configs.config_ativo) {
 		retorno.status = 400;
-		retorno.message =
-			'Evento inativo, aguarde até abrir as inscrições!';
+		retorno.message = 'Evento inativo, aguarde até abrir as inscrições!';
 		return retorno;
 	}
 
@@ -307,11 +270,7 @@ const getConfigs = async (idEvento) => {
 	return retorno;
 };
 
-const criarDados = async (
-	partDados,
-	persDados,
-	desfDados
-) => {
+const criarDados = async (partDados, persDados, desfDados) => {
 	const Desfile = db.desfile;
 	const Participante = db.participante;
 	const Personagem = db.personagem;
@@ -345,8 +304,7 @@ const criarDados = async (
 						transaction,
 					}).then(async ([desfile, desfCriado]) => {
 						retorno.status = 201;
-						retorno.message =
-							'Cadastro concluído com sucesso!';
+						retorno.message = 'Cadastro concluído com sucesso!';
 					});
 				});
 			});
@@ -380,12 +338,7 @@ const criarLista = async (idEvento, pula, quant) => {
 			desf_event: idEvento,
 		},
 		attributes: {
-			exclude: [
-				'desf_event',
-				'desf_pers',
-				'desf_categ',
-				'desf_media',
-			],
+			exclude: ['desf_event', 'desf_pers', 'desf_categ', 'desf_media'],
 		},
 		include: [
 			{
@@ -433,7 +386,7 @@ const criarLista = async (idEvento, pula, quant) => {
 			desfileLista.push(desfile);
 		});
 
-		if (!retorno.lista.length == 0) {
+		if (!retorno.lista.length === 0) {
 			console.log(retorno.lista);
 			retorno.status = 400;
 			retorno.message = 'Nenhum competidor foi encontrado!';

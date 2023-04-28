@@ -16,10 +16,7 @@ const desfileRoutes = (app) => {
 		[verificaDuplicado.checaDuplicadoDesfile],
 		desfileCtrl.novoDesfile
 	);
-	app.get(
-		'/api/lista/desfile/:idEvento',
-		desfileCtrl.desfileLista
-	);
+	app.get('/api/lista/desfile/:idEvento', desfileCtrl.desfileLista);
 	app.put(
 		'/api/staff/desfile/checkin/:id',
 		[authJwt.verificaToken, authJwt.eStaff],

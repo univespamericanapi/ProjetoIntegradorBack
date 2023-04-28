@@ -9,21 +9,14 @@ import { mensagensConstant } from '../constants/mensagens.constant.js';
 
 const verificarEmail = async (id, token) => {
 	try {
-		const Competidor = new CompetidorRepository(
-			db.competidor
-		);
-		const EmailToken = new EmailTokenRepository(
-			db.emailToken
-		);
+		const Competidor = new CompetidorRepository(db.competidor);
+		const EmailToken = new EmailTokenRepository(db.emailToken);
 
 		const competidor = await Competidor.buscarPorId(id);
 
 		verifica.registroExiste(competidor, Competidor.nome);
 
-		const emailToken = await EmailToken.buscaPorToken(
-			id,
-			token
-		);
+		const emailToken = await EmailToken.buscaPorToken(id, token);
 
 		verifica.registroExiste(emailToken, EmailToken.nome);
 
@@ -53,9 +46,7 @@ const verificarEmail = async (id, token) => {
 
 const enviarEmail = async (email, assunto, texto) => {
 	try {
-		const transportador = nodemailer.createTransport(
-			config.email
-		);
+		const transportador = nodemailer.createTransport(config.email);
 
 		await transportador.sendMail({
 			from: config.email.auth.user,
@@ -73,20 +64,12 @@ const enviarEmail = async (email, assunto, texto) => {
 
 const reenviar = async (email) => {
 	try {
-		const Competidor = new CompetidorRepository(
-			db.competidor
-		);
-		const EmailToken = new EmailTokenRepository(
-			db.emailToken
-		);
+		const Competidor = new CompetidorRepository(db.competidor);
+		const EmailToken = new EmailTokenRepository(db.emailToken);
 
-		const competidor = await Competidor.buscarPorEmail(
-			email
-		);
+		const competidor = await Competidor.buscarPorEmail(email);
 		verifica.registroExiste(competidor);
-		const emailToken = await EmailToken.buscaPorCompetidor(
-			competidor.comp_id
-		);
+		const emailToken = await EmailToken.buscaPorCompetidor(competidor.comp_id);
 		verifica.registroExiste(emailToken);
 
 		const emailCorpo = gerarMensagem(
@@ -113,20 +96,14 @@ const reenviar = async (email) => {
 
 const alterarEmail = async (cpf, nasc, email) => {
 	try {
-		const Competidor = new CompetidorRepository(
-			db.competidor
-		);
+		const Competidor = new CompetidorRepository(db.competidor);
 
-		const competidor = await Competidor.buscarPorCpfNasc(
-			cpf,
-			nasc
-		);
+		const competidor = await Competidor.buscarPorCpfNasc(cpf, nasc);
 		verifica.registroExiste(competidor);
 
-		const resposta = await Competidor.atualizarPorId(
-			competidor.comp_id,
-			{ comp_email: email }
-		);
+		const resposta = await Competidor.atualizarPorId(competidor.comp_id, {
+			comp_email: email,
+		});
 
 		return {
 			status: 200,
@@ -155,8 +132,7 @@ const criarToken = async (competidor, tipo) => {
 
 const gerarMensagem = (nome, comp_id, token) => {
 	return {
-		assunto:
-			'E-mail de verificação. Não responda esse e-mail!',
+		assunto: 'E-mail de verificação. Não responda esse e-mail!',
 		mensagem: `Olá ${nome},
 
     Verifique seu e-mail clicando no link abaixo:

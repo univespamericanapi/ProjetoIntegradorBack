@@ -5,9 +5,7 @@ const criar = async (req, res) => {
 	try {
 		const resposta = await eventoService.criar(req.body);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -15,9 +13,7 @@ const criar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -26,9 +22,7 @@ const listar = async (req, res) => {
 	try {
 		const resposta = await eventoService.listar();
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -36,22 +30,16 @@ const listar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const deletar = async (req, res) => {
 	try {
-		const resposta = await eventoService.deletar(
-			req.params.idEvento
-		);
+		const resposta = await eventoService.deletar(req.params.idEvento);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -59,9 +47,7 @@ const deletar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -73,9 +59,7 @@ const atualizar = async (req, res) => {
 			req.body
 		);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -83,22 +67,16 @@ const atualizar = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
 
 const buscarPorId = async (req, res) => {
 	try {
-		const resposta = await eventoService.buscarPorId(
-			req.params.idEvento
-		);
+		const resposta = await eventoService.buscarPorId(req.params.idEvento);
 
-		return res
-			.status(resposta.status)
-			.send(resposta.message);
+		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
 			console.log(
@@ -106,9 +84,7 @@ const buscarPorId = async (req, res) => {
 			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(
-			`${coresLog.FgRed}${erro}${coresLog.Reset}`
-		);
+		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

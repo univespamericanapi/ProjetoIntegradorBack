@@ -6,9 +6,7 @@ import EmailTokenRepository from '../repositories/emailToken.repository.js';
 const transacaoService = async (Instancias, dados) => {
 	try {
 		const Transacao = new TransacaoRepository(db.sequelize);
-		const EmailToken = new EmailTokenRepository(
-			db.emailToken
-		);
+		const EmailToken = new EmailTokenRepository(db.emailToken);
 
 		const transacao = await Transacao.iniciar();
 		const compCriado = await Transacao.buscarOuCriar(
@@ -30,14 +28,8 @@ const transacaoService = async (Instancias, dados) => {
 			transacao
 		);
 		dados.extra.extra_part = partCriada.part_id;
-		await Transacao.criar(
-			Instancias.Extra.model,
-			dados.extra,
-			transacao
-		);
-		if (
-			dados.participacao.part_tipo_inscr === 'Inscrição'
-		) {
+		await Transacao.criar(Instancias.Extra.model, dados.extra, transacao);
+		if (dados.participacao.part_tipo_inscr === 'Inscrição') {
 			await Transacao.incrementar(
 				dados.concurso,
 				{ conc_atual_inscr: 1 },
@@ -54,11 +46,7 @@ const transacaoService = async (Instancias, dados) => {
 			compCriado,
 			dados.participacao.part_tipo_inscr
 		);
-		await Transacao.criar(
-			EmailToken.model,
-			emailToken,
-			transacao
-		);
+		await Transacao.criar(EmailToken.model, emailToken, transacao);
 		const emailCorpo = emailService.gerarMensagem(
 			compCriado.comp_nome_social,
 			compCriado.comp_id,

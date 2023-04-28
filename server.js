@@ -24,16 +24,11 @@ app.use(
 );
 
 // Swagger
-app.use(
-	'/api-docs',
-	swaggerUI.serve,
-	swaggerUI.setup(swaggerDocs)
-);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
 	res.json({
-		message:
-			'Bem vindo a Avalon Concursos - API de gerancimento de concursos.',
+		message: 'Bem vindo a Avalon Concursos - API de gerancimento de concursos.',
 	});
 });
 
@@ -63,10 +58,7 @@ async function conectarAoBanco() {
 			`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgGreen}${process.env.DB_HOST}.${coresLog.Reset}`
 		);
 	} catch (error) {
-		console.error(
-			'Não foi possível se conectar ao banco de dados:',
-			error
-		);
+		console.error('Não foi possível se conectar ao banco de dados:', error);
 	}
 }
 
