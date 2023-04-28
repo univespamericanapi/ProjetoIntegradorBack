@@ -40,6 +40,7 @@ const login = async (login) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -73,6 +74,7 @@ const refreshToken = async (requestToken) => {
             },
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

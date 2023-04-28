@@ -17,6 +17,7 @@ export default class ParticipacaoRepository extends BaseRepository {
 
             return participacao;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

@@ -2,7 +2,7 @@ import db from "../models/db.model.js";
 import BaseRepository from "./base.repository.js";
 
 export default class CidadeRepository extends BaseRepository {
-    constructor (model) {
+    constructor(model) {
         super(model);
         this.nome = 'Cidade';
     }
@@ -25,6 +25,7 @@ export default class CidadeRepository extends BaseRepository {
 
             return cidades;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

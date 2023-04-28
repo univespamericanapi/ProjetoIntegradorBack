@@ -7,6 +7,7 @@ export default class TransacaoRepository {
         try {
             return await this.sequelize.transaction();
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -21,6 +22,7 @@ export default class TransacaoRepository {
                 return registro;
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -30,8 +32,9 @@ export default class TransacaoRepository {
             return await model.create(
                 data,
                 { transaction }
-            )
+            );
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -40,6 +43,7 @@ export default class TransacaoRepository {
         try {
             await registry.increment(field, { transaction });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

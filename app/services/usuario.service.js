@@ -23,6 +23,7 @@ const criar = async (novo) => {
             message: resposta
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -45,6 +46,7 @@ const listar = async () => {
             message: listaUsuarios,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -66,6 +68,7 @@ const deletar = async (idUsuario) => {
             message: resposta
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -105,6 +108,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
             message: resposta
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -138,6 +142,7 @@ const atualizar = async (idUsuario, alteracao) => {
             message: resposta
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -157,6 +162,7 @@ const buscarPorId = async (idUsuario) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -176,6 +182,7 @@ const buscarPorLogin = async (loginUsuario) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

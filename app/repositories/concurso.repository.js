@@ -14,6 +14,7 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -27,6 +28,7 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -40,11 +42,12 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
 
-    async buscarCospCirc(idEvento) {
+    async buscarKaraoke(idEvento) {
         try {
             return await this.model.findOne({
                 where: {
@@ -53,6 +56,7 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -66,6 +70,7 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -79,6 +84,7 @@ export default class ConcursoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -90,6 +96,7 @@ export default class ConcursoRepository extends BaseRepository {
                 conc_nome: concurso.conc_nome,
             };
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

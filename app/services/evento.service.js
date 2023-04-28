@@ -21,6 +21,7 @@ const criar = async (novo) => {
             message: resposta,
         }
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -38,6 +39,7 @@ const listar = async () => {
             message: eventos,
         }
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -57,6 +59,7 @@ const deletar = async (idEvento) => {
             message: resposta,
         }
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -90,6 +93,7 @@ const atualizar = async (idEvento, alteracao) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -109,6 +113,7 @@ const buscarPorId = async (idEvento) => {
             message: evento,
         }
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 }

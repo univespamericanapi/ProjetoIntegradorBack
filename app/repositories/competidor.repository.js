@@ -16,6 +16,7 @@ export default class CompetidorRepository extends BaseRepository {
 
             return competidor;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -31,6 +32,7 @@ export default class CompetidorRepository extends BaseRepository {
 
             return competidor;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -45,6 +47,7 @@ export default class CompetidorRepository extends BaseRepository {
 
             return competidor;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

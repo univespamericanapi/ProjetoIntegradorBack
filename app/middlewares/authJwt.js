@@ -49,7 +49,6 @@ const eAdmin = async (req, res, next) => {
         res.status(403).send({
             message: mensagensConstant.requeridoAdm
         });
-        return;
     });
 }
 
@@ -67,7 +66,6 @@ const eStaff = async (req, res, next) => {
         res.status(403).send({
             message: mensagensConstant.requeridoStaff
         });
-        return;
     });
 }
 
@@ -104,7 +102,6 @@ const eOProprio = async (req, res, next) => {
         res.status(403).send({
             message: mensagensConstant.naoAutorizado
         });
-        return;
     });
 }
 

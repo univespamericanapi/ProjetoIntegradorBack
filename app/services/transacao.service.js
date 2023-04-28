@@ -61,7 +61,7 @@ const transacaoService = async (Instancias, dados) => {
             emailToken.token,
         );
 
-        const resposta =  await emailService.enviarEmail(
+        const resposta = await emailService.enviarEmail(
             compCriado.comp_email,
             emailCorpo.assunto,
             emailCorpo.mensagem,
@@ -71,6 +71,7 @@ const transacaoService = async (Instancias, dados) => {
 
         return resposta;
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

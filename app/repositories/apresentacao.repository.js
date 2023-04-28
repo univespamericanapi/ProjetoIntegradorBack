@@ -16,6 +16,7 @@ export default class ApresentacaoRepository extends BaseRepository {
 
             return apresentacao;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

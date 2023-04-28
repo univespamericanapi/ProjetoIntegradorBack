@@ -16,6 +16,7 @@ const buscarPorEvento = async (idEvento) => {
             message: concursos,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -28,7 +29,7 @@ const atualizar = async (idConcurso, alteracao) => {
 
         verifica.registroExiste(concurso, Concurso.nome);
 
-        if(alteracao.conc_data_ativ) {
+        if (alteracao.conc_data_ativ) {
             alteracao.conc_data_ativ = dataUtils.stringParaData(alteracao.conc_data_ativ);
         }
 
@@ -39,6 +40,7 @@ const atualizar = async (idConcurso, alteracao) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

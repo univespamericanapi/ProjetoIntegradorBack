@@ -1,7 +1,7 @@
 import BaseRepository from "./base.repository.js";
 
 export default class CargoRepository extends BaseRepository {
-    constructor (model) {
+    constructor(model) {
         super(model);
         this.nome = 'Cargo';
     }
@@ -16,6 +16,7 @@ export default class CargoRepository extends BaseRepository {
 
             return cargo;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

@@ -17,6 +17,7 @@ export default class EmailTokenRepository extends BaseRepository {
 
             return registro;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     };
@@ -31,6 +32,7 @@ export default class EmailTokenRepository extends BaseRepository {
 
             return registro;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     };

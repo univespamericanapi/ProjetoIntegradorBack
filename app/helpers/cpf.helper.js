@@ -42,11 +42,7 @@ const validaCpf = cpf => {
         restante = 0;
     }
 
-    if (restante != parseInt(cpf.substring(10, 11))) {
-        return false;
-    }
-
-    return true;
+    return restante == parseInt(cpf.substring(10, 11));
 }
 
 export default validaCpf;

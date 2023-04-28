@@ -240,35 +240,6 @@ db.usuario.belongsTo(db.cargo, {
     foreignKey: 'usuario_cargo'
 });
 
-
-
-
-
-
-// // Participantes - Personagens
-// db.participante.hasMany(db.personagem, {
-//     foreignKey: 'pers_part'
-// });
-// db.personagem.belongsTo(db.participante, {
-//     foreignKey: 'pers_part'
-// });
-
-
-
-// // Desfile - Categoria
-// db.categoria.hasMany(db.desfile, {
-//     foreignKey: 'desf_categ'
-// });
-// db.desfile.belongsTo(db.categoria, {
-//     foreignKey: 'desf_categ'
-// });
-
-
-
-
-
-
-
 // Concurso - Evento
 db.evento.hasMany(db.concurso, {
     foreignKey: 'conc_event'

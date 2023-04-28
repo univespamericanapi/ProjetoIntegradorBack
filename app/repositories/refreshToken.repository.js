@@ -3,7 +3,7 @@ import BaseRepository from "./base.repository.js";
 import { v4 as uuidv4 } from 'uuid';
 
 export default class RefreshTokenRepository extends BaseRepository {
-    constructor (model) {
+    constructor(model) {
         super(model);
         this.nome = 'Refresh Token';
     }
@@ -18,6 +18,7 @@ export default class RefreshTokenRepository extends BaseRepository {
 
             return registro;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     };
@@ -38,6 +39,7 @@ export default class RefreshTokenRepository extends BaseRepository {
 
             return registro.token;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     };

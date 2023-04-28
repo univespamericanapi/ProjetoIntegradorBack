@@ -78,6 +78,7 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

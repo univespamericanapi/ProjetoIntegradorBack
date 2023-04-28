@@ -26,6 +26,7 @@ export default class EventoRepository extends BaseRepository {
                 }
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -49,6 +50,7 @@ export default class EventoRepository extends BaseRepository {
                 ]
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -72,6 +74,7 @@ export default class EventoRepository extends BaseRepository {
                 ]
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -83,6 +86,7 @@ export default class EventoRepository extends BaseRepository {
                 event_ed_nome: evento.event_ed_nome,
             };
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }

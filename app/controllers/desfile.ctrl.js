@@ -369,7 +369,7 @@ const criarLista = async (idEvento, pula, quant) => {
             desfileLista.push(desfile);
         });
 
-        if (!retorno.lista.length === 0) {
+        if (!retorno.lista.length == 0) {
             console.log(retorno.lista);
             retorno.status = 400;
             retorno.message = 'Nenhum competidor foi encontrado!';

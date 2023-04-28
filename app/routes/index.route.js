@@ -8,9 +8,6 @@ import cosplayDesfileRoutes from './cosplayDesfile.route.js';
 import emailRoutes from './email.route.js';
 
 const indexRoutes = app => {
-    // desfileRoutes(app);
-    // notaRoutes(app);
-    
     authRoutes(app);
     usuarioRoutes(app);
     listaRoutes(app);

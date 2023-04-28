@@ -39,6 +39,7 @@ const verificarEmail = async (id, token) => {
             message: message,
         }
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -56,6 +57,7 @@ const enviarEmail = async (email, assunto, texto) => {
 
         return mensagensConstant.participacaoRegistrada;
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -87,6 +89,7 @@ const reenviar = async (email) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -108,6 +111,7 @@ const alterarEmail = async (cpf, nasc, email) => {
             message: resposta,
         };
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };
@@ -122,6 +126,7 @@ const criarToken = async (competidor, tipo) => {
 
         return registro;
     } catch (erro) {
+        console.error(erro);
         throw erro;
     }
 };

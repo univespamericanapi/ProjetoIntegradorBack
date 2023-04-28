@@ -1,12 +1,3 @@
-// {
-//     nota_id,
-//     nota_usuario,
-//     nota_desfile,
-//     nota_jurado,
-//     nota_confec,
-//     nota_fidel
-// }
-
 import db from "../models/db.model.js";
 
 const inserirNota = async (req, res) => {

@@ -17,6 +17,7 @@ export default class UsuarioRepository extends BaseRepository {
 
             return usuario;
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -29,6 +30,7 @@ export default class UsuarioRepository extends BaseRepository {
                 },
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -41,6 +43,7 @@ export default class UsuarioRepository extends BaseRepository {
                 return this.nome + mensagensConstant.registroAtualizado
             });
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
@@ -54,6 +57,7 @@ export default class UsuarioRepository extends BaseRepository {
                 cargo: await usuario.getCargo(),
             };
         } catch (erro) {
+            console.error(erro);
             throw erro;
         }
     }
