@@ -1,5 +1,3 @@
-import { mensagensConstant } from "../constants/mensagens.constant.js";
-
 export default class TransacaoRepository {
     constructor(sequelize) {
         this.sequelize = sequelize;

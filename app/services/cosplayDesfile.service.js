@@ -7,7 +7,6 @@ import ConcursoRepository from "../repositories/concurso.repository.js";
 import db from "../models/db.model.js";
 import verifica from "../helpers/verificacao.helper.js";
 import dataUtils from "../utils/data.util.js";
-import emailService from "./email.service.js";
 import transacaoService from "./transacao.service.js";
 
 const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
