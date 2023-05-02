@@ -11,6 +11,7 @@ export default class ConcursoRepository extends BaseRepository {
 			return await this.model.findAll({
 				where: {
 					conc_event: idEvento,
+					conc_ativo: true,
 				},
 			});
 		} catch (erro) {
