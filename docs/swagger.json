@@ -18,7 +18,11 @@
 	"servers": [
 		{
 			"url": "http://localhost:8080",
-			"description": "API de teste"
+			"description": "API de Dev Local"
+		},
+		{
+			"url": "https://c4c4uiddr5.execute-api.sa-east-1.amazonaws.com",
+			"description": "Produção na AWS"
 		}
 	],
 	"paths": {

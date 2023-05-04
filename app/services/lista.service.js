@@ -150,7 +150,7 @@ const listarConcursos = async (idEvento) => {
 	try {
 		const Concurso = new ConcursoRepository(db.concurso);
 
-		const concursos = await Concurso.buscarPorEvento(idEvento);
+		const concursos = await Concurso.buscarPorEventoAtivo(idEvento);
 		const listaConcursos = [];
 
 		for (let concurso of concursos) {

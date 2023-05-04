@@ -1,4 +1,3 @@
-import { coresLog } from '../constants/coresLog.constant.js';
 import emailService from '../services/email.service.js';
 
 const verificarEmail = async (req, res) => {
@@ -10,12 +9,8 @@ const verificarEmail = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -27,12 +22,8 @@ const reenviar = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -48,12 +39,8 @@ const alterarEmail = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

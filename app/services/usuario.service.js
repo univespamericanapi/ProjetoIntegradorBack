@@ -61,8 +61,6 @@ const deletar = async (idUsuario) => {
 
 		const resposta = await Usuario.deletarPorId(idUsuario);
 
-		console.log(resposta);
-
 		return {
 			status: 202,
 			message: resposta,

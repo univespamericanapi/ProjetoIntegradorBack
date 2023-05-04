@@ -1,5 +1,4 @@
 import dataUtils from '../utils/data.util.js';
-import { coresLog } from '../constants/coresLog.constant.js';
 
 export default class CustomError extends Error {
 	constructor(status = 500, ...params) {
@@ -13,6 +12,6 @@ export default class CustomError extends Error {
 
 		this.status = status;
 		this.date = dataUtils.dataParaStringConsole(new Date());
-		this.consoleLog = `${coresLog.FgRed}${this.date}: ${this.message}${coresLog.Reset}`;
+		this.consoleLog = `${this.message}`;
 	}
 }

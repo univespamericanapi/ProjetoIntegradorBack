@@ -16,6 +16,9 @@ app.use(
 		origin: config.corsOrigin,
 	})
 );
+console.log(
+	`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgGreen}${config.corsOrigin}.${coresLog.Reset}`
+);
 app.use(json());
 app.use(
 	urlencoded({

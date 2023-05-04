@@ -1,4 +1,3 @@
-import { coresLog } from '../constants/coresLog.constant.js';
 import listaService from '../services/lista.service.js';
 
 const cargo = async (req, res) => {
@@ -8,12 +7,8 @@ const cargo = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -25,12 +20,8 @@ const categoria = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -42,12 +33,8 @@ const cidade = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -59,12 +46,8 @@ const estado = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -76,12 +59,8 @@ const estilo = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -93,12 +72,8 @@ const modalidade = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -110,12 +85,8 @@ const evento = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -127,12 +98,8 @@ const concurso = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };

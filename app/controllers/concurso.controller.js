@@ -1,4 +1,3 @@
-import { coresLog } from '../constants/coresLog.constant.js';
 import concursoService from '../services/concurso.service.js';
 
 const listarPorEvento = async (req, res) => {
@@ -8,12 +7,8 @@ const listarPorEvento = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
@@ -28,12 +23,8 @@ const atualizar = async (req, res) => {
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 };
