@@ -8,6 +8,7 @@ const config = {
 	env: process.env.NODE_ENV,
 	segredo: process.env.APP_SECRET,
 	jwtExpira: 3600 * 1,
+	// jwtExpira: 10 * 1,
 	jwtRefreshExpira: 3600 * 8,
 	corsOrigin: process.env.CORS_ORIGIN,
 	baseUrlEmail: process.env.EMAIL_BASE_URL,

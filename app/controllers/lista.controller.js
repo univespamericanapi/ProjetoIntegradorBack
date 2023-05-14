@@ -39,6 +39,19 @@ const cidade = async (req, res) => {
 	}
 };
 
+const buscarCidadePorId = async (req, res) => {
+	try {
+		const resposta = await listaService.buscarCidadesPorId(req.params.idCidade);
+
+		return res.status(resposta.status).send(resposta.message);
+	} catch (erro) {
+		if (erro.status) {
+			return res.status(erro.status).send(erro.message);
+		}
+		return res.status(500).send(erro.message);
+	}
+};
+
 const estado = async (req, res) => {
 	try {
 		const resposta = await listaService.listarEstados();
@@ -106,6 +119,7 @@ const concurso = async (req, res) => {
 
 const listaController = {
 	cidade,
+	buscarCidadePorId,
 	estado,
 	cargo,
 	categoria,

@@ -1,5 +1,5 @@
 const allAccess = async (req, res) => {
-	res.status(200).send('Public Content.');
+	res.status(200).send('Bem vindo a sistema de concursos da Avalon Eventos.');
 };
 
 const userBoard = (req, res) => {
@@ -11,7 +11,7 @@ const staffBoard = (req, res) => {
 };
 
 const adminBoard = (req, res) => {
-	res.status(200).send('Admin Content.');
+	res.status(200).send('Bem vindo ao controle do administrador.');
 };
 
 const demoController = {

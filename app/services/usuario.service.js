@@ -8,7 +8,8 @@ const criar = async (novo) => {
 	try {
 		const Usuario = new UsuarioRepository(db.usuario);
 
-		const usuario = Usuario.buscarPorLogin(novo.usuario_login);
+		const usuario = await Usuario.buscarPorLogin(novo.usuario_login);
+		console.log(usuario);
 
 		verifica.registroDuplicado(usuario, Usuario.nome);
 

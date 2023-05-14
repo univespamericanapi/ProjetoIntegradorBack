@@ -536,6 +536,48 @@
 				}
 			}
 		},
+		"/api/lista/cidade/{idCidade}": {
+			"get": {
+				"summary": "Busca de cidade do sistema.",
+				"description": "Rota responsável pela busca de uma cidade cadastrada, pelo id.",
+				"tags": ["Listas"],
+				"parameters": [
+					{
+						"name": "idCidade",
+						"in": "path",
+						"description": "Id da cidade.",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"type": "object",
+								"properties": {
+									"cid_id": {
+										"type": "number"
+									},
+									"cid_desc": {
+										"type": "string"
+									},
+									"cid_estado": {
+										"type": "number"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Nenhum estado fornecido!"
+					},
+					"404": {
+						"description": "Estado não encontrado!"
+					}
+				}
+			}
+		},
 		"/api/lista/concurso/{idEvento}": {
 			"get": {
 				"summary": "Lista de concursos do sistema.",
