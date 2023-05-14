@@ -56,12 +56,11 @@ export default class EventoRepository extends BaseRepository {
 	async buscarPorId(id) {
 		try {
 			return await this.model.findByPk(id, {
-				attributes: {
-					exclude: ['event_cidade'],
-				},
 				include: {
 					model: db.cidade,
-					attributes: ['cid_desc'],
+					attributes: {
+						exclude: ['cid_id'],
+					},
 					include: {
 						model: db.estado,
 						attributes: ['est_sigla', 'est_desc'],

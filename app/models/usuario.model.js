@@ -25,7 +25,18 @@ export const usuario = (sequelize, Sequelize) => {
 				allowNull: false,
 			},
 		},
-		{ timestamps: false }
+		{
+			timestamps: false,
+			hooks: {
+				beforeDestroy: (usuarios) => {
+					sequelize.models.refreshTokens.destroy({
+						where: {
+							refreshToken_usuario: usuarios.usuario_id,
+						},
+					});
+				},
+			},
+		}
 	);
 
 	return Usuario;

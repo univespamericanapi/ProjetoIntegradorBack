@@ -69,26 +69,6 @@ const listarCidades = async (estadoId) => {
 	}
 };
 
-const buscarCidadesPorId = async (cidadeId) => {
-	try {
-		const Cidade = new CidadeRepository(db.cidade);
-
-		verifica.faltaParametro(cidadeId);
-
-		const cidade = await Cidade.buscarPorId(cidadeId);
-
-		verifica.registroExiste(cidade, Cidade.nome);
-
-		return {
-			status: 200,
-			message: cidade,
-		};
-	} catch (erro) {
-		console.error(erro);
-		throw erro;
-	}
-};
-
 const listarEstados = async () => {
 	try {
 		const Estado = new EstadoRepository(db.estado);
@@ -192,7 +172,6 @@ const listarConcursos = async (idEvento) => {
 const listaService = {
 	listarEstados,
 	listarCidades,
-	buscarCidadesPorId,
 	listarCargos,
 	listarCategorias,
 	listarEstilos,

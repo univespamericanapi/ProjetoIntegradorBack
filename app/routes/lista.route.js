@@ -17,7 +17,6 @@ const listaRoutes = (app) => {
 	);
 	app.get('/api/lista/categoria', listaController.categoria);
 	app.get('/api/lista/cidade', listaController.cidade);
-	app.get('/api/lista/cidade/:idCidade', listaController.buscarCidadePorId);
 	app.get('/api/lista/concurso/:idEvento', listaController.concurso);
 	app.get('/api/lista/estado', listaController.estado);
 	app.get('/api/lista/estilo', listaController.estilo);
