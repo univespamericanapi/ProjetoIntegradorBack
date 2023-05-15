@@ -14,7 +14,9 @@ const criar = async (novo) => {
 
 		verifica.registroDuplicado(evento, Evento.nome);
 
-		const resposta = await Evento.salvar(novo);
+		const resposta =
+			(await Evento.salvar(novo)) +
+			' Não esqueça de ir na seção "Configurar Concursos" para habilitar os concursos do evento criado.';
 
 		return {
 			status: 201,
