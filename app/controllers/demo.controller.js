@@ -7,7 +7,7 @@ const userBoard = (req, res) => {
 };
 
 const staffBoard = (req, res) => {
-	res.status(200).send('Staff Content.');
+	res.status(200).send('Bem vindo ao controle do staff.');
 };
 
 const adminBoard = (req, res) => {
