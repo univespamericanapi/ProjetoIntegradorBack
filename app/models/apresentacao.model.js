@@ -22,7 +22,7 @@ export const apresentacao = (sequelize, Sequelize) => {
 			},
 			apres_link_ref: {
 				type: Sequelize.STRING(250),
-				allowNull: false,
+				allowNull: true,
 			},
 			apres_media: {
 				// Média das notas
