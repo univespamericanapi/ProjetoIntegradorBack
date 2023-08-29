@@ -1,4 +1,3 @@
-import authJwt from '../middlewares/authJwt.js';
 import cosplayDesfileController from '../controllers/cosplayDesfile.controller.js';
 
 const cosplayDesfileRoutes = (app) => {

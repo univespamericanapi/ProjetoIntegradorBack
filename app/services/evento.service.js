@@ -1,4 +1,4 @@
-import verifica from '../helpers/verificacao.helper.js';
+import verifica from '../utils/verificacao.util.js';
 import db from '../models/db.model.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import dataUtils from '../utils/data.util.js';

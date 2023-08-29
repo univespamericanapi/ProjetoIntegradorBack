@@ -4,7 +4,7 @@ import db from '../models/db.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import verifica from '../helpers/verificacao.helper.js';
+import verifica from '../utils/verificacao.util.js';
 
 const login = async (login) => {
 	try {

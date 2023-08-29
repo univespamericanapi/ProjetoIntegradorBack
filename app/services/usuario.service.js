@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
-import verifica from '../helpers/verificacao.helper.js';
+import verifica from '../utils/verificacao.util.js';
 
 const criar = async (novo) => {
 	try {

@@ -3,7 +3,7 @@ import db from '../models/db.model.js';
 import config from '../config/config.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
-import verifica from '../helpers/verificacao.helper.js';
+import verifica from '../utils/verificacao.util.js';
 import { coresLog } from '../constants/coresLog.constant.js';
 
 const catchError = (err, res) => {

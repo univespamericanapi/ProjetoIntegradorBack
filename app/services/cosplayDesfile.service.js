@@ -5,7 +5,7 @@ import ParticipacaoRepository from '../repositories/participacao.repository.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import ConcursoRepository from '../repositories/concurso.repository.js';
 import db from '../models/db.model.js';
-import verifica from '../helpers/verificacao.helper.js';
+import verifica from '../utils/verificacao.util.js';
 import dataUtils from '../utils/data.util.js';
 import transacaoService from './transacao.service.js';
 

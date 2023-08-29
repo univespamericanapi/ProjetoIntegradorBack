@@ -1,7 +1,7 @@
 import { mensagensConstant } from '../constants/mensagens.constant.js';
-import CustomError from './customError.helper.js';
-import senhaVerifica from '../utils/senha.util.js';
-import validaCpf from './cpf.helper.js';
+import CustomError from '../errors/customError.error.js';
+import senhaVerifica from './senha.util.js';
+import validaCpf from './cpf.util.js';
 import validator from 'email-validator';
 
 const registroExiste = (registro, nome) => {
