@@ -32,13 +32,13 @@ const config = {
 			login: process.env.ADM_LOGIN,
 			nome: process.env.ADM_NAME,
 			senha: process.env.ADM_PASSWORD,
-			cargo: process.env.ADM_CARGO,
+			cargo: 'admin',
 		},
 		{
 			login: process.env.DEV_LOGIN,
 			nome: process.env.DEV_NAME,
 			senha: process.env.DEV_PASSWORD,
-			cargo: process.env.DEV_CARGO,
+			cargo: 'admin',
 		},
 	],
 	email: {

@@ -1,12 +1,13 @@
 import { cargosConstant } from '../../constants/listas.constant.js';
 
 const cargoSeeder = async (Cargo) => {
-	cargosConstant.forEach(async (cargo) => {
+	console.log('Criando cargos...');
+	for (let cargo of cargosConstant) {
 		await Cargo.create({
 			cargo_nome: cargo,
 		});
-	});
-	console.log('Criando cargos...');
+	}
+	console.log('Cargos criados...');
 };
 
 export default cargoSeeder;

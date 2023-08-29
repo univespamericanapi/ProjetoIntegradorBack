@@ -1,4 +1,5 @@
 const cidadeSeeder = async (Cidade, Estado) => {
+	console.log('Criando cidades...');
 	await Estado.findOne({
 		where: {
 			est_desc: 'Acre',
@@ -22467,7 +22468,7 @@ const cidadeSeeder = async (Cidade, Estado) => {
 			cid_estado: estado.est_id,
 		});
 	});
-	console.log('Criando cidades...');
+	console.log('Cidades criadas...');
 };
 
 export default cidadeSeeder;

@@ -2,7 +2,8 @@ import config from '../../config/config.js';
 import bcrypt from 'bcryptjs';
 
 const usuarioSeeder = async (Usuario, Cargo) => {
-	config.contaAdmin.forEach(async (user) => {
+	console.log('Criando usuário...');
+	for (let user of config.contaAdmin) {
 		await Cargo.findOne({
 			where: {
 				cargo_nome: user.cargo,
@@ -15,8 +16,8 @@ const usuarioSeeder = async (Usuario, Cargo) => {
 				usuario_cargo: cargo.cargo_id,
 			});
 		});
-	});
-	console.log('Criando usuário...');
+	}
+	console.log('Usuários criados...');
 };
 
 export default usuarioSeeder;

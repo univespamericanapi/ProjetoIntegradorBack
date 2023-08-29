@@ -14,13 +14,16 @@ export const createSeeder = async () => {
 		.then(async () => {
 			console.log('Removendo e Resincronizando o Banco de Dados');
 
-			await cargoSeeder(db.cargo);
-			await estadoSeeder(db.estado);
-			await cidadeSeeder(db.cidade, db.estado);
+			await cargoSeeder(db.cargo).then(
+				async () => usuarioSeeder(db.usuario, db.cargo)
+			);
+			await estadoSeeder(db.estado).then(
+				async () => cidadeSeeder(db.cidade, db.estado)
+			);
 			await categoriaSeeder(db.categoria);
 			await estiloSeeder(db.estilo);
 			await modalidadeSeeder(db.modalidade);
-			await usuarioSeeder(db.usuario, db.cargo);
+
 		})
 		.then(() => {
 			console.log(`${coresLog.FgCyan}Finalizado...${coresLog.Reset}`);

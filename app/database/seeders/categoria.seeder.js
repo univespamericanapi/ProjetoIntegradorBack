@@ -1,12 +1,13 @@
 import { categoriasConstant } from '../../constants/listas.constant.js';
 
 const categoriaSeeder = async (Categoria) => {
-	categoriasConstant.forEach(async (categoria) => {
+	console.log('Criando categorias...');
+	for (let categoria of categoriasConstant) {
 		await Categoria.create({
 			categ_nome: categoria,
 		});
-	});
-	console.log('Criando categorias...');
+	}
+	console.log('Categorias criadas...');
 };
 
 export default categoriaSeeder;

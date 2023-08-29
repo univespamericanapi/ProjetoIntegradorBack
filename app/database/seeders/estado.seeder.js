@@ -1,4 +1,5 @@
 const estadoSeeder = async (Estado) => {
+	console.log('Criando estados...');
 	await Estado.create({
 		est_sigla: 'AC',
 		est_desc: 'Acre',
@@ -107,7 +108,7 @@ const estadoSeeder = async (Estado) => {
 		est_sigla: 'TO',
 		est_desc: 'Tocantins',
 	});
-	console.log('Criando estados...');
+	console.log('Estados criados...');
 };
 
 export default estadoSeeder;

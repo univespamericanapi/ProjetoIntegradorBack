@@ -1,12 +1,13 @@
 import { estilosConstant } from '../../constants/listas.constant.js';
 
 const estiloSeeder = async (Estilo) => {
-	estilosConstant.forEach(async (estilo) => {
+	console.log('Criando estilos...');
+	for (let estilo of estilosConstant) {
 		await Estilo.create({
 			estil_nome: estilo,
 		});
-	});
-	console.log('Criando estilos...');
+	}
+	console.log('Estilos criados...');
 };
 
 export default estiloSeeder;
