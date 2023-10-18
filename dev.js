@@ -10,7 +10,7 @@ import indexRoutes from './app/routes/index.route.js';
 
 const app = express();
 
-const fast = 0;
+const fast = 1;
 
 // Configuração do aplicativo
 app.use(cors({ origin: config.corsOrigin }));
