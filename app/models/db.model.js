@@ -101,41 +101,41 @@ db.concurso.belongsTo(db.evento, {
 
 // cospCirc - participacao
 db.participacao.hasOne(db.cospCirc, {
-	foreignKey: 'cosp_circ_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 db.cospCirc.belongsTo(db.participacao, {
-	foreignKey: 'cosp_circ_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 
 // cospCirc - estilo
 db.estilo.hasOne(db.cospCirc, {
-	foreignKey: 'cosp_circ_estil',
+	foreignKey: 'extra_estil',
 	targetKey: 'estil_id',
 });
 db.cospCirc.belongsTo(db.estilo, {
-	foreignKey: 'cosp_circ_estil',
+	foreignKey: 'extra_estil',
 	targetKey: 'estil_id',
 });
 
 // cospDesf - participacao
 db.participacao.hasOne(db.cospDesf, {
-	foreignKey: 'cosp_desf_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 db.cospDesf.belongsTo(db.participacao, {
-	foreignKey: 'cosp_desf_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 
 // cospDesf - categoria
 db.categoria.hasOne(db.cospDesf, {
-	foreignKey: 'cosp_desf_categ',
+	foreignKey: 'extra_categ',
 	targetKey: 'categ_id',
 });
 db.cospDesf.belongsTo(db.categoria, {
-	foreignKey: 'cosp_desf_categ',
+	foreignKey: 'extra_categ',
 	targetKey: 'categ_id',
 });
 
@@ -149,31 +149,31 @@ db.evento.belongsTo(db.cidade, {
 
 // kpopCirc - participacao
 db.participacao.hasOne(db.kpopCirc, {
-	foreignKey: 'kpop_circ_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 db.kpopCirc.belongsTo(db.participacao, {
-	foreignKey: 'kpop_circ_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 
 // kpopSolo - participacao
 db.participacao.hasOne(db.kpopSolo, {
-	foreignKey: 'kpop_solo_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 db.kpopSolo.belongsTo(db.participacao, {
-	foreignKey: 'kpop_solo_part',
+	foreignKey: 'extra_part',
 	targetKey: 'part_id',
 });
 
 // kpopSolo - modalidade
 db.modalidade.hasOne(db.kpopSolo, {
-	foreignKey: 'kpop_solo_mod',
+	foreignKey: 'extra_mod',
 	targetKey: 'mod_id',
 });
 db.kpopSolo.belongsTo(db.modalidade, {
-	foreignKey: 'kpop_solo_mod',
+	foreignKey: 'extra_mod',
 	targetKey: 'mod_id',
 });
 
