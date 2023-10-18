@@ -5,6 +5,7 @@ import eventoRoutes from '../routes/evento.route.js';
 import usuarioRoutes from './usuario.route.js';
 import concursoRoutes from './concurso.route.js';
 import cosplayDesfileRoutes from './cosplayDesfile.route.js';
+import cosplayCircuitoRoutes from './cosplayCircuito.route.js';
 import emailRoutes from './email.route.js';
 
 const indexRoutes = (app) => {
@@ -15,6 +16,7 @@ const indexRoutes = (app) => {
 	demoRoutes(app);
 	concursoRoutes(app);
 	cosplayDesfileRoutes(app);
+	cosplayCircuitoRoutes(app);
 	emailRoutes(app);
 };
 
