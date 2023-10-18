@@ -1,7 +1,5 @@
 import cargoSeeder from './cargo.seeder.js';
 import categoriaSeeder from './categoria.seeder.js';
-import cidadeSeeder from './cidade.seeder.js';
-import estadoSeeder from './estado.seeder.js';
 import usuarioSeeder from './usuario.seeder.js';
 import db from '../../models/db.model.js';
 import { coresLog } from '../../constants/coresLog.constant.js';
@@ -16,9 +14,6 @@ export const createSeeder = async () => {
 
 			await cargoSeeder(db.cargo).then(
 				async () => usuarioSeeder(db.usuario, db.cargo)
-			);
-			await estadoSeeder(db.estado).then(
-				async () => cidadeSeeder(db.cidade, db.estado)
 			);
 			await categoriaSeeder(db.categoria);
 			await estiloSeeder(db.estilo);

@@ -3,12 +3,10 @@ import config from '../config/config.js';
 import { apresentacao } from './apresentacao.model.js';
 import { cargo } from './cargo.model.js';
 import { categoria } from './categoria.model.js';
-import { cidade } from './cidade.model.js';
 import { competidor } from './competidor.model.js';
 import { concurso } from './concurso.model.js';
 import { cospCirc } from './cosp_circ.model.js';
 import { cospDesf } from './cosp_desf.model.js';
-import { estado } from './estado.model.js';
 import { estilo } from './estilo.model.js';
 import { evento } from './evento.model.js';
 import { kpopCirc } from './kpop_circ.model.js';
@@ -41,12 +39,10 @@ db.sequelize = sequelize;
 db.apresentacao = apresentacao(sequelize, Sequelize);
 db.cargo = cargo(sequelize, Sequelize);
 db.categoria = categoria(sequelize, Sequelize);
-db.cidade = cidade(sequelize, Sequelize);
 db.competidor = competidor(sequelize, Sequelize);
 db.concurso = concurso(sequelize, Sequelize);
 db.cospCirc = cospCirc(sequelize, Sequelize);
 db.cospDesf = cospDesf(sequelize, Sequelize);
-db.estado = estado(sequelize, Sequelize);
 db.estilo = estilo(sequelize, Sequelize);
 db.evento = evento(sequelize, Sequelize);
 db.kpopCirc = kpopCirc(sequelize, Sequelize);
@@ -67,28 +63,12 @@ db.apresentacao.belongsTo(db.competidor, {
 	foreignKey: 'apres_comp',
 });
 
-// cidade - estado
-db.estado.hasMany(db.cidade, {
-	foreignKey: 'cid_estado',
-});
-db.cidade.belongsTo(db.estado, {
-	foreignKey: 'cid_estado',
-});
-
 // usuario - competidor
 db.usuario.hasOne(db.competidor, {
 	foreignKey: 'comp_usua',
 });
 db.competidor.belongsTo(db.usuario, {
 	foreignKey: 'comp_usua',
-});
-
-// competidor - cidade
-db.cidade.hasMany(db.competidor, {
-	foreignKey: 'comp_cidade',
-});
-db.competidor.belongsTo(db.cidade, {
-	foreignKey: 'comp_cidade',
 });
 
 // concurso - evento
@@ -137,14 +117,6 @@ db.categoria.hasOne(db.cospDesf, {
 db.cospDesf.belongsTo(db.categoria, {
 	foreignKey: 'extra_categ',
 	targetKey: 'categ_id',
-});
-
-// evento - cidade
-db.cidade.hasMany(db.evento, {
-	foreignKey: 'event_cidade',
-});
-db.evento.belongsTo(db.cidade, {
-	foreignKey: 'event_cidade',
 });
 
 // kpopCirc - participacao

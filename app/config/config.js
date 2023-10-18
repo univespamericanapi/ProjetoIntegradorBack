@@ -51,6 +51,7 @@ const config = {
 			pass: process.env.EMAIL_PASS,
 		},
 	},
+	endpointIBGE: process.env.IBGE_ENDPOINT,
 };
 
 export default config;

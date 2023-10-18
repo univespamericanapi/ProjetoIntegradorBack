@@ -1,12 +1,11 @@
 import verifica from '../utils/verificacao.util.js';
 import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
-import CidadeRepository from '../repositories/cidade.repository.js';
 import ConcursoRepository from '../repositories/concurso.repository.js';
-import EstadoRepository from '../repositories/estado.repository.js';
 import EstiloRepository from '../repositories/estilo.repository.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import ModalidadeRepository from '../repositories/modalidade.repository.js';
+import localidadesConsumer from '../consumer/localidades.consumer.js';
 
 const listarCargos = async () => {
 	try {
@@ -46,18 +45,15 @@ const listarCategorias = async () => {
 
 const listarCidades = async (estadoId) => {
 	try {
-		const Cidade = new CidadeRepository(db.cidade);
-		const Estado = new EstadoRepository(db.estado);
-
 		verifica.faltaParametro(estadoId);
 
-		const estado = await Estado.buscarPorId(estadoId);
+		const estado = await localidadesConsumer.estadoPorId(estadoId);
 
-		verifica.registroExiste(estado, Estado.nome);
+		verifica.registroExiste(estado, 'Estado');
 
-		const cidades = await Cidade.listarPorEstado(estadoId);
+		const cidades = await localidadesConsumer.cidades(estadoId);
 
-		verifica.registroExiste(cidades, Cidade.nome);
+		verifica.registroExiste(cidades, 'Cidade');
 
 		return {
 			status: 200,
@@ -71,11 +67,9 @@ const listarCidades = async (estadoId) => {
 
 const listarEstados = async () => {
 	try {
-		const Estado = new EstadoRepository(db.estado);
+		const estados = await localidadesConsumer.estados();
 
-		const estados = await Estado.buscarTodos();
-
-		verifica.registroExiste(estados, Estado.nome);
+		verifica.registroExiste(estados, 'Estado');
 
 		return {
 			status: 200,
