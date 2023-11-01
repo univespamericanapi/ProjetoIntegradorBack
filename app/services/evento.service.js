@@ -2,6 +2,7 @@ import verifica from '../utils/verificacao.util.js';
 import db from '../models/db.model.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import dataUtils from '../utils/data.util.js';
+import localidadesConsumer from '../consumer/localidades.consumer.js';
 
 const criar = async (novo) => {
 	try {
@@ -35,6 +36,12 @@ const listar = async () => {
 		const eventos = await Evento.buscarTodos();
 
 		verifica.registroExiste(eventos, Evento.nome);
+
+		for (const element of eventos) {
+			const cidade = await localidadesConsumer.cidadePorId(element.event_cidade);
+			delete cidade.cid_id;
+			element.dataValues.cidade = cidade;
+		}
 
 		return {
 			status: 200,
@@ -109,6 +116,10 @@ const buscarPorId = async (idEvento) => {
 		const evento = await Evento.buscarPorId(idEvento);
 
 		verifica.registroExiste(evento, Evento.nome);
+
+		const cidade = await localidadesConsumer.cidadePorId(evento.event_cidade);
+		delete cidade.cid_id;
+		evento.dataValues.cidade = cidade;
 
 		return {
 			status: 200,

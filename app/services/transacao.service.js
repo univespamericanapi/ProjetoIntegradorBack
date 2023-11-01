@@ -27,8 +27,11 @@ const transacaoService = async (Instancias, dados) => {
 			dados.participacao,
 			transacao
 		);
-		dados.extra.extra_part = partCriada.part_id;
-		await Transacao.criar(Instancias.Extra.model, dados.extra, transacao);
+		console.log(dados.extra)
+		if (dados.extra) {
+			dados.extra.extra_part = partCriada.part_id;
+			await Transacao.criar(Instancias.Extra.model, dados.extra, transacao);
+		}
 		if (dados.participacao.part_tipo_inscr === 'Inscrição') {
 			await Transacao.incrementar(
 				dados.concurso,

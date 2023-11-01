@@ -16,6 +16,7 @@ const criar = async (req, res) => {
 const listar = async (req, res) => {
 	try {
 		const resposta = await eventoService.listar();
+		console.log(resposta.message);
 
 		return res.status(resposta.status).send(resposta.message);
 	} catch (erro) {

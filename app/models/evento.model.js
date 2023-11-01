@@ -22,7 +22,6 @@ export const evento = (sequelize, Sequelize) => {
 				allowNull: false,
 			},
 			event_cidade: {
-				// FK para tabela cidade
 				type: Sequelize.INTEGER,
 				allowNull: false,
 			},

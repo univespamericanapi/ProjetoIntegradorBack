@@ -8,6 +8,7 @@ import db from '../models/db.model.js';
 import verifica from '../utils/verificacao.util.js';
 import dataUtils from '../utils/data.util.js';
 import transacaoService from './transacao.service.js';
+import { coresLog } from '../constants/coresLog.constant.js';
 
 const criar = async (novoComp, novoApres, novoPart, novoCospCirc) => {
     try {
@@ -19,6 +20,9 @@ const criar = async (novoComp, novoApres, novoPart, novoCospCirc) => {
         const CospCircuito = new CosplayCircuitoRepository(db.cospCirc);
 
         const evento = await Evento.buscarPorId(novoPart.part_event);
+        console.log(
+            `${coresLog.BgRed}Teste :::::::::::${coresLog.Reset}`
+        );
 
         verifica.registroExiste(evento, Evento.nome);
 
