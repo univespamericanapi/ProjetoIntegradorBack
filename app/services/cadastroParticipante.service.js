@@ -28,7 +28,6 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
 
         verifica.registroExiste(concurso, Concurso.nome);
         verifica.concursoInativo(concurso);
-        console.log(concurso.conc_nome);
 
         const Extra = concurso.conc_nome === concursosConstant[2] ? false : await selecionaExtra(concurso.conc_nome, novoExtra);
 
@@ -72,8 +71,6 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
             Participacao,
             Extra,
         };
-
-        console.log(Extra);
 
         const dadosTransacao = {
             competidor: Competidor.selecionaDadosCriar(novoComp),

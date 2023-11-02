@@ -27,7 +27,7 @@ const transacaoService = async (Instancias, dados) => {
 			dados.participacao,
 			transacao
 		);
-		console.log(dados.extra)
+
 		if (dados.extra) {
 			dados.extra.extra_part = partCriada.part_id;
 			await Transacao.criar(Instancias.Extra.model, dados.extra, transacao);
