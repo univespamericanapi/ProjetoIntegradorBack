@@ -83,14 +83,15 @@ const cidadePorId = async (cidadeId) => {
     try {
         const response = await axios.get(`${config.endpointIBGE}/municipios/${cidadeId}`);
 
-        const cidade = {
-            "cid_id": response.data.id,
-            "cid_desc": response.data.nome,
-            "estado": {
-                "est_sigla": response.data.microrregiao.mesorregiao.UF.sigla,
-                "est_desc": response.data.microrregiao.mesorregiao.UF.nome,
-            },
-        };
+        const cidade = {};
+
+        if (response.data.length !== 0) {
+            cidade.cid_id = response.data.id;
+            cidade.cid_desc = response.data.nome;
+            cidade.estado = {};
+            cidade.estado.est_sigla = response.data.microrregiao.mesorregiao.UF.sigla;
+            cidade.estado.est_desc = response.data.microrregiao.mesorregiao.UF.nome;
+        }
 
         return cidade;
     } catch (erro) {

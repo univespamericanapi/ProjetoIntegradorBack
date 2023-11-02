@@ -15,6 +15,10 @@ const criar = async (novo) => {
 
 		verifica.registroDuplicado(evento, Evento.nome);
 
+		const cidade = await localidadesConsumer.cidadePorId(novo.event_cidade);
+
+		verifica.registroExiste(cidade.cid_id, "Cidade");
+
 		const resposta =
 			(await Evento.salvar(novo)) +
 			' Não esqueça de ir na seção "Configurar Concursos" para habilitar os concursos do evento criado.';

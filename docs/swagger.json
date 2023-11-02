@@ -30,7 +30,9 @@
 			"post": {
 				"summary": "Login de usuário.",
 				"description": "Rota responsável pelo login dos usuários ao sistema.",
-				"tags": ["Autenticação"],
+				"tags": [
+					"Autenticação"
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -73,7 +75,9 @@
 			"post": {
 				"summary": "Refresh JWT Token.",
 				"description": "Rota responsável pelo refresh do JWT Token.",
-				"tags": ["Autenticação"],
+				"tags": [
+					"Autenticação"
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -128,7 +132,9 @@
 			"get": {
 				"summary": "Listagem de todos os usuários.",
 				"description": "Rota responsável pela listagem de todos usuários cadastrados.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"security": [
 					{
 						"JwtToken": []
@@ -164,7 +170,9 @@
 			"get": {
 				"summary": "Buscar um usuário pelo id",
 				"description": "Rota responsável por buscar um usuário utilizando o id.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"parameters": [
 					{
 						"name": "idUsuario",
@@ -206,7 +214,9 @@
 			"get": {
 				"summary": "Buscar um usuário pelo nome de login",
 				"description": "Rota responsável por buscar um usuário utilizando o nome de login.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"parameters": [
 					{
 						"name": "login",
@@ -248,7 +258,9 @@
 			"post": {
 				"summary": "Cadastrar de usuário.",
 				"description": "Rota responsável pelo cadastro de novos usuários ao sistema.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"security": [
 					{
 						"JwtToken": []
@@ -299,7 +311,9 @@
 			"put": {
 				"summary": "Atualizar um usuário pelo id, acesso de admin",
 				"description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo, com acesso de administrador.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"parameters": [
 					{
 						"name": "idUsuario",
@@ -352,7 +366,9 @@
 			"put": {
 				"summary": "Atualizar um usuário pelo id",
 				"description": "Rota responsável por atualizar um usuário utilizando o id para encontrá-lo.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"parameters": [
 					{
 						"name": "idUsuario",
@@ -404,7 +420,9 @@
 			"delete": {
 				"summary": "Deletar um usuário pelo id",
 				"description": "Rota responsável por deletar um usuário utilizando o id para encontrá-lo.",
-				"tags": ["Usuário"],
+				"tags": [
+					"Usuário"
+				],
 				"parameters": [
 					{
 						"name": "idUsuario",
@@ -438,7 +456,9 @@
 			"get": {
 				"summary": "Lista de cargos do sistema.",
 				"description": "Rota responsável pela listagem de todos os cargos cadastrados.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"security": [
 					{
 						"JwtToken": []
@@ -465,7 +485,9 @@
 			"get": {
 				"summary": "Lista de categorias do sistema.",
 				"description": "Rota responsável pela listagem de todas as categorias cadastradas.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -487,7 +509,9 @@
 			"get": {
 				"summary": "Lista de cidades do sistema.",
 				"description": "Rota responsável pela listagem de todas as cidades cadastradas.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"parameters": [
 					{
 						"name": "estado",
@@ -540,7 +564,9 @@
 			"get": {
 				"summary": "Busca de cidade do sistema.",
 				"description": "Rota responsável pela busca de uma cidade cadastrada, pelo id.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"parameters": [
 					{
 						"name": "idCidade",
@@ -582,7 +608,9 @@
 			"get": {
 				"summary": "Lista de concursos do sistema.",
 				"description": "Rota responsável pela listagem de todos os concursos cadastrados, exibindo apenas id e nome.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"parameters": [
 					{
 						"name": "idEvento",
@@ -618,7 +646,9 @@
 			"get": {
 				"summary": "Lista de estados do sistema.",
 				"description": "Rota responsável pela listagem de todos os estados cadastrados.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -649,7 +679,9 @@
 			"get": {
 				"summary": "Lista de estilos do sistema.",
 				"description": "Rota responsável pela listagem de todos os estilos cadastrados.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -671,7 +703,9 @@
 			"get": {
 				"summary": "Lista de evento do sistema.",
 				"description": "Rota responsável pela listagem de todos os eventos cadastrados, exibindo apenas id e nome.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -693,7 +727,9 @@
 			"get": {
 				"summary": "Lista de modalidades do sistema.",
 				"description": "Rota responsável pela listagem de todas as modalidades cadastradas.",
-				"tags": ["Listas"],
+				"tags": [
+					"Listas"
+				],
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -715,7 +751,9 @@
 			"get": {
 				"summary": "Listagem de todos os eventos.",
 				"description": "Rota responsável pela listagem de todos eventos cadastrados.",
-				"tags": ["Eventos"],
+				"tags": [
+					"Eventos"
+				],
 				"security": [
 					{
 						"JwtToken": []
@@ -745,7 +783,9 @@
 			"get": {
 				"summary": "Buscar um evento pelo id",
 				"description": "Rota responsável por buscar um evento utilizando o id.",
-				"tags": ["Eventos"],
+				"tags": [
+					"Eventos"
+				],
 				"parameters": [
 					{
 						"name": "idEvento",
@@ -787,7 +827,9 @@
 			"post": {
 				"summary": "Cadastrar de evento.",
 				"description": "Rota responsável pelo cadastro de novos eventos ao sistema.",
-				"tags": ["Eventos"],
+				"tags": [
+					"Eventos"
+				],
 				"security": [
 					{
 						"JwtToken": []
@@ -805,7 +847,7 @@
 										"event_nome": "Mega Campinas Anime Fest",
 										"event_local": "Liceu Salesiano",
 										"event_edicao": 27,
-										"event_cidade": 4820,
+										"event_cidade": 3509502,
 										"event_data": "20/08/2023"
 									}
 								}
@@ -839,7 +881,9 @@
 			"put": {
 				"summary": "Atualizar um evento pelo id.",
 				"description": "Rota responsável por atualizar um evento utilizando o id para encontrá-lo.",
-				"tags": ["Eventos"],
+				"tags": [
+					"Eventos"
+				],
 				"parameters": [
 					{
 						"name": "idEvento",
@@ -865,7 +909,7 @@
 										"event_nome": "Mega Campinas Anime Fest",
 										"event_local": "Liceu Salesiano",
 										"event_edicao": 27,
-										"event_cidade": 4820,
+										"event_cidade": 3509502,
 										"event_data": "20/08/2023"
 									}
 								}
@@ -893,7 +937,9 @@
 			"delete": {
 				"summary": "Deletar um evento pelo id",
 				"description": "Rota responsável por deletar um evento utilizando o id para encontrá-lo.",
-				"tags": ["Eventos"],
+				"tags": [
+					"Eventos"
+				],
 				"parameters": [
 					{
 						"name": "idEvento",
@@ -927,7 +973,9 @@
 			"get": {
 				"summary": "Listar concursos pelo id do evento.",
 				"description": "Rota responsável por listar os concursos utilizando o id do evento.",
-				"tags": ["Concursos"],
+				"tags": [
+					"Concursos"
+				],
 				"parameters": [
 					{
 						"name": "idEvento",
@@ -969,7 +1017,9 @@
 			"put": {
 				"summary": "Atualizar um concurso pelo id.",
 				"description": "Rota responsável por atualizar um concurso utilizando o id para encontrá-lo.",
-				"tags": ["Concursos"],
+				"tags": [
+					"Concursos"
+				],
 				"parameters": [
 					{
 						"name": "idConcurso",
@@ -1023,7 +1073,9 @@
 			"post": {
 				"summary": "Cadastro de competidor.",
 				"description": "Rota responsável pelo cadastro de competidores no Desfile Cosplay.",
-				"tags": ["Desfile Cosplay"],
+				"tags": [
+					"Desfile Cosplay"
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -1040,7 +1092,7 @@
 											"comp_cpf": "12345678901",
 											"comp_nasc": "01/01/2000",
 											"comp_whats": "19991111111",
-											"comp_cidade": 4730
+											"comp_cidade": 3509502
 										},
 										"apresentacao": {
 											"apres_nome": "Goku",

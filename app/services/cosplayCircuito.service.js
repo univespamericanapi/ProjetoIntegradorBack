@@ -50,6 +50,9 @@ const criar = async (novoComp, novoApres, novoPart, novoCospCirc) => {
         competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
         verifica.emailDuplicado(competidor);
 
+        const cidade = await localidadesConsumer.cidadePorId(novoComp.comp_cidade);
+        verifica.registroExiste(cidade.cid_id, "Cidade");
+
         novoComp.comp_nasc = dataUtils.stringParaData(novoComp.comp_nasc);
 
         if (!novoComp.comp_nome_social) {

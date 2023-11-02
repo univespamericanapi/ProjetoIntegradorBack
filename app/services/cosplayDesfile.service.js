@@ -8,6 +8,7 @@ import db from '../models/db.model.js';
 import verifica from '../utils/verificacao.util.js';
 import dataUtils from '../utils/data.util.js';
 import transacaoService from './transacao.service.js';
+import localidadesConsumer from '../consumer/localidades.consumer.js';
 
 const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 	try {
@@ -45,6 +46,9 @@ const criar = async (novoComp, novoApres, novoPart, novoCospDesf) => {
 
 		competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
 		verifica.emailDuplicado(competidor);
+
+		const cidade = await localidadesConsumer.cidadePorId(novoComp.comp_cidade);
+		verifica.registroExiste(cidade.cid_id, "Cidade");
 
 		novoComp.comp_nasc = dataUtils.stringParaData(novoComp.comp_nasc);
 
