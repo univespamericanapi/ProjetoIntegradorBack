@@ -5,4 +5,14 @@ export default class KpopSoloDuoRepository extends BaseRepository {
 		super(model);
 		this.nome = 'Kpop Solo / Duo';
 	}
+
+	selecionaDadosCriar(kpopSolo) {
+		const dados = {};
+
+		dados.extra_integ = kpopSolo.extra_integ;
+		dados.extra_mod = kpopSolo.extra_mod;
+		dados.extra_link_av = kpopSolo.extra_link_av;
+
+		return dados;
+	}
 }

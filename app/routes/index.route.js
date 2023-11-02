@@ -1,12 +1,11 @@
-import authRoutes from '../routes/auth.route.js';
+import authRoutes from './auth.route.js';
 import demoRoutes from './demo.route.js';
-import listaRoutes from '../routes/lista.route.js';
-import eventoRoutes from '../routes/evento.route.js';
+import listaRoutes from './lista.route.js';
+import eventoRoutes from './evento.route.js';
 import usuarioRoutes from './usuario.route.js';
 import concursoRoutes from './concurso.route.js';
-import cosplayDesfileRoutes from './cosplayDesfile.route.js';
-import cosplayCircuitoRoutes from './cosplayCircuito.route.js';
 import emailRoutes from './email.route.js';
+import cadastroParticipanteRoutes from './cadastroParticipante.route.js';
 
 const indexRoutes = (app) => {
 	authRoutes(app);
@@ -15,8 +14,7 @@ const indexRoutes = (app) => {
 	eventoRoutes(app);
 	demoRoutes(app);
 	concursoRoutes(app);
-	cosplayDesfileRoutes(app);
-	cosplayCircuitoRoutes(app);
+	cadastroParticipanteRoutes(app);
 	emailRoutes(app);
 };
 

@@ -1069,12 +1069,12 @@
 				}
 			}
 		},
-		"/api/cosplay/desfile/criar": {
+		"/api/participante/cadastro/criar": {
 			"post": {
 				"summary": "Cadastro de competidor.",
-				"description": "Rota responsável pelo cadastro de competidores no Desfile Cosplay.",
+				"description": "Rota responsável pelo cadastro de competidores nos concursos.",
 				"tags": [
-					"Desfile Cosplay"
+					"Cadastro Participante"
 				],
 				"requestBody": {
 					"content": {
@@ -1089,7 +1089,7 @@
 											"comp_email": "joao@gmail.com",
 											"comp_nome": "João da Silva",
 											"comp_nome_social": "",
-											"comp_cpf": "12345678901",
+											"comp_cpf": "87445556010",
 											"comp_nasc": "01/01/2000",
 											"comp_whats": "19991111111",
 											"comp_cidade": 3509502
@@ -1104,7 +1104,7 @@
 											"part_conc": 2,
 											"part_aceit_regul": true
 										},
-										"cospDesfile": {
+										"extra": {
 											"extra_categ": 1
 										}
 									}

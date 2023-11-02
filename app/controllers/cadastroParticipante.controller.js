@@ -1,12 +1,12 @@
-import cosplayCircuitoService from '../services/cosplayCircuito.service.js';
+import cadastroParticipanteService from "../services/cadastroParticipante.service.js";
 
 const criar = async (req, res) => {
     try {
-        const resposta = await cosplayCircuitoService.criar(
+        const resposta = await cadastroParticipanteService.criar(
             req.body.competidor,
             req.body.apresentacao,
             req.body.participacao,
-            req.body.cospCircuito
+            req.body.extra,
         );
 
         return res.status(resposta.status).send(resposta.message);
@@ -18,8 +18,8 @@ const criar = async (req, res) => {
     }
 };
 
-const cosplayCircuitoController = {
+const cadastroParticipanteController = {
     criar,
 };
 
-export default cosplayCircuitoController;
+export default cadastroParticipanteController;

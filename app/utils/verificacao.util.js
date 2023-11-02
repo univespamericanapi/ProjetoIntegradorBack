@@ -91,6 +91,30 @@ const refreshTokenExpirado = () => {
 	throw new CustomError(403, mensagensConstant.refreshTokenExpirou);
 };
 
+const extraCospCirc = (extra) => {
+	if (!extra.extra_integ || !extra.extra_estil || !extra.extra_link_av) {
+		throw new CustomError(400, "Campo do Circuito Cosplay" + mensagensConstant.parametroNaoEnviado);
+	}
+}
+
+const extraCospDesf = (extra) => {
+	if (!extra.extra_categ) {
+		throw new CustomError(400, "Campo do Desfile Cosplay" + mensagensConstant.parametroNaoEnviado);
+	}
+}
+
+const extraKpopCirc = (extra) => {
+	if (!extra.extra_integ || !extra.extra_link_av || !extra.extra_mat) {
+		throw new CustomError(400, "Campo do Circuito Kpop" + mensagensConstant.parametroNaoEnviado);
+	}
+}
+
+const extraKpopSolo = (extra) => {
+	if (!extra.extra_integ || !extra.extra_mod || !extra.extra_link_av) {
+		throw new CustomError(400, "Campo do Kpop Solo / Duo" + mensagensConstant.parametroNaoEnviado);
+	}
+}
+
 const verifica = {
 	registroExiste,
 	registroVazio,
@@ -106,6 +130,10 @@ const verifica = {
 	aceitouTermos,
 	concursoInativo,
 	refreshTokenExpirado,
+	extraCospCirc,
+	extraCospDesf,
+	extraKpopCirc,
+	extraKpopSolo,
 };
 
 export default verifica;
