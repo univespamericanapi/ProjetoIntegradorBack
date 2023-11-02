@@ -92,7 +92,7 @@ const refreshTokenExpirado = () => {
 };
 
 const extraCospCirc = (extra) => {
-	if (!extra.extra_integ || !extra.extra_estil || !extra.extra_link_av) {
+	if (!extra.extra_estil || !extra.extra_link_av) {
 		throw new CustomError(400, "Campo do Circuito Cosplay" + mensagensConstant.parametroNaoEnviado);
 	}
 }

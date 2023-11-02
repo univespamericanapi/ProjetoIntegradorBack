@@ -73,11 +73,13 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
             Extra,
         };
 
+        console.log(Extra);
+
         const dadosTransacao = {
             competidor: Competidor.selecionaDadosCriar(novoComp),
             apresentacao: Apresentacao.selecionaDadosCriar(novoApres),
             participacao: Participacao.selecionaDadosCriar(novoPart),
-            extra: !novoExtra ? novoExtra : Extra.selecionaDadosCriar(novoExtra),
+            extra: !Extra ? Extra : Extra.selecionaDadosCriar(novoExtra),
             concurso,
         };
 
