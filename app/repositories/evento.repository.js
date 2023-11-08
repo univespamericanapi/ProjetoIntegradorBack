@@ -1,4 +1,5 @@
 import BaseRepository from './base.repository.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class EventoRepository extends BaseRepository {
 	constructor(model) {
@@ -14,7 +15,7 @@ export default class EventoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -26,7 +27,7 @@ export default class EventoRepository extends BaseRepository {
 				order: [['event_data', 'DESC']],
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -47,7 +48,7 @@ export default class EventoRepository extends BaseRepository {
 				order: [['event_data', 'DESC']],
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -59,7 +60,7 @@ export default class EventoRepository extends BaseRepository {
 				event_ed_nome: evento.event_ed_nome,
 			};
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

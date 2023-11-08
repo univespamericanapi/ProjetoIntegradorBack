@@ -1,4 +1,5 @@
 import { mensagensConstant } from '../constants/mensagens.constant.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class BaseRepository {
 	constructor(m) {
@@ -11,7 +12,7 @@ export default class BaseRepository {
 				return this.nome + mensagensConstant.registroCriado;
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -20,7 +21,7 @@ export default class BaseRepository {
 		try {
 			return await this.model.findAll();
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -31,7 +32,7 @@ export default class BaseRepository {
 
 			return registro;
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -44,7 +45,7 @@ export default class BaseRepository {
 				return this.nome + mensagensConstant.registroDeletado;
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -57,7 +58,7 @@ export default class BaseRepository {
 				return this.nome + mensagensConstant.registroAtualizado;
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -66,7 +67,7 @@ export default class BaseRepository {
 		try {
 			return await this.model.count();
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

@@ -5,6 +5,7 @@ import ConcursoRepository from '../repositories/concurso.repository.js';
 import TransacaoRepository from "../repositories/transacao.repository.js";
 import db from "../models/db.model.js";
 import verifica from "../utils/verificacao.util.js";
+import consoleError from "../utils/consoleError.util.js";
 
 const registrarCheckin = async (partId) => {
     try {
@@ -51,7 +52,7 @@ const registrarCheckin = async (partId) => {
 
         return resposta;
     } catch (erro) {
-        console.error(erro);
+        consoleError(erro);
         throw erro;
     }
 };
@@ -98,7 +99,7 @@ const listarInscricoes = async (concId, espera) => {
             message: listaInscricoes,
         };
     } catch (erro) {
-        console.error(erro);
+        consoleError(erro);
         throw erro;
     }
 };

@@ -1,4 +1,5 @@
 import BaseRepository from './base.repository.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class ApresentacaoRepository extends BaseRepository {
 	constructor(model) {
@@ -16,7 +17,7 @@ export default class ApresentacaoRepository extends BaseRepository {
 
 			return apresentacao;
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

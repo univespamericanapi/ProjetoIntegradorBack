@@ -3,6 +3,7 @@ import db from '../models/db.model.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import dataUtils from '../utils/data.util.js';
 import localidadesConsumer from '../consumer/localidades.consumer.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const criar = async (novo) => {
 	try {
@@ -28,7 +29,7 @@ const criar = async (novo) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -52,7 +53,7 @@ const listar = async () => {
 			message: eventos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -72,7 +73,7 @@ const deletar = async (idEvento) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -106,7 +107,7 @@ const atualizar = async (idEvento, alteracao) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -130,7 +131,7 @@ const buscarPorId = async (idEvento) => {
 			message: evento,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

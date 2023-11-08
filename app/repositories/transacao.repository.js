@@ -1,3 +1,5 @@
+import consoleError from "../utils/consoleError.util.js";
+
 export default class TransacaoRepository {
 	constructor(sequelize) {
 		this.sequelize = sequelize;
@@ -7,7 +9,7 @@ export default class TransacaoRepository {
 		try {
 			return await this.sequelize.transaction();
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -24,7 +26,7 @@ export default class TransacaoRepository {
 					return registro;
 				});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -33,7 +35,7 @@ export default class TransacaoRepository {
 		try {
 			return await model.update(updates, { where: where }, { transaction });
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -42,7 +44,7 @@ export default class TransacaoRepository {
 		try {
 			return await model.create(data, { transaction });
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -51,7 +53,7 @@ export default class TransacaoRepository {
 		try {
 			await registry.increment(field, { transaction });
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

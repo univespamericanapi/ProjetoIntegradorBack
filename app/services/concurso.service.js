@@ -2,6 +2,7 @@ import verifica from '../utils/verificacao.util.js';
 import db from '../models/db.model.js';
 import ConcursoRepository from '../repositories/concurso.repository.js';
 import dataUtils from '../utils/data.util.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const buscarPorEvento = async (idEvento) => {
 	try {
@@ -16,7 +17,7 @@ const buscarPorEvento = async (idEvento) => {
 			message: concursos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -42,7 +43,7 @@ const atualizar = async (idConcurso, alteracao) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

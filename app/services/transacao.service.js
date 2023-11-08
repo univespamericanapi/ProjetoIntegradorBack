@@ -2,6 +2,7 @@ import TransacaoRepository from '../repositories/transacao.repository.js';
 import db from '../models/db.model.js';
 import emailService from './email.service.js';
 import EmailTokenRepository from '../repositories/emailToken.repository.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const transacaoService = async (Instancias, dados) => {
 	try {
@@ -66,7 +67,7 @@ const transacaoService = async (Instancias, dados) => {
 
 		return resposta;
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

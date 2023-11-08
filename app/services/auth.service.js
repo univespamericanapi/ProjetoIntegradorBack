@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import verifica from '../utils/verificacao.util.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const login = async (login) => {
 	try {
@@ -39,7 +40,7 @@ const login = async (login) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -77,7 +78,7 @@ const refreshToken = async (requestToken) => {
 			},
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

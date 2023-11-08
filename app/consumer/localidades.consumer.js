@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config/config.js";
+import consoleError from "../utils/consoleError.util.js";
 
 const estados = async () => {
     try {
@@ -25,7 +26,7 @@ const estados = async () => {
 
         return estados;
     } catch (erro) {
-        console.error('Erro ao buscar dados do IBGE:', erro.message);
+        consoleError('Erro ao buscar dados do IBGE:', erro.message);
         throw erro;
     }
 };
@@ -42,7 +43,7 @@ const estadoPorId = async (estadoId) => {
 
         return estado;
     } catch (erro) {
-        console.error('Erro ao buscar dados do IBGE:', erro.message);
+        consoleError('Erro ao buscar dados do IBGE:', erro.message);
         throw erro;
     }
 };
@@ -74,7 +75,7 @@ const cidades = async (estadoId) => {
 
         return cidades;
     } catch (erro) {
-        console.error('Erro ao buscar dados do IBGE:', erro.message);
+        consoleError('Erro ao buscar dados do IBGE:', erro.message);
         throw erro;
     }
 };
@@ -95,7 +96,7 @@ const cidadePorId = async (cidadeId) => {
 
         return cidade;
     } catch (erro) {
-        console.error('Erro ao buscar dados do IBGE:', erro.message);
+        consoleError('Erro ao buscar dados do IBGE:', erro.message);
         throw erro;
     }
 };

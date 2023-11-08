@@ -8,6 +8,7 @@ import KpopCircuitoRepository from '../repositories/kpop_circ.repository.js';
 import KpopSoloDuoRepository from '../repositories/kpop_solo.repository.js';
 import ModalidadeRepository from '../repositories/modalidade.repository.js';
 import verifica from './verificacao.util.js';
+import consoleError from "./consoleError.util.js";
 
 const selecionaExtra = async (concurso, extra) => {
     try {
@@ -41,7 +42,7 @@ const selecionaExtra = async (concurso, extra) => {
                 break;
         }
     } catch (erro) {
-        console.error(erro);
+        consoleError(erro);
         throw erro;
     }
 };

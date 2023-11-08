@@ -3,6 +3,7 @@ import db from '../models/db.model.js';
 import CargoRepository from '../repositories/cargo.repository.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
 import verifica from '../utils/verificacao.util.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const criar = async (novo) => {
 	try {
@@ -23,7 +24,7 @@ const criar = async (novo) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -46,7 +47,7 @@ const listar = async () => {
 			message: listaUsuarios,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -66,7 +67,7 @@ const deletar = async (idUsuario) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -106,7 +107,7 @@ const atualizarPorAdmin = async (idUsuario, alteracao) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -140,7 +141,7 @@ const atualizar = async (idUsuario, alteracao) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -160,7 +161,7 @@ const buscarPorId = async (idUsuario) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -180,7 +181,7 @@ const buscarPorLogin = async (loginUsuario) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

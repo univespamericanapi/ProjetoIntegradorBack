@@ -1,4 +1,5 @@
 import BaseRepository from './base.repository.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class ConcursoRepository extends BaseRepository {
 	constructor(model) {
@@ -14,7 +15,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -28,7 +29,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -42,7 +43,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -56,7 +57,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -70,7 +71,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -84,7 +85,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -98,7 +99,7 @@ export default class ConcursoRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -110,7 +111,7 @@ export default class ConcursoRepository extends BaseRepository {
 				conc_nome: concurso.conc_nome,
 			};
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

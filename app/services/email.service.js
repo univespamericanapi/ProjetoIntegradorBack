@@ -6,6 +6,7 @@ import nodemailer from 'nodemailer';
 import config from '../config/config.js';
 import { v4 as uuidv4 } from 'uuid';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const verificarEmail = async (id, token) => {
 	try {
@@ -39,7 +40,7 @@ const verificarEmail = async (id, token) => {
 			message: message,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -57,7 +58,7 @@ const enviarEmail = async (email, assunto, texto) => {
 
 		return mensagensConstant.participacaoRegistrada;
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -89,7 +90,7 @@ const reenviar = async (email) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -110,7 +111,7 @@ const alterarEmail = async (cpf, nasc, email) => {
 			message: resposta,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -125,7 +126,7 @@ const criarToken = async (competidor, tipo) => {
 
 		return registro;
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };

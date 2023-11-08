@@ -27,6 +27,7 @@ const sequelize = new Sequelize(
 		host: config.bancoDeDados.host,
 		port: 3306,
 		dialect: config.bancoDeDados.dialect,
+		logging: false,
 		operatorsAliases: false,
 		pool: config.bancoDeDados.pool,
 	}

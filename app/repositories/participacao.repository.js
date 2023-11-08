@@ -1,4 +1,5 @@
 import BaseRepository from './base.repository.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class ParticipacaoRepository extends BaseRepository {
 	constructor(model) {
@@ -17,7 +18,7 @@ export default class ParticipacaoRepository extends BaseRepository {
 
 			return participacao;
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -32,7 +33,7 @@ export default class ParticipacaoRepository extends BaseRepository {
 
 			return participacao;
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

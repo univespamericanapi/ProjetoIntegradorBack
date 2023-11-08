@@ -10,6 +10,7 @@ import transacaoService from './transacao.service.js';
 import localidadesConsumer from '../consumer/localidades.consumer.js';
 import selecionaExtra from '../utils/selecionaExtra.util.js';
 import { concursosConstant } from '../constants/listas.constant.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
     try {
@@ -90,7 +91,7 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
             message: resposta,
         };
     } catch (erro) {
-        console.error(erro);
+        consoleError(erro);
         throw erro;
     }
 };

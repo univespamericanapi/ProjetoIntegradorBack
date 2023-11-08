@@ -4,16 +4,16 @@ import config from '../config/config.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
 import UsuarioRepository from '../repositories/usuario.repository.js';
 import verifica from '../utils/verificacao.util.js';
-import { coresLog } from '../constants/coresLog.constant.js';
+import consoleError from '../utils/consoleError.util.js';
 
 const catchError = (err, res) => {
 	if (err instanceof jwt.TokenExpiredError) {
-		console.log(`${coresLog.FgRed}${err}${coresLog.Reset}`);
+		consoleError(err);
 		return res.status(401).send({
 			message: mensagensConstant.tokenExpirou,
 		});
 	}
-	console.log(`${coresLog.FgRed}${err}${coresLog.Reset}`);
+	consoleError(err);
 	return res.status(401).send({
 		message: mensagensConstant.naoAutorizado,
 	});
@@ -25,7 +25,6 @@ const verificaToken = (req, res, next) => {
 
 	jwt.verify(token, config.segredo, (err, decoded) => {
 		if (err) {
-			console.log(`${coresLog.FgRed}${err}${coresLog.Reset}`);
 			return catchError(err, res);
 		}
 
@@ -83,13 +82,10 @@ const eOProprio = async (req, res, next) => {
 			idUsuarioAltera = usuario.usuario_id;
 		}
 	} catch (erro) {
+		consoleError(erro);
 		if (erro.status) {
-			console.log(
-				`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`
-			);
 			return res.status(erro.status).send(erro.message);
 		}
-		console.log(`${coresLog.FgRed}${erro}${coresLog.Reset}`);
 		return res.status(500).send(erro.message);
 	}
 

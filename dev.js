@@ -7,6 +7,7 @@ import { createSeeder } from './app/database/seeders/index.seeder.js';
 import config from './app/config/config.js';
 import { coresLog } from './app/constants/coresLog.constant.js';
 import indexRoutes from './app/routes/index.route.js';
+import consoleError from "./app/utils/consoleError.util.js";
 
 const app = express();
 
@@ -64,6 +65,6 @@ async function conectarAoBanco() {
 			`${coresLog.FgYellow}Conectado no banco de dados em: ${coresLog.FgCyan}${process.env.DB_HOST}.${coresLog.Reset}`
 		);
 	} catch (error) {
-		console.error('Não foi possível se conectar ao banco de dados:', error);
+		consoleError('Não foi possível se conectar ao banco de dados:', error);
 	}
 }

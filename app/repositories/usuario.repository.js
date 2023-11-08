@@ -1,5 +1,6 @@
 import BaseRepository from './base.repository.js';
 import { mensagensConstant } from '../constants/mensagens.constant.js';
+import consoleError from "../utils/consoleError.util.js";
 
 export default class UsuarioRepository extends BaseRepository {
 	constructor(model) {
@@ -17,7 +18,7 @@ export default class UsuarioRepository extends BaseRepository {
 
 			return usuario;
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -30,7 +31,7 @@ export default class UsuarioRepository extends BaseRepository {
 				},
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -43,7 +44,7 @@ export default class UsuarioRepository extends BaseRepository {
 				return this.nome + mensagensConstant.registroAtualizado;
 			});
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}
@@ -57,7 +58,7 @@ export default class UsuarioRepository extends BaseRepository {
 				cargo: await usuario.getCargo(),
 			};
 		} catch (erro) {
-			console.error(erro);
+			consoleError(erro);
 			throw erro;
 		}
 	}

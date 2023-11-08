@@ -6,6 +6,7 @@ import EstiloRepository from '../repositories/estilo.repository.js';
 import EventoRepository from '../repositories/evento.repository.js';
 import ModalidadeRepository from '../repositories/modalidade.repository.js';
 import localidadesConsumer from '../consumer/localidades.consumer.js';
+import consoleError from "../utils/consoleError.util.js";
 
 const listarCargos = async () => {
 	try {
@@ -20,7 +21,7 @@ const listarCargos = async () => {
 			message: cargos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -38,7 +39,7 @@ const listarCategorias = async () => {
 			message: categorias,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -60,7 +61,7 @@ const listarCidades = async (estadoId) => {
 			message: cidades,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -76,7 +77,7 @@ const listarEstados = async () => {
 			message: estados,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -94,7 +95,7 @@ const listarEstilos = async () => {
 			message: estilos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -112,7 +113,7 @@ const listarModalidades = async () => {
 			message: modalidades,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -135,7 +136,7 @@ const listarEventos = async () => {
 			message: listaEventos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
@@ -158,7 +159,7 @@ const listarConcursos = async (idEvento) => {
 			message: listaConcursos,
 		};
 	} catch (erro) {
-		console.error(erro);
+		consoleError(erro);
 		throw erro;
 	}
 };
