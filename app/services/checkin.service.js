@@ -8,6 +8,10 @@ import verifica from "../utils/verificacao.util.js";
 
 const registrarCheckin = async (partId) => {
     try {
+        const resposta = {
+            status: 0,
+            message: "",
+        };
         const Participacao = new ParticipacaoRepository(db.participacao);
         const Concurso = new ConcursoRepository(db.concurso);
 
@@ -17,32 +21,35 @@ const registrarCheckin = async (partId) => {
         const concurso = await Concurso.buscarPorId(participacao.part_conc);
         verifica.registroExiste(concurso, Concurso.nome);
 
-        const checkin = { 'part_checkin': !participacao.part_checkin };
+        if (concurso.conc_atual_checkin < concurso.conc_limit_checkin || participacao.part_checkin) {
+            const checkin = { 'part_checkin': !participacao.part_checkin };
 
-        const Transacao = new TransacaoRepository(db.sequelize);
-        const transacao = await Transacao.iniciar();
+            const Transacao = new TransacaoRepository(db.sequelize);
+            const transacao = await Transacao.iniciar();
 
-        await Transacao.incrementar(
-            concurso,
-            { conc_atual_checkin: checkin.part_checkin === true ? 1 : -1 },
-            transacao
-        );
+            await Transacao.incrementar(
+                concurso,
+                { conc_atual_checkin: checkin.part_checkin === true ? 1 : -1 },
+                transacao
+            );
 
-        await Transacao.atualizar(
-            Participacao.model,
-            { part_id: partId },
-            checkin,
-            transacao
-        );
+            await Transacao.atualizar(
+                Participacao.model,
+                { part_id: partId },
+                checkin,
+                transacao
+            );
 
-        await Transacao.finalizar(transacao);
+            resposta.status = 202;
+            resposta.message = 'Checkin realizado com sucesso!';
 
-        // const resposta = await Participacao.atualizarPorId(partId, checkin);
+            await Transacao.finalizar(transacao);
+        } else {
+            resposta.status = 400;
+            resposta.message = 'Limite de checkin alcançado!';
+        }
 
-        return {
-            status: 202,
-            message: "Checkin realizado com sucesso!",
-        };
+        return resposta;
     } catch (erro) {
         console.error(erro);
         throw erro;
