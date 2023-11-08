@@ -22,6 +22,21 @@ export default class ParticipacaoRepository extends BaseRepository {
 		}
 	}
 
+	async buscaPorConcurso(concId) {
+		try {
+			const participacao = await this.model.findOne({
+				where: {
+					part_conc: concId,
+				},
+			});
+
+			return participacao;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(participacao) {
 		const dados = {};
 

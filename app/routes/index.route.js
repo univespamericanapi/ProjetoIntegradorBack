@@ -6,6 +6,7 @@ import usuarioRoutes from './usuario.route.js';
 import concursoRoutes from './concurso.route.js';
 import emailRoutes from './email.route.js';
 import cadastroParticipanteRoutes from './cadastroParticipante.route.js';
+import checkinRoutes from './checkin.route.js';
 
 const indexRoutes = (app) => {
 	authRoutes(app);
@@ -16,6 +17,7 @@ const indexRoutes = (app) => {
 	concursoRoutes(app);
 	cadastroParticipanteRoutes(app);
 	emailRoutes(app);
+	checkinRoutes(app);
 };
 
 export default indexRoutes;
