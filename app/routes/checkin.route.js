@@ -11,7 +11,7 @@ const checkinRoutes = (app) => {
 	});
 
 	app.get(
-		'/api/staff/competidores/listar?:concId&:espera',
+		'/api/staff/competidores/listar',
 		[authJwt.verificaToken, authJwt.eStaff],
 		checkinController.listarInscricoes
 	);

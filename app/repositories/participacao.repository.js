@@ -24,7 +24,7 @@ export default class ParticipacaoRepository extends BaseRepository {
 
 	async buscaPorConcurso(concId) {
 		try {
-			const participacao = await this.model.findOne({
+			const participacao = await this.model.findAll({
 				where: {
 					part_conc: concId,
 				},

@@ -28,7 +28,7 @@ const registrarCheckin = async (partId) => {
 const listarInscricoes = async (concId, espera) => {
     try {
         const listaInscricoes = [];
-        const tipoInscr = espera ? 'Espera' : 'Inscrição';
+        const tipoInscr = (espera === true) ? 'Espera' : 'Inscrição';
         const Concurso = new ConcursoRepository(db.concurso);
         const concurso = await Concurso.buscarPorId(concId);
 
@@ -36,6 +36,8 @@ const listarInscricoes = async (concId, espera) => {
 
         const Participacao = new ParticipacaoRepository(db.participacao);
         const listaPart = await Participacao.buscaPorConcurso(concId);
+
+        console.log(tipoInscr, espera);
 
         const Apresentacao = new ApresentacaoRepository(db.apresentacao);
         const Competidor = new CompetidorRepository(db.competidor);
@@ -49,7 +51,7 @@ const listarInscricoes = async (concId, espera) => {
                 comp_nome: competidor.comp_nome,
                 comp_cpf: competidor.comp_cpf,
                 comp_whats: competidor.comp_whats,
-                comp_email_verif: Boolean(competidor.comp_email_verif),
+                comp_email_verif: competidor.comp_email_verif,
                 apres_nome: apresentacao.apres_nome,
                 part_checkin: participacao.part_checkin,
                 part_tipo_inscr: participacao.part_tipo_inscr,
