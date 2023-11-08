@@ -2,22 +2,46 @@ import ParticipacaoRepository from "../repositories/participacao.repository.js";
 import CompetidorRepository from '../repositories/competidor.repository.js';
 import ApresentacaoRepository from '../repositories/apresentacao.repository.js';
 import ConcursoRepository from '../repositories/concurso.repository.js';
+import TransacaoRepository from "../repositories/transacao.repository.js";
 import db from "../models/db.model.js";
 import verifica from "../utils/verificacao.util.js";
 
 const registrarCheckin = async (partId) => {
     try {
         const Participacao = new ParticipacaoRepository(db.participacao);
-        const participacao = await Participacao.buscarPorId(partId);
-        const checkin = { 'part_checkin': true };
+        const Concurso = new ConcursoRepository(db.concurso);
 
+        const participacao = await Participacao.buscarPorId(partId);
         verifica.registroExiste(participacao, Participacao.nome);
 
-        const resposta = await Participacao.atualizarPorId(partId, checkin);
+        const concurso = await Concurso.buscarPorId(participacao.part_conc);
+        verifica.registroExiste(concurso, Concurso.nome);
+
+        const checkin = { 'part_checkin': !participacao.part_checkin };
+
+        const Transacao = new TransacaoRepository(db.sequelize);
+        const transacao = await Transacao.iniciar();
+
+        await Transacao.incrementar(
+            concurso,
+            { conc_atual_checkin: checkin.part_checkin === true ? 1 : -1 },
+            transacao
+        );
+
+        await Transacao.atualizar(
+            Participacao.model,
+            { part_id: partId },
+            checkin,
+            transacao
+        );
+
+        await Transacao.finalizar(transacao);
+
+        // const resposta = await Participacao.atualizarPorId(partId, checkin);
 
         return {
             status: 202,
-            message: resposta,
+            message: "Checkin realizado com sucesso!",
         };
     } catch (erro) {
         console.error(erro);

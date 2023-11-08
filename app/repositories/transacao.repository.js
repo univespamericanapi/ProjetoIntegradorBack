@@ -29,6 +29,15 @@ export default class TransacaoRepository {
 		}
 	}
 
+	async atualizar(model, where, updates, transaction) {
+		try {
+			return await model.update(updates, { where: where }, { transaction });
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	async criar(model, data, transaction) {
 		try {
 			return await model.create(data, { transaction });
