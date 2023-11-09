@@ -69,8 +69,6 @@ const listarInscricoes = async (concId, espera) => {
         const Participacao = new ParticipacaoRepository(db.participacao);
         const listaPart = await Participacao.buscaPorConcurso(concId);
 
-        console.log(tipoInscr, espera);
-
         const Apresentacao = new ApresentacaoRepository(db.apresentacao);
         const Competidor = new CompetidorRepository(db.competidor);
 
