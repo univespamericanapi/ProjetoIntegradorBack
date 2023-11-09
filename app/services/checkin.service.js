@@ -79,12 +79,15 @@ const listarInscricoes = async (concId, espera) => {
             const competidor = await Competidor.buscarPorId(apresentacao.apres_comp);
 
             const inscricao = {
+                comp_id: competidor.comp_id,
                 comp_nome_social: competidor.comp_nome_social,
                 comp_nome: competidor.comp_nome,
                 comp_cpf: competidor.comp_cpf,
                 comp_whats: competidor.comp_whats,
                 comp_email_verif: competidor.comp_email_verif,
+                apres_id: apresentacao.apres_id,
                 apres_nome: apresentacao.apres_nome,
+                part_id: participacao.part_id,
                 part_checkin: participacao.part_checkin,
                 part_tipo_inscr: participacao.part_tipo_inscr,
             };
