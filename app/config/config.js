@@ -29,16 +29,22 @@ const config = {
 	},
 	contaAdmin: [
 		{
+			login: process.env.STAFF_LOGIN,
+			nome: process.env.STAFF_NAME,
+			senha: process.env.STAFF_PASSWORD,
+			cargo: process.env.STAFF_CARGO_NOME,
+		},
+		{
 			login: process.env.ADM_LOGIN,
 			nome: process.env.ADM_NAME,
 			senha: process.env.ADM_PASSWORD,
-			cargo: 'admin',
+			cargo: process.env.ADMIN_CARGO_NOME,
 		},
 		{
 			login: process.env.DEV_LOGIN,
 			nome: process.env.DEV_NAME,
 			senha: process.env.DEV_PASSWORD,
-			cargo: 'admin',
+			cargo: process.env.ADMIN_CARGO_NOME,
 		},
 	],
 	email: {
