@@ -11,7 +11,7 @@ import consoleError from "./app/utils/consoleError.util.js";
 
 const app = express();
 
-const fast = 1;
+const resinconizar = true;
 
 // Configuração do aplicativo
 app.use(cors({ origin: config.corsOrigin }));
@@ -45,7 +45,7 @@ async function conectarAoBanco() {
 		await db.sequelize.authenticate();
 		console.log('Conexão estabelicida com sucesso.');
 
-		if (fast) {
+		if (!resinconizar) {
 			//For fast inicialization
 			await db.sequelize.sync();
 		} else {
