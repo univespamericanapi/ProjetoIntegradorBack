@@ -52,8 +52,6 @@ async function conectarAoBanco() {
 			// :::::::: Caution ::::::::
 			// This code will drop all tables everytime
 			await db.sequelize.sync({ force: true }).then(async () => {
-				console.log('Removendo e Resincronizando o Banco de Dados');
-
 				await createSeeder();
 			});
 		}
