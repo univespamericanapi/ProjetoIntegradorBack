@@ -12,7 +12,7 @@ import selecionaExtra from '../utils/selecionaExtra.util.js';
 import { concursosConstant } from '../constants/listas.constant.js';
 import consoleError from "../utils/consoleError.util.js";
 
-const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
+const criar = async (novoComp, novoApres, novoPart, novoExtra = false, email = true) => {
     try {
         const Evento = new EventoRepository(db.evento);
         const Concurso = new ConcursoRepository(db.concurso);
@@ -79,6 +79,7 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false) => {
             participacao: Participacao.selecionaDadosCriar(novoPart),
             extra: !Extra ? Extra : Extra.selecionaDadosCriar(novoExtra),
             concurso,
+            email,
         };
 
         const resposta = await transacaoService(

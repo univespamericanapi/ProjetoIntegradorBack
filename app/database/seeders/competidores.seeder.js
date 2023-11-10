@@ -2,7 +2,6 @@ import { coresLog } from "../../constants/coresLog.constant.js";
 import db from "../../models/db.model.js";
 import CompetidorRepository from "../../repositories/competidor.repository.js";
 import ConcursoRepository from "../../repositories/concurso.repository.js";
-import EmailTokenRepository from "../../repositories/emailToken.repository.js";
 import cadastroParticipanteService from "../../services/cadastroParticipante.service.js";
 import concursoService from "../../services/concurso.service.js";
 import eventoService from "../../services/evento.service.js";
@@ -72,15 +71,12 @@ const competidorSeeder = async () => {
                 competidor,
                 apresentacao,
                 participacao,
-                extra
+                extra,
+                false
             );
 
             const Competidor = new CompetidorRepository(db.competidor);
             const competidorCadastrado = await Competidor.buscarPorCpf(inscricao.comp_cpf);
-
-            const EmailToken = new EmailTokenRepository(db.emailToken);
-            const emailToken = await EmailToken.buscaPorCompetidor(competidorCadastrado.comp_id);
-            await EmailToken.deletarPorId(emailToken.id);
             await Competidor.atualizarPorId(competidorCadastrado.comp_id, { comp_email_verif: true });
             process.stdout.write('█');
         }

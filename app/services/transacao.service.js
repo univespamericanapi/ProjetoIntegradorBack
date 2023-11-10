@@ -46,22 +46,39 @@ const transacaoService = async (Instancias, dados) => {
 				transacao
 			);
 		}
-		const emailToken = await emailService.criarToken(
-			compCriado,
-			dados.participacao.part_tipo_inscr
-		);
-		await Transacao.criar(EmailToken.model, emailToken, transacao);
-		const emailCorpo = emailService.gerarMensagem(
-			compCriado.comp_nome_social,
-			compCriado.comp_id,
-			emailToken.token
-		);
 
-		const resposta = await emailService.enviarEmail(
+		let emailCorpo;
+		if (dados.email) {
+			const emailToken = await emailService.criarToken(
+				compCriado,
+				dados.participacao.part_tipo_inscr
+			);
+			await Transacao.criar(EmailToken.model, emailToken, transacao);
+			emailCorpo = emailService.gerarMensagem(
+				compCriado.comp_nome_social,
+				compCriado.comp_id,
+				emailToken.token
+			);
+		}
+
+		const resposta = (dados.email === true) ? await emailService.enviarEmail(
 			compCriado.comp_email,
 			emailCorpo.assunto,
 			emailCorpo.mensagem
-		);
+		) : () => {
+			let message;
+
+			if (dados.participacao.part_tipo_inscr === 'Inscrição') {
+				message = mensagensConstant.inscrito;
+			} else {
+				message = mensagensConstant.filaDeEspera;
+			}
+
+			return {
+				status: 200,
+				message: message,
+			};
+		};
 
 		await Transacao.finalizar(transacao);
 
