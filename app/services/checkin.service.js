@@ -60,7 +60,7 @@ const registrarCheckin = async (partId) => {
 const listarInscricoes = async (concId, espera) => {
     try {
         const listaInscricoes = [];
-        const tipoInscr = (espera === true) ? 'Espera' : 'Inscrição';
+        const tipoInscr = (Number(espera) === 1) ? 'Espera' : 'Inscrição';
         const Concurso = new ConcursoRepository(db.concurso);
         const concurso = await Concurso.buscarPorId(concId);
 
