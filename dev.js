@@ -11,7 +11,7 @@ import consoleError from "./app/utils/consoleError.util.js";
 
 const app = express();
 
-const resinconizar = true;
+const resinconizar = false;
 
 // Configuração do aplicativo
 app.use(cors({ origin: config.corsOrigin }));

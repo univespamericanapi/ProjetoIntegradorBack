@@ -27,7 +27,7 @@ export const createSeeder = async () => {
 				const rl = readline.createInterface({ input, output });
 				let resposta = '';
 				while (resposta !== 'S' && resposta !== 'N') {
-					resposta = (await rl.question('Deseja criar fake data? (S/N) ')).toString().toUpperCase();
+					resposta = (await rl.question('Deseja criar fake data, isso pode demorar um tempo? (S/N) ')).toString().toUpperCase();
 					if (resposta === 'S') {
 						await competidorSeeder();
 					}
