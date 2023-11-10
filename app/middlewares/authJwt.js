@@ -57,7 +57,7 @@ const eStaff = async (req, res, next) => {
 	await usuario.getCargo().then((cargo) => {
 		if (
 			cargo.cargo_nome === config.adminCargoNome ||
-			cargo.cargo_nome === config.staffNomeCargo
+			cargo.cargo_nome === config.staffCargoNome
 		) {
 			next();
 			return;

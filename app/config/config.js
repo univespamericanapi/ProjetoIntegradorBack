@@ -13,7 +13,7 @@ const config = {
 	corsOrigin: process.env.CORS_ORIGIN,
 	baseUrlEmail: process.env.EMAIL_BASE_URL,
 	adminCargoNome: process.env.ADMIN_CARGO_NOME,
-	staffNomeCargo: process.env.STAF_CARGO_NOME,
+	staffCargoNome: process.env.STAFF_CARGO_NOME,
 	bancoDeDados: {
 		host: process.env.DB_HOST,
 		user: process.env.DB_USER,
