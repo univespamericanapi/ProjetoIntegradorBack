@@ -20,6 +20,19 @@ export default class ConcursoRepository extends BaseRepository {
 		}
 	}
 
+	async buscarPorNome(nome) {
+		try {
+			return await this.model.findAll({
+				where: {
+					conc_nome: nome,
+				},
+			});
+		} catch (erro) {
+			consoleError(erro);
+			throw erro;
+		}
+	}
+
 	async buscarPorEventoAtivo(idEvento) {
 		try {
 			return await this.model.findAll({
