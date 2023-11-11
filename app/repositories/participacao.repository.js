@@ -38,6 +38,31 @@ export default class ParticipacaoRepository extends BaseRepository {
 		}
 	}
 
+	async buscarEventoAgruparConcurso(eventoId, db) {
+		try {
+			const participacoes = await this.model.findAll({
+				attributes: [
+					'part_conc',
+					[db.sequelize.fn('COUNT', db.sequelize.col('part_conc')), 'num_comp'],
+				],
+				raw: true,
+				where: {
+					part_event: eventoId,
+				},
+				include: {
+					model: db.concurso,
+					attributes: ['conc_nome'],
+				},
+				group: 'part_conc',
+			});
+
+			return participacoes;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(participacao) {
 		const dados = {};
 

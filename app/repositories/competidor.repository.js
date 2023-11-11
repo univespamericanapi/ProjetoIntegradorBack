@@ -52,6 +52,65 @@ export default class CompetidorRepository extends BaseRepository {
 		}
 	}
 
+	async buscarPorEvento(eventoId, db) {
+		try {
+			const competidores = await this.model.findAll({
+				include: [{
+					model: db.apresentacao,
+					include: [{
+						model: db.participacao,
+						where: {
+							part_event: eventoId,
+						},
+						required: true,
+						as: 'participacao',
+					}],
+					required: true,
+					as: 'apresentacao',
+				}],
+			});
+
+			return competidores;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
+	async buscarEventoAgruparCidade(eventoId, db) {
+		try {
+			const competidores = await this.model.findAll({
+				attributes: [
+					'comp_cidade',
+					[db.sequelize.fn('COUNT', db.sequelize.col('comp_cidade')), 'num_comp']
+				],
+				raw: true,
+				include: {
+					model: db.apresentacao,
+					attributes: [],
+					include: {
+						model: db.participacao,
+						attributes: [],
+						where: {
+							part_event: eventoId,
+						},
+						required: true,
+						as: 'participacao',
+					},
+					required: true,
+					as: 'apresentacao',
+				},
+				group: ['comp_cidade'],
+
+			});
+
+			return competidores;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(competidor) {
 		const dados = {};
 

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev nodemon dev.js",
     "seeder": "run-func app/database/seeders/index.seeder.js createSeeder",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-grafico": "run-func app/services/grafico.service.js testeGraficoService"
   },
   "keywords": [
     "pi",

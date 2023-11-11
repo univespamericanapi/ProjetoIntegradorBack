@@ -28,7 +28,7 @@ const sequelize = new Sequelize(
 		port: 3306,
 		dialect: config.bancoDeDados.dialect,
 		logging: false,
-		operatorsAliases: false,
+		operatorsAliases: 0,
 		pool: config.bancoDeDados.pool,
 	}
 );
@@ -59,9 +59,11 @@ db.usuario = usuario(sequelize, Sequelize);
 // apresentacao - competidor
 db.competidor.hasMany(db.apresentacao, {
 	foreignKey: 'apres_comp',
+	as: 'apresentacao',
 });
 db.apresentacao.belongsTo(db.competidor, {
 	foreignKey: 'apres_comp',
+	as: 'competidor',
 });
 
 // usuario - competidor
@@ -177,9 +179,11 @@ db.participacao.belongsTo(db.evento, {
 // participacao - apresentacao
 db.apresentacao.hasMany(db.participacao, {
 	foreignKey: 'part_apres',
+	as: 'participacao',
 });
 db.participacao.belongsTo(db.apresentacao, {
 	foreignKey: 'part_apres',
+	as: 'apresentacao',
 });
 
 // participacao - concurso
