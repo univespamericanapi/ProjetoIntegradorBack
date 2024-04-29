@@ -6,3 +6,4 @@
 /app/config/segredos.config.js
 /app/config/db.config.js
 /.serverless
+/coverage

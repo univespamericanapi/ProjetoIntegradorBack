@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1714434101516" clover="3.2.0">
-  <project timestamp="1714434101516" name="All files">
-    <metrics statements="1551" coveredstatements="1487" conditionals="393" coveredconditionals="293" methods="176" coveredmethods="137" elements="2120" coveredelements="1917" complexity="0" loc="1551" ncloc="1551" packages="6" files="38" classes="38"/>
+<coverage generated="1714434504983" clover="3.2.0">
+  <project timestamp="1714434504983" name="All files">
+    <metrics statements="1550" coveredstatements="1486" conditionals="393" coveredconditionals="293" methods="176" coveredmethods="137" elements="2119" coveredelements="1916" complexity="0" loc="1550" ncloc="1550" packages="6" files="38" classes="38"/>
     <package name="config">
       <metrics statements="68" coveredstatements="67" conditionals="1" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="config.js" path="D:\Codes\PI I\ProjetoIntegradorBack\app\config\config.js">
@@ -1102,7 +1102,7 @@
       </file>
     </package>
     <package name="repositories">
-      <metrics statements="244" coveredstatements="212" conditionals="294" coveredconditionals="208" methods="125" coveredmethods="90"/>
+      <metrics statements="243" coveredstatements="211" conditionals="294" coveredconditionals="208" methods="125" coveredmethods="90"/>
       <file name="base.repository.js" path="D:\Codes\PI I\ProjetoIntegradorBack\app\repositories\base.repository.js">
         <metrics statements="79" coveredstatements="78" conditionals="143" coveredconditionals="105" methods="55" coveredmethods="41"/>
         <line num="1" count="1" type="stmt"/>
@@ -1248,7 +1248,7 @@
         <line num="8" count="1" type="stmt"/>
       </file>
       <file name="evento.repository.js" path="D:\Codes\PI I\ProjetoIntegradorBack\app\repositories\evento.repository.js">
-        <metrics statements="71" coveredstatements="70" conditionals="137" coveredconditionals="89" methods="59" coveredmethods="42"/>
+        <metrics statements="70" coveredstatements="69" conditionals="137" coveredconditionals="89" methods="59" coveredmethods="42"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="0" type="cond" truecount="67" falsecount="48"/>
         <line num="3" count="1" type="stmt"/>
@@ -1317,9 +1317,8 @@
         <line num="66" count="1" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
         <line num="68" count="1" type="stmt"/>
-        <line num="69" count="1" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
-        <line num="71" count="1" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
       </file>
       <file name="kpop_circ.repository.js" path="D:\Codes\PI I\ProjetoIntegradorBack\app\repositories\kpop_circ.repository.js">
         <metrics statements="18" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
@@ -1447,7 +1446,7 @@
         <line num="3" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="6" count="1" type="stmt"/>
+        <line num="6" count="19" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="9" count="1" type="stmt"/>
