@@ -2,10 +2,13 @@ const validaCpf = (cpf) => {
 	let soma = 0;
 	let restante;
 
-	cpf = cpf.replace('.', '').replace('.', '').replace('-', '').trim();
+	cpf = cpf.replace(/\D/g, '').trim(); // Remove todos os caracteres não numéricos
+
+	if (cpf.length !== 11) {
+		return false; // Retorna false se o CPF não tiver exatamente 11 dígitos
+	}
 
 	let tudoIgual = true;
-
 	for (let i = 0; i < cpf.length - 1; i++) {
 		if (cpf[i] !== cpf[i + 1]) tudoIgual = false;
 	}
@@ -15,11 +18,10 @@ const validaCpf = (cpf) => {
 	}
 
 	for (let i = 1; i <= 9; i++) {
-		soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+		soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
 	}
 
 	restante = (soma * 10) % 11;
-
 	if (restante === 10 || restante === 11) {
 		restante = 0;
 	}
@@ -29,12 +31,11 @@ const validaCpf = (cpf) => {
 	}
 
 	soma = 0;
-
 	for (let i = 1; i <= 10; i++) {
-		soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
-		restante = (soma * 10) % 11;
+		soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
 	}
 
+	restante = (soma * 10) % 11;
 	if (restante === 10 || restante === 11) {
 		restante = 0;
 	}

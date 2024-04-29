@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
-
+let dotEnvPath = '.env';
+if (process.env.NODE_ENV === 'dev') {
+	dotEnvPath = '.env.dev';
+} else if (process.env.NODE_ENV === 'test') {
+	dotEnvPath = '.env.test';
+}
 dotenv.config({
-	path: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
+	path: dotEnvPath,
 });
 
 const config = {
