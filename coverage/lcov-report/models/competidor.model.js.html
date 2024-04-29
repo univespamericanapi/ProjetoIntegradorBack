@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for constants/coresLog.constant.js</title>
+    <title>Code coverage report for models/competidor.model.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">constants</a> coresLog.constant.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">models</a> competidor.model.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>34/34</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
@@ -97,7 +97,28 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -131,40 +152,82 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const coresLog = {
-	// flags
-	Reset: '\x1b[0m',
-	Bright: '\x1b[1m',
-	Dim: '\x1b[2m',
-	Underscore: '\x1b[4m',
-	Blink: '\x1b[5m',
-	Reverse: '\x1b[7m',
-	Hidden: '\x1b[8m',
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const competidor = (sequelize, Sequelize) =&gt; {
+	const Competidor = sequelize.define(
+		'competidores',
+		{
+			comp_id: {
+				type: Sequelize.INTEGER,
+				autoIncrement: true,
+				primaryKey: true,
+			},
+			comp_usua: {
+				// FK para a tabela usuários
+				type: Sequelize.INTEGER,
+				allowNull: true,
+			},
+			comp_email: {
+				type: Sequelize.STRING(500),
+				allowNull: true,
+			},
+			comp_email_verif: {
+				// Has the email been verified?
+				type: Sequelize.BOOLEAN,
+				allowNull: true,
+				defaultValue: false,
+			},
+			comp_nome: {
+				type: Sequelize.STRING(500),
+				allowNull: false,
+			},
+			comp_nome_social: {
+				type: Sequelize.STRING(500),
+				allowNull: false,
+			},
+			comp_cpf: {
+				type: Sequelize.STRING(11),
+				allowNull: false,
+			},
+			comp_nasc: {
+				type: Sequelize.DATEONLY,
+				allowNull: false,
+			},
+			comp_whats: {
+				type: Sequelize.STRING(11),
+				allowNull: false,
+			},
+			comp_cidade: {
+				// FK para a tabela cidades
+				type: Sequelize.INTEGER,
+				allowNull: false,
+			},
+		},
+		{ timestamps: false }
+	);
 &nbsp;
-	// foreground color
-	FgBlack: '\x1b[30m',
-	FgRed: '\x1b[31m',
-	FgGreen: '\x1b[32m',
-	FgYellow: '\x1b[33m',
-	FgBlue: '\x1b[34m',
-	FgMagenta: '\x1b[35m',
-	FgCyan: '\x1b[36m',
-	FgWhite: '\x1b[37m',
-	FgGray: '\x1b[90m',
-&nbsp;
-	// background color
-	BgBlack: '\x1b[40m',
-	BgRed: '\x1b[41m',
-	BgGreen: '\x1b[42m',
-	BgYellow: '\x1b[43m',
-	BgBlue: '\x1b[44m',
-	BgMagenta: '\x1b[45m',
-	BgCyan: '\x1b[46m',
-	BgWhite: '\x1b[47m',
-	BgGray: '\x1b[100m',
+	return Competidor;
 };
-&nbsp;
-// Example: console.log(`${coresLog.FgRed}${erro.date}: ${erro.message}${coresLog.Reset}`);
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

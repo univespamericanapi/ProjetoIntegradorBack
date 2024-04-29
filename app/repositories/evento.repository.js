@@ -53,12 +53,15 @@ export default class EventoRepository extends BaseRepository {
 		}
 	}
 
-	async idNomeView(evento) {
+	idNomeView(evento) {
 		try {
-			return {
-				event_id: evento.event_id,
-				event_ed_nome: evento.event_ed_nome,
-			};
+			if (evento) {
+				return {
+					event_id: evento.event_id,
+					event_ed_nome: evento.event_ed_nome,
+				};
+			}
+			throw new Error('Evento não fornecido');
 		} catch (erro) {
 			consoleError(erro);
 			throw erro;
