@@ -84,7 +84,6 @@ const competidorSeeder = async () => {
         consoleError(error);
         throw error;
     }
-    console.log();
     console.log(`${coresLog.FgGreen}Fake data criada!${coresLog.Reset}`);
 }
 

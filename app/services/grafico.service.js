@@ -81,7 +81,6 @@ const faixasEtarias = async (eventoId = 1) => {
         const competidoresLista = await Competidor.buscarPorEvento(Number(eventoId), db);
         const competidoresIdades = [];
         competidoresLista.forEach(competidor => {
-            console.log(competidor.comp_nasc)
             const idade = calcularIdade(competidor.comp_nasc);
             competidoresIdades.push(idade);
         });
