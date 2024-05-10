@@ -21,6 +21,12 @@ const graficoRoutes = (app) => {
         [authJwt.verificaToken, authJwt.eAdmin],
         graficoController.competidorPorConcurso
     );
+
+    app.get(
+        '/api/admin/grafico/faixas-etarias/:idEvento',
+        [authJwt.verificaToken, authJwt.eAdmin],
+        graficoController.faixasEtarias
+    );
 };
 
 export default graficoRoutes;
