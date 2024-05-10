@@ -56,10 +56,7 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false, email = t
         const cidade = await localidadesConsumer.cidadePorId(novoComp.comp_cidade);
         verifica.registroExiste(cidade.cid_id, "Cidade");
 
-        const oldData = novoComp.comp_nasc;
         novoComp.comp_nasc = dataUtils.stringParaData(novoComp.comp_nasc);
-        const newData = novoComp.comp_nasc;
-        console.log(oldData + " = " + newData);
 
         if (!novoComp.comp_nome_social) {
             novoComp.comp_nome_social = novoComp.comp_nome;
