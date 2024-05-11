@@ -39,10 +39,24 @@ const faixasEtarias = async (req, res) => {
     }
 };
 
+const temas = async (req, res) => {
+    try {
+        const resposta = await graficoService.temas(req.params.idConc);
+
+        return res.status(resposta.status).send(resposta.message);
+    } catch (erro) {
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
+    }
+};
+
 const graficoController = {
     competidorPorCidade,
     competidorPorConcurso,
     faixasEtarias,
+    temas,
 };
 
 export default graficoController;

@@ -35,12 +35,22 @@ const criar = async (novoComp, novoApres, novoPart, novoExtra = false, email = t
         verifica.cpfValido(novoComp.comp_cpf);
         verifica.emailValida(novoComp.comp_email);
 
-        let competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
-        verifica.emailDuplicado(competidor);
-
-        competidor = await Competidor.buscarPorCpf(novoComp.comp_cpf);
         let apresentacao;
         let participacao;
+        let competidor = await Competidor.buscarPorEmail(novoComp.comp_email);
+        if (competidor) {
+            apresentacao = await Apresentacao.buscarPorCompetidor(competidor.comp_id);
+            if (apresentacao) {
+                participacao = await Participacao.buscarPorApresentacao(
+                    apresentacao.apres_id,
+                    evento.event_id
+                );
+            }
+        }
+
+        verifica.registroDuplicado(participacao, Participacao.nome);
+
+        competidor = await Competidor.buscarPorCpf(novoComp.comp_cpf);
         if (competidor) {
             apresentacao = await Apresentacao.buscarPorCompetidor(competidor.comp_id);
             if (apresentacao) {

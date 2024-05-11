@@ -27,6 +27,12 @@ const graficoRoutes = (app) => {
         [authJwt.verificaToken, authJwt.eAdmin],
         graficoController.faixasEtarias
     );
+
+    app.get(
+        '/api/admin/grafico/temas/:idConc',
+        [authJwt.verificaToken, authJwt.eAdmin],
+        graficoController.temas
+    );
 };
 
 export default graficoRoutes;

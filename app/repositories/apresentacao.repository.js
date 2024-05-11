@@ -22,6 +22,30 @@ export default class ApresentacaoRepository extends BaseRepository {
 		}
 	}
 
+	async buscarPartAgruparTema(concId, db) {
+		try {
+			const apresentacoes = await this.model.findAll({
+				attributes: [
+					'apres_nome',
+					[db.sequelize.fn('COUNT', db.sequelize.col('apres_nome')), 'num_tema'],
+				],
+				include: [{
+					model: db.participacao,
+					attributes: [],
+					where: { part_conc: concId },
+					as: 'participacao'
+				}],
+				group: ['apres_nome'],
+				raw: true
+			});
+
+			return apresentacoes;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(apresentacao) {
 		const dados = {};
 

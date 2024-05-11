@@ -1,5 +1,6 @@
 import localidadesConsumer from "../consumer/localidades.consumer.js";
 import db from "../models/db.model.js";
+import ApresentacaoRepository from "../repositories/apresentacao.repository.js";
 import CompetidorRepository from "../repositories/competidor.repository.js";
 import ParticipacaoRepository from "../repositories/participacao.repository.js";
 import calcularIdade from "../utils/calcularIdade.js";
@@ -84,7 +85,7 @@ const faixasEtarias = async (eventoId = 1) => {
             const idade = calcularIdade(competidor.comp_nasc);
             competidoresIdades.push(idade);
         });
-        const faixas = gerarFaixasEtarias(competidoresIdades, 7);
+        const faixas = gerarFaixasEtarias(competidoresIdades, 6);
         const data = [];
         const labels = [];
         faixas.forEach(element => {
@@ -112,7 +113,70 @@ const faixasEtarias = async (eventoId = 1) => {
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
             ],
-            borderWidth: 1
+            borderWidth: 2,
+            barPercentage: 0.5,
+            barThickness: 16,
+            maxBarThickness: 18,
+            minBarLength: 2,
+        }];
+
+        const resposta = {
+            datasets,
+            labels,
+        };
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        consoleError(erro);
+        throw erro;
+    }
+}
+
+const temas = async (concId = 1) => {
+    try {
+        const Apresentacao = new ApresentacaoRepository(db.apresentacao);
+        const apresentacaoLista = await Apresentacao.buscarPartAgruparTema(Number(concId), db);
+
+        apresentacaoLista.sort((a, b) => b['num_tema'] - a['num_tema']);
+
+        const labels = apresentacaoLista.slice(0, 6).map(a => a['apres_nome']);;
+        const data = apresentacaoLista.slice(0, 6).map(a => a['num_tema']);
+
+        const outrosTotal = apresentacaoLista.slice(6).reduce((sum, current) => sum + current['num_tema'], 0);
+
+        if (apresentacaoLista.length > 6) {
+            labels.push('Outros');
+            data.push(outrosTotal);
+        }
+
+        const datasets = [{
+            data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 2,
+            barPercentage: 0.5,
+            barThickness: 16,
+            maxBarThickness: 18,
+            minBarLength: 2,
         }];
 
         const resposta = {
@@ -134,6 +198,7 @@ const graficoService = {
     competidorPorCidade,
     competidorPorConcurso,
     faixasEtarias,
+    temas,
 };
 
 export default graficoService;
