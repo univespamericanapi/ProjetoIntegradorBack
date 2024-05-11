@@ -23,6 +23,21 @@ export default class ParticipacaoRepository extends BaseRepository {
 		}
 	}
 
+	async contarPorEvento(eventId) {
+		try {
+			const contagem = await this.model.count({
+				where: {
+					part_event: eventId,
+				},
+			});
+
+			return contagem;
+		} catch (erro) {
+			consoleError(erro);
+			throw erro;
+		}
+	}
+
 	async buscaPorConcurso(concId) {
 		try {
 			const participacao = await this.model.findAll({

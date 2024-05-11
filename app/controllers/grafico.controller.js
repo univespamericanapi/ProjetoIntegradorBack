@@ -26,6 +26,19 @@ const competidorPorConcurso = async (req, res) => {
     }
 };
 
+const frequenciaPorEvento = async (req, res) => {
+    try {
+        const resposta = await graficoService.frequenciaPorEvento(req.params.idEvento);
+
+        return res.status(resposta.status).send(resposta.message);
+    } catch (erro) {
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
+    }
+};
+
 const faixasEtarias = async (req, res) => {
     try {
         const resposta = await graficoService.faixasEtarias(req.params.idEvento);
@@ -52,11 +65,26 @@ const temas = async (req, res) => {
     }
 };
 
+const vagasConcursos = async (req, res) => {
+    try {
+        const resposta = await graficoService.vagasConcursos(req.params.idEvento);
+
+        return res.status(resposta.status).send(resposta.message);
+    } catch (erro) {
+        if (erro.status) {
+            return res.status(erro.status).send(erro.message);
+        }
+        return res.status(500).send(erro.message);
+    }
+};
+
 const graficoController = {
     competidorPorCidade,
     competidorPorConcurso,
+    frequenciaPorEvento,
     faixasEtarias,
     temas,
+    vagasConcursos,
 };
 
 export default graficoController;

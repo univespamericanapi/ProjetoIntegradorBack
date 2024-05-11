@@ -2,9 +2,11 @@ import localidadesConsumer from "../consumer/localidades.consumer.js";
 import db from "../models/db.model.js";
 import ApresentacaoRepository from "../repositories/apresentacao.repository.js";
 import CompetidorRepository from "../repositories/competidor.repository.js";
+import ConcursoRepository from "../repositories/concurso.repository.js";
 import ParticipacaoRepository from "../repositories/participacao.repository.js";
 import calcularIdade from "../utils/calcularIdade.js";
 import consoleError from "../utils/consoleError.util.js";
+import contarNumApres from "../utils/contarNumApres.js";
 import gerarFaixasEtarias from "../utils/gerarFaixasEtarias.js";
 import verifica from "../utils/verificacao.util.js";
 
@@ -41,6 +43,32 @@ const competidorPorCidade = async (eventoId = 1) => {
     }
 };
 
+const vagasConcursos = async (eventoId = 1) => {
+    try {
+        const Concurso = new ConcursoRepository(db.concurso);
+        const concursoLista = await Concurso.buscarPorEvento(eventoId);
+        verifica.registroExiste(concursoLista, 'Registro');
+
+        const data = [];
+
+        concursoLista.map(concurso => {
+            data.push({
+                'nome': concurso.conc_nome,
+                'atual': concurso.conc_atual_inscr,
+                'restantes': (concurso.conc_limit_inscr - concurso.conc_atual_inscr),
+            });
+        });
+
+        return {
+            status: 200,
+            message: data,
+        };
+    } catch (erro) {
+        consoleError(erro);
+        throw erro;
+    }
+};
+
 const competidorPorConcurso = async (eventoId = 1) => {
     try {
         const Participacao = new ParticipacaoRepository(db.participacao);
@@ -59,6 +87,68 @@ const competidorPorConcurso = async (eventoId = 1) => {
 
         const datasets = [{
             data,
+        }];
+
+        const resposta = {
+            datasets,
+            labels,
+        };
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        consoleError(erro);
+        throw erro;
+    }
+};
+
+const frequenciaPorEvento = async (eventoId = 1) => {
+    try {
+        const Participacao = new ParticipacaoRepository(db.participacao);
+        const Apresentacao = new ApresentacaoRepository(db.apresentacao);
+
+        const contagemDoEvento = await Participacao.contarPorEvento(eventoId);
+        verifica.registroExiste(contagemDoEvento, 'Registro');
+
+        const contagensDeCompEmEventos = await Apresentacao.contarApresPorComp(db);
+        verifica.registroExiste(contagensDeCompEmEventos, 'Registro');
+
+        const frequencia = contarNumApres(contagensDeCompEmEventos);
+
+        const labels = [];
+        const data = [];
+
+        frequencia.map(item => {
+            data.push(item.quantidade);
+            labels.push(`${item.num_apres} evento(s)`);
+        });
+
+        data.push(contagemDoEvento);
+        labels.push('Total do Evento Selecionado');
+
+        const datasets = [{
+            data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 2,
         }];
 
         const resposta = {
@@ -197,8 +287,10 @@ const temas = async (concId = 1) => {
 const graficoService = {
     competidorPorCidade,
     competidorPorConcurso,
+    frequenciaPorEvento,
     faixasEtarias,
     temas,
+    vagasConcursos,
 };
 
 export default graficoService;

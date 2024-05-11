@@ -46,6 +46,24 @@ export default class ApresentacaoRepository extends BaseRepository {
 		}
 	}
 
+	async contarApresPorComp(db) {
+		try {
+			const contagens = await this.model.findAll({
+				attributes: [
+					'apres_comp',
+					[db.sequelize.fn('COUNT', db.sequelize.col('apres_comp')), 'num_apres'],
+				],
+				group: ['apres_comp'],
+				raw: true
+			});
+
+			return contagens;
+		} catch (erro) {
+			consoleError(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(apresentacao) {
 		const dados = {};
 

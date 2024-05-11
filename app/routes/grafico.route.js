@@ -23,6 +23,12 @@ const graficoRoutes = (app) => {
     );
 
     app.get(
+        '/api/admin/grafico/frequencia/:idEvento',
+        [authJwt.verificaToken, authJwt.eAdmin],
+        graficoController.frequenciaPorEvento
+    );
+
+    app.get(
         '/api/admin/grafico/faixas-etarias/:idEvento',
         [authJwt.verificaToken, authJwt.eAdmin],
         graficoController.faixasEtarias
@@ -32,6 +38,12 @@ const graficoRoutes = (app) => {
         '/api/admin/grafico/temas/:idConc',
         [authJwt.verificaToken, authJwt.eAdmin],
         graficoController.temas
+    );
+
+    app.get(
+        '/api/admin/grafico/vagas/:idEvento',
+        [authJwt.verificaToken, authJwt.eAdmin],
+        graficoController.vagasConcursos
     );
 };
 
