@@ -78,6 +78,45 @@ export default class ParticipacaoRepository extends BaseRepository {
 		}
 	}
 
+	async listarParticipantesPorEvento(eventoId, db, limite = null) {
+		try {
+			const participacoes = await this.model.findAll({
+				attributes: ['part_id', 'part_conc'],
+				where: { part_event: eventoId },
+				include: [{
+					model: db.concurso,
+					attributes: ['conc_nome'],
+				}, {
+					model: db.apresentacao,
+					attributes: [
+						'apres_nome',
+						'apres_origem',
+					],
+					as: 'apresentacao',
+					include: {
+						model: db.competidor,
+						attributes: [
+							'comp_nome_social',
+							'comp_nasc',
+							'comp_whats',
+							'comp_cidade',
+						],
+						as: 'competidor',
+					},
+					raw: true,
+				}],
+				order: [['part_id', 'DESC']],
+				limit: limite,
+				raw: true,
+			});
+
+			return participacoes;
+		} catch (erro) {
+			console.error(erro);
+			throw erro;
+		}
+	}
+
 	selecionaDadosCriar(participacao) {
 		const dados = {};
 

@@ -45,6 +45,12 @@ const graficoRoutes = (app) => {
         [authJwt.verificaToken, authJwt.eAdmin],
         graficoController.vagasConcursos
     );
+
+    app.get(
+        '/api/admin/grafico/ultimos/:idEvento',
+        [authJwt.verificaToken, authJwt.eAdmin],
+        graficoController.ultimosCadastros
+    );
 };
 
 export default graficoRoutes;

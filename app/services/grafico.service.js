@@ -7,6 +7,7 @@ import ParticipacaoRepository from "../repositories/participacao.repository.js";
 import calcularIdade from "../utils/calcularIdade.js";
 import consoleError from "../utils/consoleError.util.js";
 import contarNumApres from "../utils/contarNumApres.js";
+import dataUtils from "../utils/data.util.js";
 import gerarFaixasEtarias from "../utils/gerarFaixasEtarias.js";
 import verifica from "../utils/verificacao.util.js";
 
@@ -166,6 +167,40 @@ const frequenciaPorEvento = async (eventoId = 1) => {
     }
 };
 
+const ultimosCadastros = async (eventoId = 1) => {
+    try {
+        const Participacao = new ParticipacaoRepository(db.participacao);
+        const listaUltimos = await Participacao.listarParticipantesPorEvento(eventoId, db, 20);
+
+        const resposta = [];
+
+        for (const competidor of listaUltimos) {
+            const cidade = await localidadesConsumer.cidadePorId(competidor['apresentacao.competidor.comp_cidade']);
+            const dataNasc = dataUtils.dataParaString(competidor['apresentacao.competidor.comp_nasc']);
+            resposta.push(
+                {
+                    'idParticipacao': competidor['part_id'],
+                    'nomeCompetidor': competidor['apresentacao.competidor.comp_nome_social'],
+                    'concurso': competidor['concurso.conc_nome'],
+                    'apresentacao': competidor['apresentacao.apres_nome'],
+                    'origemApresentacao': competidor['apresentacao.apres_origem'],
+                    'dataNascimento': dataNasc,
+                    'whatsapp': competidor['apresentacao.competidor.comp_whats'],
+                    'cidade': `${cidade.cid_desc} / ${cidade.estado.est_sigla}`,
+                }
+            );
+        }
+
+        return {
+            status: 200,
+            message: resposta,
+        };
+    } catch (erro) {
+        consoleError(erro);
+        throw erro;
+    }
+}
+
 const faixasEtarias = async (eventoId = 1) => {
     try {
         const Competidor = new CompetidorRepository(db.competidor);
@@ -291,6 +326,7 @@ const graficoService = {
     faixasEtarias,
     temas,
     vagasConcursos,
+    ultimosCadastros,
 };
 
 export default graficoService;
